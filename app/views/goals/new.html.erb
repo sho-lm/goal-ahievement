@@ -1,0 +1,23 @@
+<% content_for(:title, "goals new") %>
+<h1>NEW</h1>
+<div class="error-message">
+  <% @goal.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+</div>
+
+<div class="new">
+  <%= form_with model: @goal, class: "new-form", local: true do |form| %>
+    <div class="new-form-item">
+      <%= form.label :contnet %>
+      <%= form.text_field :content, class: "new-form-item-content" %>
+    </div>
+    <div class="new-form-item">
+      <%= form.label :limit %>
+      <%= form.date_field :limit, class: "new-form-item-limit" %>
+    </div>
+    <div class="new-form-submit">
+      <%= form.submit "create", class: "submit-button" %>
+    </div>
+  <% end %>
+</div>
