@@ -59,4 +59,7 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # add aws cloud9 to white access list
+  config.hosts << "25a935bc7cfe46c19230c6e5ca9c7822.vfs.cloud9.ap-northeast-1.amazonaws.com"
 end
