@@ -6,12 +6,10 @@ RSpec.describe "Goals", type: :request do
       get goals_path
       expect(response.status).to eq 200
     end
-    it "has goals array" do
-      # fix factory に直す
-      goal = Goal.new(content: "index test")
-      goal.save
+    it "shows goals list" do
+      goal = create(:test_goal)
       get goals_path
-      expect(response.body).to include "index test"
+      expect(response.body).to include "test goal"
     end
   end
 
