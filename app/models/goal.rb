@@ -3,7 +3,6 @@ class Goal < ApplicationRecord
   attribute :progress,              :integer, default: 0
   attribute :hierarchy,             :integer, default: 1
   attribute :children_length,       :integer, default: 0
-  attribute :parent_id,             :integer, default: 1
   attribute :user_id,               :integer, default: 1
 
   validates :content,                   presence: true
@@ -17,7 +16,6 @@ class Goal < ApplicationRecord
   validates :hierarchy,                 presence: true,
                                         inclusion: { in: 1..3 }
   validates :children_length,           presence: true
-  validates :parent_id,                 presence: true
   validates :user_id,                   presence: true
 
 
