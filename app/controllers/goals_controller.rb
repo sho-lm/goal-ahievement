@@ -16,6 +16,20 @@ class GoalsController < ApplicationController
     end
   end
 
+  def show
+    @goal = Goal.find_by(id: params[:id])
+    redirect_to goals_path if @goal.nil?
+  end
+
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
   private
     
     def goal_params
