@@ -1,0 +1,30 @@
+<% content_for(:title, "goals show") %>
+
+<div class="goals">
+  <div class="goals-header">
+    <div class="goals-item-content">
+      content
+    </div>
+    <div class="goals-item-limit">
+      limit
+    </div>
+    <div class="goals-item-progress">
+      progress
+    </div>
+  </div>
+  <div class="goals-item">
+    <div class="goals-item-content">
+      <%= @goal.content %>
+    </div>
+    <div class="goals-item-limit">
+      <%= @goal.limit %>
+    </div>
+    <div class="goals-item-progress">
+      <%= @goal.progress %>
+    </div>
+  </div>
+</div>
+<%= link_to "戻る", goals_path %>
+<%= link_to "編集", edit_goal_path %>
+<%= link_to "削除", @goal, method: "delete",
+                          data: { confirm: "本当にいいですか？" } %>

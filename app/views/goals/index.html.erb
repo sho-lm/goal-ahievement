@@ -17,7 +17,7 @@
   <% @goals.each do |goal| %>
     <div class="goals-item">
       <div class="goals-item-content">
-        <%= goal.content %>
+        <%= link_to goal.content, goal %>
       </div>
       <div class="goals-item-limit">
         <%= goal.limit %>
