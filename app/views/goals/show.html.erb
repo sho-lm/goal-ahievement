@@ -25,3 +25,6 @@
   </div>
 </div>
 <%= link_to "戻る", goals_path %>
+<%= link_to "編集", edit_goal_path %>
+<%= link_to "削除", @goal, method: "delete",
+                          data: { confirm: "本当にいいですか？" } %>
