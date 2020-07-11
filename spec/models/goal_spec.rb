@@ -7,7 +7,7 @@ RSpec.describe Goal, type: :model do
     context "without arguments" do
       let(:goal) { Goal.new } 
       it "achievement_flag has default value" do
-        expect(goal.achievement_flag).to be_falsy
+        expect(goal.achievement_flag).to eq false
       end
       it "progress has default value" do
         expect(goal.progress).to eq 0
@@ -25,7 +25,7 @@ RSpec.describe Goal, type: :model do
     context "with achievement_flag" do
       it "achievement_flag has specified value" do
         goal_ = Goal.new(achievement_flag: true)
-        expect(goal_.achievement_flag).to be_truthy  
+        expect(goal_.achievement_flag).to eq true 
       end
     end
     context "with progress" do
