@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_05_044300) do
+ActiveRecord::Schema.define(version: 2020_07_11_014522) do
 
   create_table "goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "content"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2020_07_05_044300) do
     t.integer "children_length"
     t.integer "user_id"
     t.integer "parent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "password"
+    t.string "password_digest"
+    t.boolean "is_admin"
+    t.boolean "is_private"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
