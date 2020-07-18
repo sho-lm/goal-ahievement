@@ -20,7 +20,7 @@ RSpec.describe "Goals", type: :request do
         get goal_path test_goal.id
         expect(response.status).to eq 200
       end
-      it "showw goal content" do
+      it "shows goal content" do
         get goal_path test_goal.id
         expect(response.body).to include "test goal"
       end
