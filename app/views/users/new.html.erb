@@ -1,0 +1,24 @@
+<% content_for(:title, "user new") %>
+<h1>NEW</h1>
+<div class="error-message">
+  <% @user.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+</div>
+
+<div class="new">
+  <%= form_with model: @user, class: "new-form", local: true do |form| %>
+    <div class="new-form-item">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "new-form-item-content" %>
+    </div>
+    <div class="new-form-item">
+      <%= form.label :password %>
+      <%= form.password_field :password, class: "new-form-item-limit" %>
+    </div>
+    <div class="new-form-submit">
+      <%= form.submit "new", class: "submit-button" %>
+    </div>
+  <% end %>
+</div>
+<%= link_to "戻る", users_path %>

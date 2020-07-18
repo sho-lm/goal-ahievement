@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  # has_many :goals, dependent: :destroy
+
   attribute :is_admin,   :boolean, default: false
   attribute :is_private, :boolean, default: false
 
