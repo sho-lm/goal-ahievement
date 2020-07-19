@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Goal, type: :model do
-
-
-  describe "#default" do
-    context "without arguments" do
+  # default -----------------------------------------------------------------------------------------------------
+  describe "default value" do
+    context "when #new without arguments" do
       let(:goal) { Goal.new } 
       it "achievement_flag has default value" do
         expect(goal.achievement_flag).to eq false
@@ -18,119 +17,113 @@ RSpec.describe Goal, type: :model do
       it "children_length has default value" do
         expect(goal.children_length).to eq 0
       end
-      it "user_id has default value" do
-        expect(goal.user_id).to eq 1
-      end
     end
-    context "with achievement_flag" do
+    context "when #new with achievement_flag" do
       it "achievement_flag has specified value" do
         goal_ = Goal.new(achievement_flag: true)
         expect(goal_.achievement_flag).to eq true 
       end
     end
-    context "with progress" do
+    context "when #new with progress" do
       it "progress has specified value" do
         goal_ = Goal.new(progress: 10)
         expect(goal_.progress).to eq 10  
       end
     end
-    context "with hierarchy" do
+    context "when #new with hierarchy" do
       it "hierarchy has specified value" do
         goal_ = Goal.new(hierarchy: 2)
         expect(goal_.hierarchy).to eq 2 
       end
     end
-    context "with children_length" do
+    context "when #new with children_length" do
       it "children_length has specified value" do
         goal_ = Goal.new(children_length: 3)
         expect(goal_.children_length).to eq 3  
       end
     end
-    context "with user_id" do
-      it "user_id has specified value" do
-        goal_ = Goal.new(user_id: 4)
-        expect(goal_.user_id).to eq 4
-      end
-    end
   end
-
-  describe "#validates" do
-    let(:goal) { Goal.new(content: "content") }
-    context "with content" do
+  # validates ------------------------------------------------------------------------------------------------
+  describe "validates" do
+    let(:test_goal) { create(:test_goal) }
+    context "with correct attributes" do
       it "is valid" do
-        expect(goal).to be_valid  
+        expect(test_goal).to be_valid  
       end
     end
-    context "with no content" do
+    # content -------------------------------------
+    context "when content is blank" do
       it "is invalid" do
-        goal.content = nil
-        expect(goal).not_to be_valid  
+        test_goal.content = nil
+        expect(test_goal).not_to be_valid  
       end
     end
-    context "with no achievement_flag" do
+    # achievement_flag-----------------------------
+    context "when achievement_flag is blank" do
       it "is invalid" do
-        goal.achievement_flag = nil
-        expect(goal).not_to be_valid  
+        test_goal.achievement_flag = nil
+        expect(test_goal).not_to be_valid  
       end
     end
-    context "with no progress" do
+    # progress -------------------------------------
+    context "when progress is blank" do
       it "is invalid" do
-        goal.progress = nil
-        expect(goal).not_to be_valid  
+        test_goal.progress = nil
+        expect(test_goal).not_to be_valid  
       end
     end
-    context "with no hierarchy" do
-      it "is invalid" do
-        goal.hierarchy = nil
-        expect(goal).not_to be_valid  
-      end
-    end
-    context "with no user_id" do
-      it "is invalid" do
-        goal.user_id = nil
-        expect(goal).not_to be_valid  
-      end
-    end
-
     context "when progress is in 0..100" do
       it "is valid" do
-        goal.progress = 0
-        expect(goal).to be_valid  
-        goal.progress = 50
-        expect(goal).to be_valid  
-        goal.progress = 100
-        expect(goal).to be_valid  
+        test_goal.progress = 0
+        expect(test_goal).to be_valid  
+        test_goal.progress = 50
+        expect(test_goal).to be_valid  
+        test_goal.progress = 100
+        expect(test_goal).to be_valid  
       end
     end
     context "when progress is out of 0..100" do
       it "is invalid" do
-        goal.progress = -1
-        expect(goal).not_to be_valid  
-        goal.progress = 101
-        expect(goal).not_to be_valid  
+        test_goal.progress = -1
+        expect(test_goal).not_to be_valid  
+        test_goal.progress = 101
+        expect(test_goal).not_to be_valid  
       end
     end
-
+    # hierarchy -------------------------------------
+    context "when hierarchy is blank" do
+      it "is invalid" do
+        test_goal.hierarchy = nil
+        expect(test_goal).not_to be_valid  
+      end
+    end
     context "when hierarchy is in 1..3" do
       it "is valid" do
-        goal.hierarchy = 1
-        expect(goal).to be_valid  
-        goal.hierarchy = 2
-        expect(goal).to be_valid  
-        goal.hierarchy = 3
-        expect(goal).to be_valid  
+        test_goal.hierarchy = 1
+        expect(test_goal).to be_valid  
+        test_goal.hierarchy = 2
+        expect(test_goal).to be_valid  
+        test_goal.hierarchy = 3
+        expect(test_goal).to be_valid  
       end
     end
     context "when hierarchy is out of 1..3" do
-      it "is invalid with 0" do
-        goal.hierarchy = 0
-        expect(goal).not_to be_valid  
-        goal.hierarchy = 4
-        expect(goal).not_to be_valid  
+      it "is invalid" do
+        test_goal.hierarchy = 0
+        expect(test_goal).not_to be_valid  
+        test_goal.hierarchy = 4
+        expect(test_goal).not_to be_valid  
+      end
+    end
+    # user_id ----------------------------------------
+    context "when user_id is blank" do
+      it "is invalid" do
+        test_goal.user_id = nil
+        expect(test_goal).not_to be_valid  
       end
     end
   end
-
+  # methods -----------------------------------------------------------------------------------------------
   describe "#progress_rate" do
     context "when called" do
       it "returns progress + %" do
@@ -141,6 +134,4 @@ RSpec.describe Goal, type: :model do
       end
     end
   end
-  
-
 end

@@ -7,7 +7,7 @@
 </div>
 
 <div class="new">
-  <%= form_with model: @goal, class: "new-form", local: true do |form| %>
+  <%= form_with(model: [@user, @goal], class: "new-form", local: true) do |form| %>
     <div class="new-form-item">
       <%= form.label :contnet %>
       <%= form.text_field :content, class: "new-form-item-content" %>
@@ -21,4 +21,4 @@
     </div>
   <% end %>
 </div>
-<%= link_to "戻る", goals_path %>
+<%= link_to("戻る", user_goals_path(@user)) %>
