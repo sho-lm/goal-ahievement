@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :show, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :show, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user,   only: [:show, :edit, :update, :destroy]
   # before_action :admin_user,     only: [:index]
 
   # 一覧画面を表示する(管理者専用の予定)
@@ -12,14 +12,14 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
-  # 更新用画面を表示する
-  def edit
-    redirect_to root_path if @user.nil?
-  end
 
   # 詳細画面を表示する
   def show
+    redirect_to root_path if @user.nil?
+  end
+  
+  # 更新用画面を表示する
+  def edit
     redirect_to root_path if @user.nil?
   end
 

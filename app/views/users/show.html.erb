@@ -7,5 +7,8 @@
 <%= link_to("delete", @user, method: "delete",
                              data: { confirm: "本当にいいですか?" }) %>
 <p>
+  <%= link_to("goals", user_goals_path(@user)) %>
+</p>
+<p>
   <%= link_to("back", users_path) %>
 </p>

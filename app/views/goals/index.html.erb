@@ -17,7 +17,7 @@
   <% @goals.each do |goal| %>
     <div class="goals-item">
       <div class="goals-item-content">
-        <%= link_to goal.content, goal %>
+        <%= link_to(goal.content, user_goal_path(@user, goal)) %>
       </div>
       <div class="goals-item-limit">
         <%= goal.limit %>
@@ -31,7 +31,7 @@
 
 <div class="new-link">
   <button class="new-link-button" type="button">
-    <%= link_to("new", new_goal_path) %>
+    <%= link_to("new", new_user_goal_path(@user)) %>
   </button>
 </div>
 <div class="users-link">

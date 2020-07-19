@@ -1,187 +1,380 @@
 require 'rails_helper'
 
 RSpec.describe "Goals", type: :request do
+  let(:sally) { create(:sally) }
+  let(:sally_goal) { sally.goals.create(content: "sally goal") }
+  let(:sally_params) { { session: { name: sally.name, password: sally.password } } }
+  # index -----------------------------------------------------------------------------------------
   describe "GET #index" do
-    it "returns HTTP STATUS 200" do
-      get goals_path
-      expect(response.status).to eq 200
+    context "when haven't logged in" do
+      it "returns HTTP STATUS 302" do
+        get user_goals_path(sally)
+        expect(response.status).to eq 302
+      end
+      it "redirects to login_path" do
+        get user_goals_path(sally)
+        expect(response).to redirect_to login_path  
+      end
     end
-    it "shows goals list" do
-      goal = create(:test_goal)
-      get goals_path
-      expect(response.body).to include "test goal"
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
+      end
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+          get user_goals_path(tom)
+          expect(response.status).to eq 302
+        end
+        it "redirects to root_path" do
+          get user_goals_path(tom)
+          expect(response).to redirect_to root_path
+        end
+      end
+      context "when specified user is current_user" do
+        it "returns HTTP STATUS 200" do
+          get user_goals_path(sally)
+          expect(response.status).to eq 200
+        end
+        it "shows goals list" do
+          sally.goals.create(content: "sally goal")
+          get user_goals_path(sally)
+          expect(response.body).to include "sally goal"
+        end
+      end
     end
   end
 
-  describe "GET #show" do
-    context "when specified goal exists" do
-      let(:test_goal) { create(:test_goal) }
-      it "returns HTTP STATUS 200" do
-        get goal_path test_goal.id
-        expect(response.status).to eq 200
-      end
-      it "shows goal content" do
-        get goal_path test_goal.id
-        expect(response.body).to include "test goal"
-      end
-    end
-    context "when specified goal doesn't exist" do
-      let(:not_exist_goal) { Goal.new(id: 0) }
-      it "return HTTP STATUS 302" do
-        get goal_path not_exist_goal.id
-        expect(response.status).to eq 302  
-      end
-      it "redirects to goals_path" do
-        get goal_path not_exist_goal.id
-        expect(response).to redirect_to goals_path  
-      end
-    end
-  end
-  
-
+  # new ------------------------------------------------------------------------------------------
   describe "GET#new" do
-    it "returns HTTP STATUS 200" do
-      get new_goal_path
-      expect(response.status).to eq 200  
+    context "when haven't logged in" do
+      it "returns HTTP STATUS 302" do
+        get new_user_goal_path(sally)
+        expect(response.status).to eq 302
+      end
+      it "redirects to login_path" do
+        get new_user_goal_path(sally)
+        expect(response).to redirect_to login_path  
+      end
+    end
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
+      end
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+          get new_user_goal_path(tom)
+          expect(response.status).to eq 302  
+        end
+        it "redirects to root_path" do
+          get new_user_goal_path(tom)
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified user is current_user" do
+        it "returns HTTP STATUS 200" do
+          get new_user_goal_path(sally)
+          expect(response.status).to eq 200  
+        end
+      end
     end
   end
 
+  # show ------------------------------------------------------------------------------------------
+  describe "GET #show" do
+    context "when haven't logged in" do
+      it "returns HTTP STATUS 302" do
+        get user_goal_path(sally, sally_goal)
+        expect(response.status).to eq 302
+      end
+      it "redirects to login_path" do
+        get user_goal_path(sally, sally_goal)
+        expect(response).to redirect_to login_path  
+      end
+    end
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
+      end
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+          get user_goal_path(tom, sally_goal)
+          expect(response.status).to eq 302  
+        end
+        it "redirects to root_path" do
+          get user_goal_path(tom, sally_goal)
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified goal doesn't exist" do
+        let(:not_exist_goal) { sally.goals.build(id: -1, content: "not exist goal") }
+        it "return HTTP STATUS 302" do
+          get user_goal_path(sally, not_exist_goal)
+          expect(response.status).to eq 302  
+        end
+        it "redirects to to root_path" do
+          get user_goal_path(sally, not_exist_goal)
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified goal exists" do
+        it "returns HTTP STATUS 200" do
+          get user_goal_path(sally, sally_goal)
+          expect(response.status).to eq 200
+        end
+        it "shows goal content" do
+          get user_goal_path(sally, sally_goal)
+          expect(response.body).to include "sally goal"
+        end
+      end
+    end
+  end
+
+  # edit ------------------------------------------------------------------------------------------
   describe "GET #edit" do
-    context "when specified goal exists" do
-      let(:test_goal) { create(:test_goal) }
-      it "returns HTTP STATUS 200" do
-        get edit_goal_path test_goal.id
-        expect(response.status).to eq 200  
+    context "when haven't logged in" do
+      it "returns HTTP STATUS 302" do
+        get edit_user_goal_path(sally, sally_goal)
+        expect(response.status).to eq 302
       end
-      it "shows goal content" do
-        get edit_goal_path test_goal.id
-        expect(response.body).to include "test goal"  
+      it "redirects to login_path" do
+        get edit_user_goal_path(sally, sally_goal)
+        expect(response).to redirect_to login_path  
       end
     end
-    context "when specified goal doesn't exist" do
-      let(:not_exist_goal) { Goal.new(id: 0) }
-      it "returns HTTP STATUS 302" do
-        get edit_goal_path not_exist_goal.id
-        expect(response.status).to eq 302  
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
       end
-      it "redirects goals_path" do
-        get edit_goal_path not_exist_goal.id
-        expect(response).to redirect_to goals_path  
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+          get edit_user_goal_path(tom, sally_goal)
+          expect(response.status).to eq 302  
+        end
+        it "redirects to root_path" do
+          get edit_user_goal_path(tom, sally_goal)
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified goal doesn't exist" do
+        let(:not_exist_goal) { sally.goals.build(id: -1, content: "not exist goal") }
+        it "return HTTP STATUS 302" do
+          get edit_user_goal_path(sally, not_exist_goal)
+          expect(response.status).to eq 302  
+        end
+        it "redirects to to root_path" do
+          get edit_user_goal_path(sally, not_exist_goal)
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified goal exists" do
+        it "returns HTTP STATUS 200" do
+          get edit_user_goal_path(sally, sally_goal)
+          expect(response.status).to eq 200  
+        end
+        it "shows goal content" do
+          get edit_user_goal_path(sally, sally_goal)
+          expect(response.body).to include "sally goal"  
+        end
       end
     end
   end
   
-  
+  # create ------------------------------------------------------------------------------------------
   describe "POST #create" do
-    context "with valid params" do
-      let(:params) { { goal: { content: "new test" } } }
+    let(:goal_params) { { goal: { content: "goal" } }  }
+    context "when haven't logged in" do
       it "returns HTTP STATUS 302" do
-        post goals_path, params: params
-        expect(response.status).to eq 302  
+        post user_goals_path(sally), params: goal_params
+        expect(response.status).to eq 302
       end
-      it "creates new Goal" do
-        expect do
-          post goals_path, params: params
-        end.to change(Goal, :count).by(1)
-      end
-      it "redirects to goals_path" do
-        post goals_path, params: params
-        expect(response).to redirect_to goals_path  
+      it "redirects to login_path" do
+        post user_goals_path(sally), params: goal_params
+        expect(response).to redirect_to login_path  
       end
     end
-    context "with invalid params" do
-      let(:params_invalid) { { goal: { content: nil } } }
-      it "return HTTP STATUS 200" do
-        post goals_path, params: params_invalid
-        expect(response.status).to eq 200  
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
       end
-      it "doesn't create new Goal" do
-        expect do
-          post goals_path, params: params_invalid
-        end.not_to change(Goal, :count)
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+          post user_goals_path(tom), params: goal_params
+          expect(response.status).to eq 302  
+        end
+        it "redirects to root_path" do
+          post user_goals_path(tom), params: goal_params
+          expect(response).to redirect_to root_path  
+        end
       end
-      it "shows error message" do
-        post goals_path, params: params_invalid
-        expect(response.body).to include ERB::Util.h("Content can't be blank")
+      context "when request params are invalid" do
+        let(:invalid_params) { { goal: { content: nil } } }
+        it "return HTTP STATUS 200" do
+          post user_goals_path(sally), params: invalid_params
+          expect(response.status).to eq 200  
+        end
+        it "doesn't create goal" do
+          expect do
+            post user_goals_path(sally), params: invalid_params
+          end.not_to change(Goal, :count)
+        end
+        it "shows error message" do
+          post user_goals_path(sally), params: invalid_params
+          expect(response.body).to include ERB::Util.h("Content can't be blank")
+        end
+      end
+      context "when request params are valid" do
+        it "returns HTTP STATUS 302" do
+          post user_goals_path(sally), params: goal_params
+          expect(response.status).to eq 302  
+        end
+        it "creates goal" do
+          expect do
+            post user_goals_path(sally), params: goal_params
+          end.to change(Goal, :count).by(1)
+        end
+        it "redirects to to user_goals_path" do
+          post user_goals_path(sally), params: goal_params
+          expect(response).to redirect_to user_goals_path(sally)  
+        end
       end
     end
   end
   
+  # update ------------------------------------------------------------------------------------------
   describe "PUT #update" do
-    let(:english_goal) { create(:english_goal) }
-    context "with valid params" do
+    let(:update_params) { { goal: { content: "updated" } }  }
+    context "when haven't logged in" do
       it "returns HTTP STATUS 302" do
-        put goal_path english_goal, params: { goal: attributes_for(:math_goal) }
-        expect(response.status).to eq 302  
+        put user_goal_path(sally, sally_goal), params: update_params
+        expect(response.status).to eq 302
       end
-      it "updates goal content" do
-        expect do
-          put goal_path english_goal, params: { goal: attributes_for(:math_goal) }
-        end.to change { Goal.find(english_goal.id).content }.from("study English").to("study math")
-      end
-      it "redirects goal_path" do
-        put goal_path english_goal, params: { goal: attributes_for(:math_goal) }
-        expect(response).to redirect_to goal_path english_goal.id  
+      it "redirects to login_path" do
+        put user_goal_path(sally, sally_goal), params: update_params
+        expect(response).to redirect_to login_path  
       end
     end
-    context "with invalid params" do
-      it "returns HTTP STATUS 200" do
-        put goal_path english_goal, params: { goal: { content: "" } }
-        expect(response.status).to eq 200  
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
       end
-      it "doesn't update goal content" do
-        expect do
-          put goal_path english_goal, params: { goal: { content: "" } }
-        end.not_to change(Goal.find(english_goal.id), :content)
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+          put user_goal_path(tom, sally_goal), params: update_params
+          expect(response.status).to eq 302  
+        end
+        it "redirects to root_path" do
+          put user_goal_path(tom, sally_goal), params: update_params
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified goal doesn't exist" do
+        let(:not_exist_goal) { sally.goals.build(id: -1, content: "not exist goal") }
+        it "return HTTP STATUS 302" do
+          put user_goal_path(sally, not_exist_goal), params: update_params
+          expect(response.status).to eq 302  
+        end
+        it "redirects to to root_path" do
+          put user_goal_path(sally, not_exist_goal), params: update_params
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when request params are invalid" do
+        let(:invalid_params) { { goal: { content: nil } } }
+        it "return HTTP STATUS 200" do
+          put user_goal_path(sally, sally_goal), params: invalid_params
+          expect(response.status).to eq 200  
+        end
+        it "doesn't update goal" do
+          expect do
+            put user_goal_path(sally, sally_goal), params: invalid_params
+          end.not_to change{ sally_goal.reload.content }
+        end
+        it "shows error message" do
+          put user_goal_path(sally, sally_goal), params: invalid_params
+          expect(response.body).to include ERB::Util.h("Content can't be blank")
+        end
+      end
+      context "when request params are valid" do
+        it "returns HTTP STATUS 302" do
+          put user_goal_path(sally, sally_goal), params: update_params
+          expect(response.status).to eq 302  
+        end
+        it "updates goal content" do
+          expect do
+            put user_goal_path(sally, sally_goal), params: update_params
+          end.to change { sally_goal.reload.content }.from("sally goal").to("updated")
+        end
+        it "redirects to user_goals_path" do
+          put user_goal_path(sally, sally_goal), params: update_params
+          expect(response).to redirect_to user_goals_path(sally)
+        end
       end
     end
-    context "when specified goal doesn't exist" do
-      let(:not_exist_goal) { Goal.new(id: 0) }
-      it "returns HTTP STATUS 302" do
-        put goal_path not_exist_goal, params: { goal: { content: "not exist" } }
-        expect(response.status).to eq 302  
-      end
-      it "redirects goals_path" do
-        put goal_path not_exist_goal, params: { goal: { content: "not exist" } }
-        expect(response).to redirect_to goals_path  
-      end
-    end
-    
   end
 
+  # destroy ------------------------------------------------------------------------------------------
   describe "DELETE #destroy" do
-    context "when specified goal exists" do
-      let(:test_goal) { create(:test_goal) }
+    context "when haven't logged in" do
       it "returns HTTP STATUS 302" do
-        delete goal_path test_goal
+        delete user_goal_path(sally, sally_goal)
         expect(response.status).to eq 302
       end
-      it "destroys goal" do
-        delete goal_path test_goal
-        expect(Goal.find_by(id: test_goal.id)).to be_nil
-      end
-      it "redirects to goals_path" do
-        delete goal_path test_goal
-        expect(response).to redirect_to goals_path  
+      it "redirects to login_path" do
+        delete user_goal_path(sally, sally_goal)
+        expect(response).to redirect_to login_path  
       end
     end
-    context "when specified goal doesn't exist" do
-      let(:not_exist_goal) { Goal.new(id: 0) }
-      it "returs HTTP STATUS 302" do
-        delete goal_path not_exist_goal
-        expect(response.status).to eq 302
+    context "when have logged in" do
+      before do
+        post login_path, params: sally_params
       end
-      it "doesn't destroy any goals" do
-        expect do
-          delete goal_path not_exist_goal
-        end.not_to change(Goal, :count)
+      context "when specified user isn't current_user" do
+        let(:tom) { create(:tom) }
+        it "returns HTTP STATUS 302" do
+        delete user_goal_path(tom, sally_goal)
+          expect(response.status).to eq 302  
+        end
+        it "redirects to root_path" do
+        delete user_goal_path(tom, sally_goal)
+          expect(response).to redirect_to root_path  
+        end
       end
-      it "redirects to goals_path" do
-        delete goal_path not_exist_goal
-        expect(response).to redirect_to goals_path  
+      context "when specified goal doesn't exist" do
+        let(:not_exist_goal) { sally.goals.build(id: -1, content: "not exist goal") }
+        it "return HTTP STATUS 302" do
+          delete user_goal_path(sally, not_exist_goal)
+          expect(response.status).to eq 302  
+        end
+        it "doesn't destroy goal" do
+          expect do
+            delete user_goal_path(sally, not_exist_goal)
+          end.not_to change(Goal, :count)
+        end
+        it "redirects to to root_path" do
+          delete user_goal_path(sally, not_exist_goal)
+          expect(response).to redirect_to root_path  
+        end
+      end
+      context "when specified goal exists" do
+        it "returns HTTP STATUS 302" do
+          delete user_goal_path(sally, sally_goal)
+          expect(response.status).to eq 302
+        end
+        it "destroys goal" do
+          delete user_goal_path(sally, sally_goal)
+          expect(Goal.find_by(id: sally_goal.id)).to be_nil
+        end
+        it "redirects to to user_goals_path" do
+          delete user_goal_path(sally, sally_goal)
+          expect(response).to redirect_to user_goals_path(sally)  
+        end
       end
     end
   end
-  
-  
 end
