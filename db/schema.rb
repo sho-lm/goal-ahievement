@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_232708) do
+ActiveRecord::Schema.define(version: 2020_07_20_150307) do
 
   create_table "goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "content"
@@ -35,6 +35,19 @@ ActiveRecord::Schema.define(version: 2020_07_19_232708) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "account_id"
+  end
+
+  create_table "work_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.text "content"
+    t.date "worked_on"
+    t.integer "worked_for"
+    t.time "start_time"
+    t.time "end_time"
+    t.integer "user_id"
+    t.integer "goal_id"
+    t.integer "category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
