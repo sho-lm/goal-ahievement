@@ -7,7 +7,7 @@ module SessionsHelper
     end
   end
 
-  # 指定ユーザーでログインする
+  # 指定したユーザーをセッションに保存する
   def log_in(user)
     session[:user_id] = user.id
   end
@@ -19,7 +19,7 @@ module SessionsHelper
     end
   end
 
-  # 指定ユーザーとログイン中のユーザーが同じであればtrueを返す
+  # 指定したユーザーとログイン中のユーザーが同じであればtrueを返す
   def current_user?(user)
     current_user == user
   end
@@ -29,7 +29,7 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  # ログアウトする
+  # セッションを破棄してログアウトする
   def log_out
     session[:user_id] = nil
     @current_user = nil

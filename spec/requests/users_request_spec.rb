@@ -3,7 +3,7 @@ include SessionsHelper
 
 RSpec.describe "Users", type: :request do
   let(:sally) { create(:sally) }
-  let(:sally_params) { { session: { name: sally.name, password: sally.password } } }
+  let(:sally_login_params) { { session: { account_id: sally.account_id, password: sally.password } } }
   # new -------------------------------------------------------------------------------------------
   describe "GET #new" do
     it "returns HTTP STATUS 200" do
@@ -26,7 +26,7 @@ RSpec.describe "Users", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -66,7 +66,7 @@ RSpec.describe "Users", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -123,7 +123,7 @@ RSpec.describe "Users", type: :request do
       end
       it "logged in by created user" do
         post users_path, params: { user: attributes_for(:tom) }
-        expect(current_user.name).to eq tom.name
+        expect(current_user.account_id).to eq tom.account_id
       end
     end
   end
@@ -143,7 +143,7 @@ RSpec.describe "Users", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -204,7 +204,7 @@ RSpec.describe "Users", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't' current_user" do
         let(:tom) { User.new(id: 0, name: "tom") }

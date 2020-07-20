@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 
   # ユーザーを認証できればログインする
   def create
-    user = User.find_by(name: params[:session][:name])
+    user = User.find_by(account_id: params[:session][:account_id])
     if user && user.authenticate(params[:session][:password])
       log_in user
       redirect_to root_path

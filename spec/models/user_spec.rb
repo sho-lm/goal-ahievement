@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   # default -----------------------------------------------------------------------------------------------------
-  describe "#default" do
+  describe "default value" do
     context "when #new without arguments" do
       let(:no_args_user) { User.new }
       it "is_admin has default value" do
@@ -26,11 +26,39 @@ RSpec.describe User, type: :model do
     end
   end
   # validates ------------------------------------------------------------------------------------------------
-  describe "#validate" do
+  describe "validate" do
     let(:sally) { build(:sally) }
     context "with correct attributes" do
       it "is valid" do
         expect(sally).to be_valid  
+      end
+    end
+    # account_id -------------------------------------
+    context "when account_id is blank" do
+      it "is invalid" do
+        sally.account_id = nil
+        expect(sally).not_to be_valid  
+      end
+    end
+    context "when account_id is duplicate" do
+      it "is invalid" do
+        sally.save
+        copy_user = User.new(account_id: sally.account_id,
+                             name: "copy user",
+                             password: sally.password)
+        expect(copy_user).not_to be_valid  
+      end
+    end
+    context "when account_id length is less than or equal to 20" do
+      it "is valid" do
+        sally.account_id = "a" * 20
+        expect(sally).to be_valid  
+      end
+    end
+    context "when account_di lenght is greater than 20" do
+      it "is invalid" do
+        sally.account_id = "a" * 21
+        expect(sally).not_to be_valid  
       end
     end
     # name  ------------------------------------------

@@ -9,6 +9,10 @@
 <div class="new">
   <%= form_with model: @user, class: "new-form", local: true do |form| %>
     <div class="new-form-item">
+      <%= form.label :id %>
+      <%= form.text_field :account_id, class: "new-form-item-content" %>
+    </div>
+    <div class="new-form-item">
       <%= form.label :name %>
       <%= form.text_field :name, class: "new-form-item-content" %>
     </div>

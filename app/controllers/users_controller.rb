@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     # form から特定のパラメータだけを取得する
     def user_params
-      params.require(:user).permit(:name, :password)
+      params.require(:user).permit(:account_id, :name, :password)
     end
 
     # リクエストで指定されたユーザーを返す
