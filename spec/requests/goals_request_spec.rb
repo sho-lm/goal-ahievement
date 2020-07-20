@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Goals", type: :request do
   let(:sally) { create(:sally) }
   let(:sally_goal) { sally.goals.create(content: "sally goal") }
-  let(:sally_params) { { session: { name: sally.name, password: sally.password } } }
+  let(:sally_login_params) { { session: { account_id: sally.account_id, password: sally.password } } }
   # index -----------------------------------------------------------------------------------------
   describe "GET #index" do
     context "when haven't logged in" do
@@ -18,7 +18,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -59,7 +59,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -95,7 +95,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -146,7 +146,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -198,7 +198,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -260,7 +260,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
@@ -332,7 +332,7 @@ RSpec.describe "Goals", type: :request do
     end
     context "when have logged in" do
       before do
-        post login_path, params: sally_params
+        post login_path, params: sally_login_params
       end
       context "when specified user isn't current_user" do
         let(:tom) { create(:tom) }
