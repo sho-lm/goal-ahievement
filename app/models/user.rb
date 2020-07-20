@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  has_many :goals, dependent: :destroy
+  has_many :goals,        dependent: :destroy
+  has_many :work_records, dependent: :destroy
   has_secure_password
 
   # attirbute ---------------------------------------------------------------------------------------------
