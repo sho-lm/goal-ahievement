@@ -1,0 +1,30 @@
+<% content_for(:title, "work records show") %>
+
+<div class="goals">
+  <div class="goals-header">
+    <div class="goals-item-content">
+      content
+    </div>
+    <div class="goals-item-limit">
+      worked on
+    </div>
+    <div class="goals-item-progress">
+      worked for
+    </div>
+  </div>
+  <div class="goals-item">
+    <div class="goals-item-content">
+      <%= @work_record.content %>
+    </div>
+    <div class="goals-item-limit">
+      <%= @work_record.worked_on %>
+    </div>
+    <div class="goals-item-progress">
+      <%= @work_record.worked_for %>
+    </div>
+  </div>
+</div>
+<%= link_to("戻る", user_work_records_path(@user)) %>
+<%= link_to("編集", edit_user_work_record_path(@user, @work_record)) %>
+<%= link_to("削除", user_work_record_path(@user, @work_record), method: "delete",
+                          data: { confirm: "本当にいいですか？" }) %>

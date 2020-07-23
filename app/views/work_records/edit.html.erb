@@ -1,0 +1,28 @@
+<% content_for(:title, "work records edit") %>
+<h1>EDIT</h1>
+<div class="error-message">
+  <% @work_record.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+</div>
+
+<div class="new">
+  <%= form_with(model: [@user, @work_record], class: "new-form", local: true) do |form| %>
+    <div class="new-form-item">
+      <%= form.label :contnet %>
+      <%= form.text_field :content, class: "new-form-item-content" %>
+    </div>
+    <div class="new-form-item">
+      <%= form.label :worked_on %>
+      <%= form.date_field :worked_on, class: "new-form-item-limit" %>
+    </div>
+    <div class="new-form-item">
+      <%= form.label :worked_for %>
+      <%= form.number_field :worked_for, class: "new-form-item-limit" %>
+    </div>
+    <div class="new-form-submit">
+      <%= form.submit "update", class: "submit-button" %>
+    </div>
+  <% end %>
+</div>
+<%= link_to("戻る", user_work_records_path(@user)) %>
