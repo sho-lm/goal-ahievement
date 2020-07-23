@@ -1,0 +1,41 @@
+<% content_for(:title, "work records index") %>
+
+<h1>Work records</h1>
+
+<div class="goals">
+  <div class="goals-header">
+    <div class="goals-item-content">
+      content
+    </div>
+    <div class="goals-item-limit">
+      worked on
+    </div>
+    <div class="goals-item-progress">
+      worked for
+    </div>
+  </div>
+  <% @work_records.each do |work_record| %>
+    <div class="goals-item">
+      <div class="goals-item-content">
+        <%= link_to(work_record.content, user_work_record_path(@user, work_record)) %>
+      </div>
+      <div class="goals-item-limit">
+        <%= work_record.worked_on %>
+      </div>
+      <div class="goals-item-progress">
+        <%= work_record.worked_for %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="new-link">
+  <button class="new-link-button" type="button">
+    <%= link_to("new", new_user_work_record_path(@user)) %>
+  </button>
+</div>
+<div class="users-link">
+  <button class="users-link-button" type="button">
+    <%= link_to("users", users_path) %>
+  </button>
+</div>
