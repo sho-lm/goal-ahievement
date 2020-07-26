@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    // TSはECMAScript5 に変換
+    "target": "es5",
+    // TSのモジュールは ES Modules として出力
+    "module": "es2015",
+    "lib": [
+      "dom",
+      "es2020"
+    ],
+    // import Vue from 'vue' の書き方を許容する
+    "allowSyntheticDefaultImports": true,
+    // デコレーターを有効に設定
+    "experimentalDecorators": true,
+    // node_modules から引っ張ってくる
+    "moduleResolution": "node",
+    // this におけるデータプロパティに対して厳密な推論を可能にする
+    "strict": true,
+  }
+}
