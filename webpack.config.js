@@ -24,7 +24,6 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: 'stylesheets/[name].css'
       }),
-      new webpack.HotModuleReplacementPlugin(),
       new ManifestPlugin({
         writeToFileEmit: true
       })
