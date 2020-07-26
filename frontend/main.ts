@@ -1,2 +1,8 @@
-console.log('hello');
-console.log('updated');
+import Vue from 'vue';
+
+const vm = new Vue({
+  el: '#app',
+  data: {
+    hello: 'hello world'
+  }
+});
