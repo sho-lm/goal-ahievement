@@ -4,13 +4,14 @@
     <title>GoalAchievement</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= javascript_include_tag("", { src: "./main.js", defer: true }) %>
   </head>
 
   <body>
     <%#= render "layouts/header" %>
     <%#= yield %>
-    <div id="app"></div>
-    <%= debug(params) if Rails.env.development? %>
+    <div id="app">
+    </div>
+    <%#= debug(params) if Rails.env.development? %>
   </body>
+  <%= javascript_include_tag("", { src: "./bundle.js", defer: true }) %>
 </html>

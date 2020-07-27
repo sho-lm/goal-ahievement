@@ -1,7 +1,6 @@
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
@@ -16,14 +15,11 @@ module.exports = (env, argv) => {
     entry: './frontend/main.ts',
     // バンドル後の出力先
     output: {
-      filename: '[name].js',
+      filename: 'bundle.js',
       path: path.resolve(__dirname, 'public')
     },
     plugins: [
       new VueLoaderPlugin(),
-      new MiniCssExtractPlugin({
-        filename: 'stylesheets/[name].css'
-      }),
       new ManifestPlugin({
         writeToFileEmit: true
       })
@@ -31,9 +27,20 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.ts$/,
+          test: /\.js$/,
           exclude: /node_modules/,
-          use: 'ts-loader'
+          use: 'babel-loader'
+        },
+        {
+          test: /\.ts$/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                  appendTsSuffixTo: [/\.vue$/]
+              }
+            }
+          ]
         },
         {
           test: /\.vue$/,
@@ -46,12 +53,7 @@ module.exports = (env, argv) => {
         {
           test: /\.(c|sc)ss$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: path.resolve(__dirname, 'public/assets/stylesheets')
-              }
-            },
+            'vue-style-loader',
             'css-loader',
             'sass-loader'
           ]
@@ -69,11 +71,11 @@ module.exports = (env, argv) => {
       ]
     },
     resolve: {
-      // import 文で .tsファイルを解決するため
-      extensions: ['.js', '.ts'],
-      // Webpack で利用するときの設定
+      // import 文で拡張子を省略できる
+      extensions: ['.js', '.ts', '.vue', '.css', '.scss'],
+      // Webpack 内で vue を解釈するための設定
       alias: {
-        vue: 'vue/dist/vue.js'
+        'vue$': 'vue/dist/vue.esm.js'
       }
     },
     optimization: {

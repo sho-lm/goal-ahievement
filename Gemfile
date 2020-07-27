@@ -49,3 +49,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
+
+# windows 環境でエラーが出るため
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
