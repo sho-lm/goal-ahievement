@@ -4,6 +4,8 @@
     <title>GoalAchievement</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag("", { href: "./assets/style.css", defer: true }) %>
   </head>
 
   <body>
@@ -12,6 +14,6 @@
     <div id="app">
     </div>
     <%#= debug(params) if Rails.env.development? %>
+    <%= javascript_include_tag("", { src: "./assets/bundle.js", defer: true }) %>
   </body>
-  <%= javascript_include_tag("", { src: "./bundle.js", defer: true }) %>
 </html>
