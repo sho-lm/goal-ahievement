@@ -1,6 +1,7 @@
 const path = require('path');
-const glob = require('glob');
-const webpack = require('webpack');
+// const glob = require('glob');
+// const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
@@ -16,9 +17,12 @@ module.exports = (env, argv) => {
     // バンドル後の出力先
     output: {
       filename: 'bundle.js',
-      path: path.resolve(__dirname, 'public')
+      path: path.resolve(__dirname, 'public/assets')
     },
     plugins: [
+      new MiniCssExtractPlugin({
+        filename: 'style.css'
+      }),
       new VueLoaderPlugin(),
       new ManifestPlugin({
         writeToFileEmit: true
@@ -26,11 +30,11 @@ module.exports = (env, argv) => {
     ],
     module: {
       rules: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: 'babel-loader'
-        },
+        // {
+        //   test: /\.js$/,
+        //   exclude: /node_modules/,
+        //   use: 'babel-loader'
+        // },
         {
           test: /\.ts$/,
           use: [
@@ -53,21 +57,26 @@ module.exports = (env, argv) => {
         {
           test: /\.(c|sc)ss$/,
           use: [
-            'vue-style-loader',
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: path.resolve(__dirname, 'public/assets')
+              }
+            },
             'css-loader',
             'sass-loader'
           ]
         },
-        {
-          test: /\.(jpg|png|gif)$/,
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: path => {
-              return 'images/' + path
-            }
-          }
-        }
+        // {
+        //   test: /\.(jpg|png|gif)$/,
+        //   loader: 'file-loader',
+        //   options: {
+        //     name: '[name].[ext]',
+        //     outputPath: path => {
+        //       return 'images/' + path
+        //     }
+        //   }
+        // }
       ]
     },
     resolve: {
@@ -78,17 +87,17 @@ module.exports = (env, argv) => {
         'vue$': 'vue/dist/vue.esm.js'
       }
     },
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            test: /.(c|sa)ss/,
-            name: 'style',
-            chunks: 'all',
-            enforce: true
-          }
-        }
-      }
-    }
+    // optimization: {
+    //   splitChunks: {
+    //     cacheGroups: {
+    //       vendor: {
+    //         test: /.(c|sa)ss/,
+    //         name: 'style',
+    //         chunks: 'all',
+    //         enforce: true
+    //       }
+    //     }
+    //   }
+    // }
   }
 };

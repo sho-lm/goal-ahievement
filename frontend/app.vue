@@ -1,6 +1,9 @@
 <template>
-  <div class="example">
-    <p>hello</p>
+  <div id="app">
+    <div>
+      <p>hello</p>
+    </div>
+    <p>hello2</p>
     <users></users>
     <goals></goals>
   </div>
@@ -18,3 +21,16 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+  #app {
+    div {
+      p {
+        color: red;
+      }
+    }
+    p {
+      color: blue;
+    }
+  }
+</style>
