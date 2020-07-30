@@ -1,6 +1,6 @@
 <template lang="pug">
-  #goals
-    p hello from goals
+  #users
+    p hello from work records
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -10,7 +10,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  #goals {
-    color: blue;
+  #users {
+    color: green;
   }
 </style>

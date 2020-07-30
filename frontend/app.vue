@@ -1,36 +1,31 @@
-<template>
-  <div id="app">
-    <div>
-      <p>hello</p>
-    </div>
-    <p>hello2</p>
-    <users></users>
-    <goals></goals>
-  </div>
+<template lang="pug">
+  #app
+    header
+      el-menu(
+              mode="horizontal"
+      )
+        el-menu-item(index="home", route="{ name: 'home' }")
+          router-link(to="/home") home
+        el-menu-item(index="users", route="{ name: 'users' }")
+          router-link(to="/users") users
+        el-menu-item(index="goals", route="{ name: 'goals' }")
+          router-link(to="/goals") goals
+        el-menu-item(index="workRecords", route="{ name: 'workRecords' }")
+          router-link(to="/workRecords") workRecords
+    main
+      RouterView
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Users from './pages/users/users.vue'
-import Goals from './pages/goals/goals.vue'
+import Vue from 'vue';
 
 export default Vue.extend({
-  components: {
-    Users,
-    Goals
-  }
+  data () {
+    return {
+    }
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-  #app {
-    div {
-      p {
-        color: red;
-      }
-    }
-    p {
-      color: blue;
-    }
-  }
 </style>

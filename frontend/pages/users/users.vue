@@ -1,22 +1,33 @@
-<template>
-  <div class="users">
-    hello from users
-    <users-index></users-index>
-  </div>
+<template lang="pug">
+  #users
+    p {{ user.id }}
+    p {{ user.name }}
 </template>
-
 <script lang="ts">
 import Vue from 'vue'
-import UsersIndex from './usersIndex'
+import axios from 'axios';
+
+
 export default Vue.extend({
-  components: {
-    UsersIndex
+  data () {
+    return {
+      user: {}
+    }
+  },
+  mounted () {
+    axios
+      .get('http://localhost:3000/api/v1/users/1')
+      .then(res => {
+        console.log(res);
+        this.user = res.data;
+      })
+    
   }
 })
 </script>
 
 <style lang="scss" scoped>
-  .users {
-    background: yellow;
+  #users {
+    color: red;
   }
 </style>

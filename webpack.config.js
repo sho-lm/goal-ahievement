@@ -67,6 +67,10 @@ module.exports = (env, argv) => {
             'sass-loader'
           ]
         },
+        {
+          test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)?$/,
+          loader: 'url-loader'
+        },
         // {
         //   test: /\.(jpg|png|gif)$/,
         //   loader: 'file-loader',
@@ -82,7 +86,7 @@ module.exports = (env, argv) => {
     resolve: {
       // import 文で拡張子を省略できる
       extensions: ['.js', '.ts', '.vue', '.css', '.scss'],
-      // Webpack 内で vue を解釈するための設定
+      // import Vue from 'vue' での vue が表すファイルパス
       alias: {
         'vue$': 'vue/dist/vue.esm.js'
       }

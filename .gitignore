@@ -23,8 +23,8 @@
 !/storage/.keep
 
 # Ignore bundle source map
-# /public/assets/style.css.map
-# /public/assets/bundle.js.map
+/public/assets/style.css.map
+/public/assets/bundle.js.map
 
 .byebug_history
 

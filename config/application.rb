@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module GoalAchievement
   class Application < Rails::Application
+    # Api mode
+    config.api_only = true
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
