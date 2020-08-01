@@ -13,7 +13,7 @@ Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(ElementUI, { locale });
 
-const vm = new Vue({
+new Vue({
     el: '#app',
     router: router,
     components: { App },

@@ -4,8 +4,8 @@
       el-menu(
               mode="horizontal"
       )
-        el-menu-item(index="home", route="{ name: 'home' }")
-          router-link(to="/home") home
+        el-menu-item(index="login", route="{ name: 'login' }")
+          router-link(to="/login") login
         el-menu-item(index="users", route="{ name: 'users' }")
           router-link(to="/users") users
         el-menu-item(index="goals", route="{ name: 'goals' }")
@@ -20,10 +20,6 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  data () {
-    return {
-    }
-  },
 })
 </script>
 

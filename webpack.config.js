@@ -86,9 +86,11 @@ module.exports = (env, argv) => {
     resolve: {
       // import 文で拡張子を省略できる
       extensions: ['.js', '.ts', '.vue', '.css', '.scss'],
-      // import Vue from 'vue' での vue が表すファイルパス
       alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+        // import Vue from 'vue' での vue が表すファイルパス
+        'vue$': 'vue/dist/vue.esm.js',
+        // 環境変数ファイル
+        '@env': path.resolve(__dirname, `frontend/env/${argv.mode}.ts`),
       }
     },
     // optimization: {
