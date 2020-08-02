@@ -1,10 +1,7 @@
 <template lang="pug">
   #login
     section
-      h5(v-if="loginSuccess") login success
-      h5(v-else) plese login
-
-      p account_id
+      p accountId
       input(type="text", name="accountId", v-model="accountId")
       p password
       input(type="password", name="password", v-model="password")
@@ -15,7 +12,7 @@
     section.user-index
       div.user-info(v-for="user in users")
         p id: {{ user.id }}
-        p accountId {{ user.account_id }}
+        p accountId {{ user.accountId }}
         p name {{ user.name }}
 </template>
 
@@ -23,36 +20,42 @@
 import Vue from 'vue'
 import axios from 'axios';
 import { api } from '../../config/api'
+import { User } from '../../models/user'
 
 const sessionKey = 'userId';
 
+export type DataType = {
+  accountId:      string
+  password:       string
+  loginSuccess:   boolean
+  users:          Array<User>
+}
+
 export default Vue.extend({
-  data () {
+  data(): DataType  {
     return {
-      accountId: '',
-      password: 'aaaaaa',
+      accountId:    '',
+      password:     'aaaaaa',
       loginSuccess: false,
-      users: {}
+      users:        []
     }
   },
   mounted () {
     this.loginSuccess = false;
     axios.get(api.userPath)
       .then(response => {
-        this.users = response.data;
+        this.users = User.createIndexDataBy(response.data);  
+        console.log(this.users);
       })
       .catch(error => {
         console.log(error);
-        
       })
   },
   methods: {
     login() {
       const params = {
-        session: {
-          account_id: this.accountId,
-          password: this.password
-        }
+        account_id: this.accountId,
+        password:   this.password
       }
       axios.post(api.loginPath, params)
         .then(response => {

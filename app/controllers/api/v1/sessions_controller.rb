@@ -4,8 +4,8 @@ class Api::V1::SessionsController < ApplicationController
 
   # ユーザーを認証できればログインする
   def create
-    user = User.find_by(account_id: params[:session][:account_id])
-    if user && user.authenticate(params[:session][:password])
+    user = User.find_by(account_id: params[:account_id])
+    if user && user.authenticate(params[:password])
       log_in(user)
       render json: user
     else

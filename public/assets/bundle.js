@@ -213,19 +213,18 @@ var api = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./frontend/router.ts");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
-/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-ui/lib/locale/lang/ja */ "./node_modules/element-ui/lib/locale/lang/ja.js");
-/* harmony import */ var element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
-/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./App.vue */ "./frontend/App.vue");
+/* harmony import */ var _router_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router/router */ "./frontend/router/router.ts");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
+/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! element-ui/lib/locale/lang/ja */ "./node_modules/element-ui/lib/locale/lang/ja.js");
+/* harmony import */ var element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
+/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./App.vue */ "./frontend/App.vue");
 
 
 
@@ -234,17 +233,65 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].config.devtools = true;
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_4___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_5___default.a, { locale: element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_6___default.a });
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].config.devtools = false;
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_2___default.a, axios__WEBPACK_IMPORTED_MODULE_3___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(element_ui__WEBPACK_IMPORTED_MODULE_4___default.a, { locale: element_ui_lib_locale_lang_ja__WEBPACK_IMPORTED_MODULE_5___default.a });
 new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
     el: '#app',
-    router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
-    components: { App: _App_vue__WEBPACK_IMPORTED_MODULE_8__["default"] },
-    template: "<app />",
+    router: _router_router__WEBPACK_IMPORTED_MODULE_1__["default"],
+    components: { App: _App_vue__WEBPACK_IMPORTED_MODULE_7__["default"] },
+    template: '<app />',
 });
+
+
+/***/ }),
+
+/***/ "./frontend/models/user.ts":
+/*!*********************************!*\
+  !*** ./frontend/models/user.ts ***!
+  \*********************************/
+/*! exports provided: User */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
+var User = /** @class */ (function () {
+    function User() {
+        this.initialize();
+    }
+    User.prototype.initialize = function () {
+        this.id = 0;
+        this.accountId = '';
+        this.name = '';
+        this.password = '';
+        this.is_admin = false;
+        this.is_private = false;
+        this.created_at = '';
+        this.updated_at = '';
+    };
+    User.prototype.setResponse = function (response) {
+        this.id = response.id || 0;
+        this.accountId = response.account_id || '';
+        this.name = response.name || '';
+        this.password = response.password || '';
+        this.is_admin = response.is_admin || false;
+        this.is_private = response.is_private || false;
+        this.created_at = response.created_at || '';
+        this.updated_at = response.updated_at || '';
+    };
+    User.createIndexDataBy = function (response) {
+        var users = [];
+        for (var i in response) {
+            var user = new User();
+            user.setResponse(response[i]);
+            users.push(user);
+        }
+        return users;
+    };
+    return User;
+}());
+
 
 
 /***/ }),
@@ -597,47 +644,50 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./frontend/router.ts":
-/*!****************************!*\
-  !*** ./frontend/router.ts ***!
-  \****************************/
+/***/ "./frontend/router/router.ts":
+/*!***********************************!*\
+  !*** ./frontend/router/router.ts ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _pages_sessions_Login_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/sessions/Login.vue */ "./frontend/pages/sessions/Login.vue");
-/* harmony import */ var _pages_users_Users_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/users/Users.vue */ "./frontend/pages/users/Users.vue");
-/* harmony import */ var _pages_goals_Goals_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/goals/Goals.vue */ "./frontend/pages/goals/Goals.vue");
-/* harmony import */ var _pages_workRecords_WorkRecords_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/workRecords/WorkRecords.vue */ "./frontend/pages/workRecords/WorkRecords.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _pages_sessions_Login_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/sessions/Login.vue */ "./frontend/pages/sessions/Login.vue");
+/* harmony import */ var _pages_users_Users_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/users/Users.vue */ "./frontend/pages/users/Users.vue");
+/* harmony import */ var _pages_goals_Goals_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/goals/Goals.vue */ "./frontend/pages/goals/Goals.vue");
+/* harmony import */ var _pages_workRecords_WorkRecords_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/workRecords/WorkRecords.vue */ "./frontend/pages/workRecords/WorkRecords.vue");
 
 
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     // mode: 'history',
     routes: [
         {
             name: 'login',
             path: '/login',
-            component: _pages_sessions_Login_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+            component: _pages_sessions_Login_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
         },
         {
             name: 'users',
             path: '/users',
-            component: _pages_users_Users_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+            component: _pages_users_Users_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
         },
         {
             name: 'goals',
             path: '/goals',
-            component: _pages_goals_Goals_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+            component: _pages_goals_Goals_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
         },
         {
             name: 'workRecords',
             path: '/workRecords',
-            component: _pages_workRecords_WorkRecords_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+            component: _pages_workRecords_WorkRecords_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
         }
     ]
 }));
@@ -64957,6 +65007,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _config_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../config/api */ "./frontend/config/api.ts");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/user */ "./frontend/models/user.ts");
+
 
 
 
@@ -64967,7 +65019,7 @@ var sessionKey = 'userId';
             accountId: '',
             password: 'aaaaaa',
             loginSuccess: false,
-            users: {}
+            users: []
         };
     },
     mounted: function () {
@@ -64975,7 +65027,8 @@ var sessionKey = 'userId';
         this.loginSuccess = false;
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].userPath)
             .then(function (response) {
-            _this.users = response.data;
+            _this.users = _models_user__WEBPACK_IMPORTED_MODULE_3__["User"].createIndexDataBy(response.data);
+            console.log(_this.users);
         })
             .catch(function (error) {
             console.log(error);
@@ -64985,10 +65038,8 @@ var sessionKey = 'userId';
         login: function () {
             var _this = this;
             var params = {
-                session: {
-                    account_id: this.accountId,
-                    password: this.password
-                }
+                account_id: this.accountId,
+                password: this.password
             };
             axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].loginPath, params)
                 .then(function (response) {
@@ -65031,6 +65082,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _config_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../config/api */ "./frontend/config/api.ts");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/user */ "./frontend/models/user.ts");
+
 
 
 
@@ -65038,53 +65091,35 @@ var sessionKey = 'userId';
 /* harmony default export */ __webpack_exports__["default"] = (vue__WEBPACK_IMPORTED_MODULE_0__["default"].extend({
     data: function () {
         return {
-            user: {},
-            isExist: false,
+            user: new _models_user__WEBPACK_IMPORTED_MODULE_3__["User"](),
         };
     },
     mounted: function () {
         var _this = this;
-        this.loading = true;
-        var userId = sessionStorage.getItem(sessionKey);
+        var userId = Number(sessionStorage.getItem(sessionKey));
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].usersPath(userId))
             .then(function (response) {
-            _this.user = response.data;
-            _this.isExist = true;
+            _this.user.setResponse(response.data);
         })
             .catch(function (error) {
             console.log(error);
-            _this.isExist = false;
         });
     },
     methods: {
         postCreate: function () {
             var _this = this;
-            var params = {
-                user: {
-                    account_id: this.user.account_id,
-                    name: this.user.name,
-                    password: this.user.password
-                }
-            };
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].userPath, params)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].userPath, this.user)
                 .then(function (response) {
-                _this.user = response.data;
-                _this.isExist = true;
+                _this.user.setResponse(response.data);
                 console.log('created');
-                sessionStorage.setItem(sessionKey, _this.user.id);
+                sessionStorage.setItem(sessionKey, _this.user.id.toString());
             })
                 .catch(function (error) {
                 console.log(error);
             });
         },
         patchUpdate: function () {
-            var params = {
-                user: {
-                    account_id: this.user.account_id,
-                    name: this.user.name
-                }
-            };
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].usersPath(this.user.id), params)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].usersPath(this.user.id), this.user)
                 .then(function (response) {
                 console.log('update');
             })
@@ -65098,7 +65133,7 @@ var sessionKey = 'userId';
                 .then(function (response) {
                 console.log('deleted');
                 sessionStorage.removeItem(sessionKey);
-                _this.user = {};
+                _this.user.initialize();
             })
                 .catch(function (error) {
                 console.log(error);
@@ -65273,10 +65308,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "login" } }, [
     _c("section", [
-      _vm.loginSuccess
-        ? _c("h5", [_vm._v("login success")])
-        : _c("h5", [_vm._v("plese login")]),
-      _c("p", [_vm._v("account_id")]),
+      _c("p", [_vm._v("accountId")]),
       _c("input", {
         directives: [
           {
@@ -65329,7 +65361,7 @@ var render = function() {
       _vm._l(_vm.users, function(user) {
         return _c("div", { staticClass: "user-info" }, [
           _c("p", [_vm._v("id: " + _vm._s(user.id))]),
-          _c("p", [_vm._v("accountId " + _vm._s(user.account_id))]),
+          _c("p", [_vm._v("accountId " + _vm._s(user.accountId))]),
           _c("p", [_vm._v("name " + _vm._s(user.name))])
         ])
       }),
@@ -65361,25 +65393,27 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "users" } }, [
     _c("div", { staticClass: "user-info" }, [
-      _c("p", [_vm._v("userid: " + _vm._s(_vm.user.id))]),
+      this.user.id !== 0
+        ? _c("p", [_vm._v("userid: " + _vm._s(_vm.user.id))])
+        : _vm._e(),
       _c("label", { attrs: { for: "accountId" } }, [_vm._v("accountId")]),
       _c("input", {
         directives: [
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.user.account_id,
-            expression: "user.account_id"
+            value: _vm.user.accountId,
+            expression: "user.accountId"
           }
         ],
         attrs: { id: "accountId" },
-        domProps: { value: _vm.user.account_id },
+        domProps: { value: _vm.user.accountId },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.$set(_vm.user, "account_id", $event.target.value)
+            _vm.$set(_vm.user, "accountId", $event.target.value)
           }
         }
       }),
@@ -65426,15 +65460,15 @@ var render = function() {
         }
       })
     ]),
-    _vm.isExist
+    this.user.id === 0
       ? _c("div", [
+          _c("p", [_vm._v("user not found")]),
+          _c("button", { on: { click: _vm.postCreate } }, [_vm._v("create")])
+        ])
+      : _c("div", [
           _c("button", { on: { click: _vm.patchUpdate } }, [_vm._v("update")]),
           _c("p"),
           _c("button", { on: { click: _vm.deleteDestroy } }, [_vm._v("delete")])
-        ])
-      : _c("div", [
-          _c("p", [_vm._v("user not found")]),
-          _c("button", { on: { click: _vm.postCreate } }, [_vm._v("create")])
         ])
   ])
 }
