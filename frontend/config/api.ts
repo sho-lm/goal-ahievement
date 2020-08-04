@@ -5,11 +5,14 @@ const baseUrl = env.baseUrl;
 export const api = {
   loginPath:        `${baseUrl}/login`,
   logoutPath:       `${baseUrl}/logout`,
-  userPath:         `${baseUrl}/users`,
-  usersPath: (userId: string) => 
+  authPath:         `${baseUrl}/auth`,
+  usersPath:        `${baseUrl}/users`,
+  goalsPath:        `${baseUrl}/goals`,
+  workRecordsPath:  `${baseUrl}/workRecords`,
+  userPath: (userId: string) => 
                     `${baseUrl}/users/${userId}`,
-  goalsPath: (userId: string, goalId: string) => 
+  goalPath: (userId: string, goalId: string) => 
                     `${baseUrl}/users/${userId}/goals/${goalId}`,
-  workRecordsPath: (userId: string, workRecordId: string) => 
+  workRecordPath: (userId: string, workRecordId: string) => 
                     `${baseUrl}/users/${userId}/workRecords/${workRecordId}`,
 }

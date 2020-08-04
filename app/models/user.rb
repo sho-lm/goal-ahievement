@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :goals,        dependent: :destroy
   has_many :work_records, dependent: :destroy
   has_secure_password
+  has_secure_token
 
   # attirbute ---------------------------------------------------------------------------------------------
   attribute :is_admin,   :boolean, default: false

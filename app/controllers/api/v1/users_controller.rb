@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApiController
+  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user,   only: [:show, :edit, :update, :destroy]
 
   # ActiveRecordのレコードが見つからなければ404 not foundを応答する
   rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -11,32 +13,28 @@ class Api::V1::UsersController < ApiController
   end
 
   def show
-    user = find_user
-    render json: user
+    render json: @user
   end
 
   def create
     user = User.new(user_params)
     if user.save
-      render json: user
+      render json: user.reload
     else
-      # render json: user.errors.full_messages, status: :bad_request
       render json: "", status: :bad_request
     end
   end
 
   def update
-    user = find_user
-    if user.update(user_params)
-      render json: ""
+    if @user.update(user_params)
+      render json: @user.reload
     else
       render json: "", status: :bad_request
     end
   end
 
   def destroy
-    user = find_user
-    user.destroy
+    @user.destroy
     log_out
     render json: ""
   end
@@ -53,10 +51,10 @@ class Api::V1::UsersController < ApiController
       User.find(params[:id])
     end
     
-    # リクエストで指定されたユーザーがログイン中のユーザーでなければリダイレクトする
+    # リクエストで指定されたユーザーがログイン中のユーザーでなければ 401 を返す
     def correct_user
       @user = find_user
-      redirect_to(root_path) unless current_user?(@user)
+      render json: "", status: :unauthorized unless current_user?(@user)
     end
 
     # ログイン中のユーザーが管理者でなければリダイレクトする

@@ -3,7 +3,7 @@ module SessionsHelper
   # ログイン済みでなければログインページにリダイレクトさせる
   def logged_in_user
     unless logged_in?
-      redirect_to login_path
+      render json: { error: "need login" }, status: :unauthorized
     end
   end
 
