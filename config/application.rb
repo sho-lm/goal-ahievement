@@ -8,8 +8,8 @@ Bundler.require(*Rails.groups)
 
 module GoalAchievement
   class Application < Rails::Application
-    # Api mode
-    config.api_only = true
+    # true だと session[:xxx] が機能しない
+    config.api_only = false
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0

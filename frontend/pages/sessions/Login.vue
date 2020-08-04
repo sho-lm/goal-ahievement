@@ -1,19 +1,15 @@
 <template lang="pug">
   #login
-    section
+    h1 Login Page
+    section(v-if="$store.getters.isLoggedIn")
+      button(@click="logout") logout
+    section(v-else)
       p accountId
       input(type="text", name="accountId", v-model="accountId")
       p password
       input(type="password", name="password", v-model="password")
       p
       button(@click="login") login
-      p
-      button(@click="logout") logout
-    section.user-index
-      div.user-info(v-for="user in users")
-        p id: {{ user.id }}
-        p accountId {{ user.accountId }}
-        p name {{ user.name }}
 </template>
 
 <script lang="ts">
@@ -27,29 +23,14 @@ const sessionKey = 'userId';
 export type DataType = {
   accountId:      string
   password:       string
-  loginSuccess:   boolean
-  users:          Array<User>
 }
 
 export default Vue.extend({
   data(): DataType  {
     return {
       accountId:    '',
-      password:     'aaaaaa',
-      loginSuccess: false,
-      users:        []
+      password:     '',
     }
-  },
-  mounted () {
-    this.loginSuccess = false;
-    axios.get(api.userPath)
-      .then(response => {
-        this.users = User.createIndexDataBy(response.data);  
-        console.log(this.users);
-      })
-      .catch(error => {
-        console.log(error);
-      })
   },
   methods: {
     login() {
@@ -57,34 +38,16 @@ export default Vue.extend({
         account_id: this.accountId,
         password:   this.password
       }
-      axios.post(api.loginPath, params)
-        .then(response => {
-          sessionStorage.setItem(sessionKey, response.data.id);
-          this.loginSuccess = true;
-          console.log('log in');
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      this.$store.dispatch('login', params);
     },
     logout() {
-      axios.delete(api.logoutPath)
-        .then(response => {
-          sessionStorage.removeItem(sessionKey);
-          this.loginSuccess = false;
-          console.log('log out');
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      this.accountId = '';
+      this.password = '';
+      this.$store.dispatch('logout');
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-  .user-info {
-    border-bottom: 1px solid #0328fa;
-    margin-bottom: 10px;
-  }
 </style>

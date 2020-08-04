@@ -1,15 +1,13 @@
-class Api::V1::SessionsController < ApplicationController
-  # CSRFトークン認証をしない
-  skip_before_action :verify_authenticity_token
+class Api::V1::SessionsController < ApiController
 
-  # ユーザーを認証できればログインする
+  # ユーザーを認証できればログインする (アカウントID + パスワード)
   def create
     user = User.find_by(account_id: params[:account_id])
     if user && user.authenticate(params[:password])
       log_in(user)
       render json: user
     else
-      render json: "", status: :unauthorized
+      render json: { error: "can't authenticate" }, status: :unauthorized
     end
   end
 

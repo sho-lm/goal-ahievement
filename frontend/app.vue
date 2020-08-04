@@ -1,27 +1,34 @@
 <template lang="pug">
-  #app
-    header
+  el-container#app
+    el-header
       el-menu(
               mode="horizontal"
       )
         el-menu-item(index="login", route="{ name: 'login' }")
           router-link(to="/login") login
-        el-menu-item(index="users", route="{ name: 'users' }")
-          router-link(to="/users") users
         el-menu-item(index="goals", route="{ name: 'goals' }")
           router-link(to="/goals") goals
         el-menu-item(index="workRecords", route="{ name: 'workRecords' }")
           router-link(to="/workRecords") workRecords
-    main
-      RouterView
+        el-menu-item(index="usersList", route="{ name: 'usersList' }")
+          router-link(to="/usersList") usersList
+    el-container
+      el-aside
+        users
+      el-main
+        router-view
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Users from '~/pages/users/Users.vue';
 
-import { mapMutations } from 'vuex';
+
 
 export default Vue.extend({
+  components: {
+    Users
+  }
 })
 </script>
 

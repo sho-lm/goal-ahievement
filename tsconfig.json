@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["frontend/*"],
+      // "@env": ["frontend/config/.env/" + process.env + ".ts"]
+    },
     "sourceMap": true,
     // TSはECMAScript5 に変換
     "target": "es5",

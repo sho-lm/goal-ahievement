@@ -1,21 +1,25 @@
 <template lang="pug">
   #users
-    .user-info
-      p(v-if="this.user.id !== 0") userid: {{ user.id }}
-      label(for="accountId") accountId
-      input#accountId(v-model="user.accountId")
-      label(for="userName") userName
-      input#userName(v-model="user.name")
-      label(for="userPassword") userPassword
-      input#userPassword(v-model="user.password")
-    
-    div(v-if="this.user.id === 0")
-      p user not found
-      button(@click="postCreate") create
-    div(v-else)
-      button(@click="patchUpdate") update
-      p
-      button(@click="deleteDestroy") delete
+    h1 Users Page
+    section(v-if="$store.getters.isLoggedIn")
+      div.edit-mode(v-if="isEditMode")
+        p edit mode
+        p(v-if="this.user.id !== 0") userid: {{ userCopy.id }}
+        label(for="account_id") account_id
+        input#account_id(v-model="userCopy.account_id")
+        label(for="userName") userName
+        input#userName(v-model="userCopy.name")
+        label(for="userPassword") userPassword
+        input#userPassword(v-model="userCopy.password")
+        button(@click="patchUpdate") update
+        button(@click="deleteDestroy") delete
+        button(@click="postCreate") create
+        button(@click="cancelUpdate") cancel
+      div.normal-mode(v-else)
+        p normal mode
+        button(@click="editMode") edit mode
+    section(v-else)
+      p please log in
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -24,56 +28,59 @@ import { api } from '../../config/api';
 import { User } from '../../models/user';
 
 const sessionKey = 'userId';
+const deepCopy = (data: any) => JSON.parse(JSON.stringify(data));
 
 export type DataType = {
-  user: User
+  user:       User
+  userCopy:   User
+  isEditMode: boolean
 }
-
 
 export default Vue.extend({
   data(): DataType {
     return {
-      user: new User(),
+      user:       this.$store.getters.user,
+      userCopy:   new User(),
+      isEditMode: false,
     }
   },
-  mounted() {
-    const userId = Number(sessionStorage.getItem(sessionKey));
-    axios.get(api.usersPath(userId))
-      .then(response => {
-        this.user.setResponse(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  },
   methods: {
-    postCreate() {
-      axios.post(api.userPath, this.user)
+    editMode(): void {
+      this.isEditMode = true;
+      this.userCopy = deepCopy(this.user);
+    },
+    cancelUpdate(): void {
+      this.isEditMode = false;
+    },
+    postCreate(): void {
+      axios.post(api.usersPath, this.userCopy)
         .then(response => {
-          this.user.setResponse(response.data);
           console.log('created');
-          sessionStorage.setItem(sessionKey, this.user.id.toString());
+          this.$store.dispatch('saveSession', response.data);
+          this.isEditMode = false;
         })
         .catch(error => {
           console.log(error);
         })
     },
     patchUpdate() {
-      axios.patch(api.usersPath(this.user.id), this.user)
+      console.log(this.userCopy);
+      axios.patch(api.userPath(this.$store.getters.userId), this.userCopy)
         .then(response => {
           console.log('update');
+          this.$store.commit('setUser', response.data);
+          this.isEditMode = false;
         })
         .catch(error => {
           console.log(error);
-          
         })
     },
     deleteDestroy() {
-      axios.delete(api.usersPath(this.user.id))
+      axios.delete(api.userPath(this.$store.getters.userId))
         .then(response => {
           console.log('deleted');
-          sessionStorage.removeItem(sessionKey);
-          this.user.initialize();
+          this.$store.dispatch('discardSession');
+          this.isEditMode = false;
         })
         .catch(error => {
           console.log(error);
@@ -87,7 +94,7 @@ export default Vue.extend({
   .error {
     color: #f00;
   }
-  .user-info {
+  .edit-mode {
     display: grid;
     gap: 10px;
     margin-bottom: 20px;
