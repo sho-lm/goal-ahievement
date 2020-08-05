@@ -23,8 +23,6 @@
 import Vue from 'vue';
 import Users from '~/pages/users/Users.vue';
 
-
-
 export default Vue.extend({
   components: {
     Users

@@ -60,8 +60,8 @@ export default new Vuex.Store({
         })
     },
     restoreSession(context): void {
-      const userId = sessionStorage.getItem(keyUserId);
-      const userToken = sessionStorage.getItem(keyUserToken);
+      const userId = localStorage.getItem(keyUserId);
+      const userToken = localStorage.getItem(keyUserToken);
       if (userId && userToken) {
         const params = {
           id: userId,
@@ -79,13 +79,13 @@ export default new Vuex.Store({
     },
     saveSession(context, userData): void {
       context.commit('setUser', userData);
+      localStorage.setItem(keyUserId, context.getters.userId);
+      localStorage.setItem(keyUserToken, context.getters.userToken);
       context.commit('isLoggedIn', true);
-      sessionStorage.setItem(keyUserId, context.getters.userId);
-      sessionStorage.setItem(keyUserToken, context.getters.userToken);
     },
     discardSession(context): void {
-      sessionStorage.removeItem(keyUserId);
-      sessionStorage.removeItem(keyUserToken);
+      localStorage.removeItem(keyUserId);
+      localStorage.removeItem(keyUserToken);
       context.commit('isLoggedIn', false);
       context.commit('setUser', {});
     },

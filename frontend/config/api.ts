@@ -1,4 +1,4 @@
-import env from './.env/development';
+import { env } from '@env';
 
 const baseUrl = env.baseUrl;
 
@@ -7,8 +7,10 @@ export const api = {
   logoutPath:       `${baseUrl}/logout`,
   authPath:         `${baseUrl}/auth`,
   usersPath:        `${baseUrl}/users`,
-  goalsPath:        `${baseUrl}/goals`,
-  workRecordsPath:  `${baseUrl}/workRecords`,
+  goalsPath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/goals`,
+  workRecordsPath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/workRecords`,
   userPath: (userId: string) => 
                     `${baseUrl}/users/${userId}`,
   goalPath: (userId: string, goalId: string) => 
