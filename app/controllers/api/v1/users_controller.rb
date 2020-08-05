@@ -12,10 +12,12 @@ class Api::V1::UsersController < ApiController
     render json: users
   end
 
+  # ユーザーのデータを返す
   def show
     render json: @user
   end
 
+  # 新規登録する
   def create
     user = User.new(user_params)
     if user.save
@@ -25,6 +27,7 @@ class Api::V1::UsersController < ApiController
     end
   end
 
+  # 更新する
   def update
     if @user.update(user_params)
       render json: @user.reload
@@ -33,6 +36,7 @@ class Api::V1::UsersController < ApiController
     end
   end
 
+  # 削除する
   def destroy
     @user.destroy
     log_out

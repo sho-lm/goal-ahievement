@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "~/*": ["frontend/*"],
-      // "@env": ["frontend/config/.env/" + process.env + ".ts"]
+      "@env": ["frontend/config/.env/development.ts", "frontend/config/.env/production.ts"]
     },
     "sourceMap": true,
     // TSはECMAScript5 に変換

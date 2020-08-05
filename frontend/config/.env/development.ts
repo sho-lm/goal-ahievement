@@ -1,9 +1,6 @@
-interface Env {
-  baseUrl: string;
-}
+import { Env } from '~/config/.env/types';
 
-const env:Env = {
-  baseUrl: 'http://localhost:3000/api/v1',
+export const env:Env = {
+  baseUrl:    'http://localhost:3000/api/v1',
+  isDevMode:  true,
 }
-
-export default env;
