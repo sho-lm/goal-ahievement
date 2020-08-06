@@ -15,8 +15,21 @@
   border-bottom: 1px solid #776ef0;
 }
 
-#users[data-v-0c7857b9] {
-  color: green;
+.new-work-record[data-v-0c7857b9] {
+  display: grid;
+  gap: 5px;
+  border: 1px solid #65c87b;
+  padding: 10px;
+}
+.update-work-record[data-v-0c7857b9] {
+  margin-top: 10px;
+  display: grid;
+  gap: 5px;
+  border: 1px solid #b8e623;
+  padding: 10px;
+}
+.work-record-item[data-v-0c7857b9] {
+  border-bottom: 1px solid #776ef0;
 }
 
 .user-info[data-v-19005970] {
@@ -11940,6 +11953,10 @@
   display: grid;
   gap: 10px;
   margin-bottom: 20px;
+}
+
+.router-link-active {
+  color: #bb2222 !important;
 }
 
 

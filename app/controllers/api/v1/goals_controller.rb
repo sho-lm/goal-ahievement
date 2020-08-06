@@ -9,17 +9,16 @@ class Api::V1::GoalsController < ApiController
 
   # 一覧データを返す
   def index
-    goals = Goal.all
-    render json: goals
+    render json: @user.goals
   end
 
   # 新規登録する
   def create
-    goal = @current_user.goals.build(goal_params)
+    goal = @user.goals.build(goal_params)
     if goal.save
       render json: goal
     else
-      render json: { error: "bad request" }, status: :bad_request
+      render json: { error: "invalid params" }, status: :bad_request
     end
   end
 
@@ -44,12 +43,12 @@ class Api::V1::GoalsController < ApiController
     
     # form から特定のパラメータだけを取得する
     def goal_params
-      params.require(:goal).permit(:content, :limit)
+      params.permit(:content, :limit)
     end
     
     # リクエストで指定されたゴールを返す
     def find_goal
-      @current_user.goals.find(params[:id])
+      @user.goals.find(params[:id])
     end
 
 end
