@@ -47,7 +47,7 @@ class Api::V1::UsersController < ApiController
 
     # form から特定のパラメータだけを取得する
     def user_params
-      params.require(:user).permit(:account_id, :name, :password)
+      params.permit(:account_id, :name, :password)
     end
 
     # リクエストで指定されたユーザーを返す
@@ -55,12 +55,6 @@ class Api::V1::UsersController < ApiController
       User.find(params[:id])
     end
     
-    # リクエストで指定されたユーザーがログイン中のユーザーでなければ 401 を返す
-    def correct_user
-      @user = find_user
-      render json: "", status: :unauthorized unless current_user?(@user)
-    end
-
     # ログイン中のユーザーが管理者でなければリダイレクトする
     def admin_user
       redirect_to root_path unless current_user.admin?

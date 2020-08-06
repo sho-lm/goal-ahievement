@@ -30,5 +30,8 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  .router-link-active {
+    color: rgb(187, 34, 34) !important;
+  }
 </style>

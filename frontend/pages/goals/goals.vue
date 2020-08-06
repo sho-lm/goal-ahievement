@@ -20,7 +20,7 @@
 
       section.goals
         h3 goals data list
-        .goal-item(v-for="goal in goalsList")
+        .goal-item(v-for="goal in goalList")
           div.normal-mode
             p content:  {{ goal.content }}
             p limit: {{ goal.limit }}
@@ -36,7 +36,7 @@ import { Goal } from '~/models/goal';
 import { api } from '~/config/api';
 
 export type DataType = {
-  goalsList: Array<Goal>
+  goalList: Array<Goal>
   content:      string
   limit:        string
   contentCopy:  string
@@ -48,7 +48,7 @@ export type DataType = {
 export default Vue.extend({
   data(): DataType {
     return {
-      goalsList:    [],
+      goalList:    [],
       content:      '',
       limit:        '',
       contentCopy:  '',
@@ -62,17 +62,17 @@ export default Vue.extend({
       return this.$store.getters.userId;
     }
   },
-  mounted() {
-    this.selectGoalList();
-  },
   watch: {
     // computed の userId の返り値が変わったら、データを取得する(初期アクセスのデータ取得遅延)
-    userId() {
+    userId(): void {
       this.selectGoalList();
     }
   },
+  mounted() {
+    this.selectGoalList();
+  },
   methods: {
-    changeEditMode(goal: any, event): void {
+    changeEditMode(goal: Goal, event: any): void {
       this.contentCopy = goal.content;
       this.limitCopy = goal.limit; 
       this.goalId = goal.id;
@@ -84,7 +84,7 @@ export default Vue.extend({
     selectGoalList(): void {
       axios.get(api.goalsPath(this.userId))
         .then(response => {
-          this.goalsList = Goal.createIndexDataBy(response.data);
+          this.goalList = Goal.createIndexDataBy(response.data);
         })
         .catch(error => {
           console.log(error.response);
@@ -100,7 +100,9 @@ export default Vue.extend({
           console.log('created goal');
           const goal = new Goal();
           goal.setGoalData(response.data);
-          this.goalsList.push(goal);
+          this.goalList.push(goal);
+          this.content = '';
+          this.limit = '';
         })
         .catch(error => {
           console.log(error.response);

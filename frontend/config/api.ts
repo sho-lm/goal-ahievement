@@ -10,11 +10,11 @@ export const api = {
   goalsPath: (userId: string) =>
                     `${baseUrl}/users/${userId}/goals`,
   workRecordsPath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/workRecords`,
+                    `${baseUrl}/users/${userId}/work_records`,
   userPath: (userId: string) => 
                     `${baseUrl}/users/${userId}`,
   goalPath: (userId: string, goalId: string) => 
                     `${baseUrl}/users/${userId}/goals/${goalId}`,
   workRecordPath: (userId: string, workRecordId: string) => 
-                    `${baseUrl}/users/${userId}/workRecords/${workRecordId}`,
+                    `${baseUrl}/users/${userId}/work_records/${workRecordId}`,
 }
