@@ -93,7 +93,7 @@ export default Vue.extend({
         content: this.content,
         worked_on: this.workedOn
       };
-      axios.post(api.workRecordsPath(this.userId), params)
+      axios.post(api.workRecordsPath(this.userId), { work_record: params })
         .then(response => {
           const workRecord = new WorkRecord();
           workRecord.setWorkRecordData(response.data);
@@ -110,7 +110,7 @@ export default Vue.extend({
         content: this.contentCopy,
         worked_on: this.workedOnCopy
       };
-      axios.patch(api.workRecordPath(this.userId, this.workRecordId), params)
+      axios.patch(api.workRecordPath(this.userId, this.workRecordId), { work_record: params })
         .then(response => {
           this.isEditMode = false;
           this.selectWorkRecordList();

@@ -4,7 +4,7 @@ class Api::V1::GoalsController < ApiController
 
   # ActiveRecordのレコードが見つからなければ404 not foundを応答する
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    render json: { error: '404 not found' }, status: :not_found
+    render json: { error: 'goal not found' }, status: :not_found
   end
 
   # 一覧データを返す
@@ -16,7 +16,7 @@ class Api::V1::GoalsController < ApiController
   def create
     goal = @user.goals.build(goal_params)
     if goal.save
-      render json: goal
+      render json: goal, status: :created
     else
       render json: { error: "invalid params" }, status: :bad_request
     end
@@ -43,7 +43,7 @@ class Api::V1::GoalsController < ApiController
     
     # form から特定のパラメータだけを取得する
     def goal_params
-      params.permit(:content, :limit)
+      params.require(:goal).permit(:content, :limit)
     end
     
     # リクエストで指定されたゴールを返す
@@ -51,4 +51,8 @@ class Api::V1::GoalsController < ApiController
       @user.goals.find(params[:id])
     end
 
+    # リクエストで指定されたユーザーを返す( correct_user での判定時に呼び出される)
+    def find_user
+      User.find_by(id: params[:user_id])
+    end
 end

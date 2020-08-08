@@ -1,4 +1,12 @@
 FactoryBot.define do
+  factory :john, class: User do
+    id { 1 }
+    account_id { "john"}
+    name { "john" }
+    token { "john_token" }
+    password { "aaaaaa" }
+  end
+
   factory :sally, class: User do
     account_id { "sally" }
     name { "sally" }
@@ -14,4 +22,5 @@ FactoryBot.define do
     is_admin { false }
     is_private { false }
   end
+
 end

@@ -66976,7 +66976,7 @@ __webpack_require__.r(__webpack_exports__);
                 content: this.content,
                 limit: this.limit
             };
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].goalsPath(this.userId), params)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].goalsPath(this.userId), { goal: params })
                 .then(function (response) {
                 console.log('created goal');
                 var goal = new _models_goal__WEBPACK_IMPORTED_MODULE_2__["Goal"]();
@@ -66995,7 +66995,7 @@ __webpack_require__.r(__webpack_exports__);
                 content: this.contentCopy,
                 limit: this.limitCopy
             };
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].goalPath(this.userId, this.goalId), params)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].goalPath(this.userId, this.goalId), { goal: params })
                 .then(function (response) {
                 _this.isEditMode = false;
                 _this.selectGoalList();
@@ -67097,7 +67097,7 @@ var deepCopy = function (data) { return JSON.parse(JSON.stringify(data)); };
         },
         postCreate: function () {
             var _this = this;
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].usersPath, this.userCopy)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].usersPath, { user: this.userCopy })
                 .then(function (response) {
                 console.log('created');
                 _this.$store.dispatch('saveSession', response.data);
@@ -67109,8 +67109,7 @@ var deepCopy = function (data) { return JSON.parse(JSON.stringify(data)); };
         },
         patchUpdate: function () {
             var _this = this;
-            console.log(this.userCopy);
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].userPath(this.$store.getters.userId), this.userCopy)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].userPath(this.$store.getters.userId), { user: this.userCopy })
                 .then(function (response) {
                 console.log('update');
                 _this.$store.commit('setUser', response.data);
@@ -67207,7 +67206,7 @@ __webpack_require__.r(__webpack_exports__);
                 content: this.content,
                 worked_on: this.workedOn
             };
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].workRecordsPath(this.userId), params)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].workRecordsPath(this.userId), { work_record: params })
                 .then(function (response) {
                 var workRecord = new _models_workRecord__WEBPACK_IMPORTED_MODULE_2__["WorkRecord"]();
                 workRecord.setWorkRecordData(response.data);
@@ -67225,7 +67224,7 @@ __webpack_require__.r(__webpack_exports__);
                 content: this.contentCopy,
                 worked_on: this.workedOnCopy
             };
-            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].workRecordPath(this.userId, this.workRecordId), params)
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(_config_api__WEBPACK_IMPORTED_MODULE_3__["api"].workRecordPath(this.userId, this.workRecordId), { work_record: params })
                 .then(function (response) {
                 _this.isEditMode = false;
                 _this.selectWorkRecordList();

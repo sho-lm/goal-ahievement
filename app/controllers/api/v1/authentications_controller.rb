@@ -1,7 +1,4 @@
 class Api::V1::AuthenticationsController < ApiController
-  # CSRFトークン認証をしない
-  # skip_before_action :verify_authenticity_token
-
 
   # ユーザーを認証できればログインする (ID + トークン)
   def create

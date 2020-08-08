@@ -44,8 +44,8 @@ RSpec.describe User, type: :model do
       it "is invalid" do
         sally.save
         copy_user = User.new(account_id: sally.account_id,
-                             name: "copy user",
-                             password: sally.password)
+                              name: "copy user",
+                              password: sally.password)
         expect(copy_user).not_to be_valid  
       end
     end
