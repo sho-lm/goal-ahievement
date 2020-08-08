@@ -53,7 +53,7 @@ export default Vue.extend({
       this.isEditMode = false;
     },
     postCreate(): void {
-      axios.post(api.usersPath, this.userCopy)
+      axios.post(api.usersPath, { user: this.userCopy })
         .then(response => {
           console.log('created');
           this.$store.dispatch('saveSession', response.data);
@@ -64,8 +64,7 @@ export default Vue.extend({
         })
     },
     patchUpdate() {
-      console.log(this.userCopy);
-      axios.patch(api.userPath(this.$store.getters.userId), this.userCopy)
+      axios.patch(api.userPath(this.$store.getters.userId), { user: this.userCopy })
         .then(response => {
           console.log('update');
           this.$store.commit('setUser', response.data);

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApiController
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:update, :destroy]
+  before_action :correct_user,   only: [:update, :destroy]
 
   # ActiveRecordのレコードが見つからなければ404 not foundを応答する
   rescue_from ActiveRecord::RecordNotFound do |exception|
@@ -12,18 +12,14 @@ class Api::V1::UsersController < ApiController
     render json: users
   end
 
-  # ユーザーのデータを返す
-  def show
-    render json: @user
-  end
-
   # 新規登録する
   def create
     user = User.new(user_params)
     if user.save
-      render json: user.reload
+      log_in(user)
+      render json: user.reload, status: :created
     else
-      render json: "", status: :bad_request
+      render json: { error: "invalid params" }, status: :bad_request
     end
   end
 
@@ -32,7 +28,7 @@ class Api::V1::UsersController < ApiController
     if @user.update(user_params)
       render json: @user.reload
     else
-      render json: "", status: :bad_request
+      render json: { error: "invalid params" } , status: :bad_request
     end
   end
 
@@ -47,16 +43,11 @@ class Api::V1::UsersController < ApiController
 
     # form から特定のパラメータだけを取得する
     def user_params
-      params.permit(:account_id, :name, :password)
+      params.require(:user).permit(:account_id, :name, :password)
     end
 
-    # リクエストで指定されたユーザーを返す
+    # リクエストで指定されたユーザーを返す( correct_user での判定時に呼び出される)
     def find_user
-      User.find(params[:id])
-    end
-    
-    # ログイン中のユーザーが管理者でなければリダイレクトする
-    def admin_user
-      redirect_to root_path unless current_user.admin?
+      User.find_by(id: params[:id])
     end
 end

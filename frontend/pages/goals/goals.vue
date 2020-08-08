@@ -95,7 +95,7 @@ export default Vue.extend({
         content: this.content,
         limit:   this.limit
       };
-      axios.post(api.goalsPath(this.userId), params)
+      axios.post(api.goalsPath(this.userId), { goal: params})
         .then(response => {
           console.log('created goal');
           const goal = new Goal();
@@ -113,7 +113,7 @@ export default Vue.extend({
         content: this.contentCopy,
         limit:   this.limitCopy
       };
-      axios.patch(api.goalPath(this.userId, this.goalId), params)
+      axios.patch(api.goalPath(this.userId, this.goalId), { goal: params })
         .then(response => {
           this.isEditMode = false;
           this.selectGoalList();

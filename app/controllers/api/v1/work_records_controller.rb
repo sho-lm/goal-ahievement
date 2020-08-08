@@ -4,7 +4,7 @@ class Api::V1::WorkRecordsController < ApiController
 
   # ActiveRecordのレコードが見つからなければ404 not foundを応答する
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    render json: { error: '404 not found' }, status: :not_found
+    render json: { error: 'work_record not found' }, status: :not_found
   end
 
   # 一覧データを返す
@@ -16,7 +16,7 @@ class Api::V1::WorkRecordsController < ApiController
   def create
     work_record = @user.work_records.build(work_record_params)
     if work_record.save
-      render json: work_record
+      render json: work_record, status: :created
     else
       render json: { error: "invalid params" }, status: :bad_request
     end
@@ -43,11 +43,16 @@ class Api::V1::WorkRecordsController < ApiController
     
     # form から特定のパラメータだけを取得する
     def work_record_params
-      params.permit(:content, :worked_on)
+      params.require(:work_record).permit(:content, :worked_on)
     end
     
     # リクエストで指定されたゴールを返す
     def find_work_record
       @user.work_records.find(params[:id])
+    end
+
+    # リクエストで指定されたユーザーを返す( correct_user での判定時に呼び出される)
+    def find_user
+      User.find_by(id: params[:user_id])
     end
 end
