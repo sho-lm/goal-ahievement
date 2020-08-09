@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Api::V1::WorkRecords", type: :request do
   let(:sally) { create(:sally) }
   let(:sally_work_record) { sally.work_records.create(content: "sally work record", worked_on: "2020-7-7") }
-  let(:sally_login_params) { { account_id: sally.account_id, password: sally.password } }
+  let(:sally_login_params) { { name: sally.name, password: sally.password } }
   
   # index -----------------------------------------------------------------------------------------
   describe "GET #index" do

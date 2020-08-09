@@ -33,48 +33,28 @@ RSpec.describe User, type: :model do
         expect(sally).to be_valid  
       end
     end
-    # account_id -------------------------------------
-    context "when account_id is blank" do
-      it "is invalid" do
-        sally.account_id = nil
-        expect(sally).not_to be_valid  
-      end
-    end
-    context "when account_id is duplicate" do
-      it "is invalid" do
-        sally.save
-        copy_user = User.new(account_id: sally.account_id,
-                              name: "copy user",
-                              password: sally.password)
-        expect(copy_user).not_to be_valid  
-      end
-    end
-    context "when account_id length is less than or equal to 20" do
-      it "is valid" do
-        sally.account_id = "a" * 20
-        expect(sally).to be_valid  
-      end
-    end
-    context "when account_di lenght is greater than 20" do
-      it "is invalid" do
-        sally.account_id = "a" * 21
-        expect(sally).not_to be_valid  
-      end
-    end
-    # name  ------------------------------------------
+    # name -------------------------------------
     context "when name is blank" do
       it "is invalid" do
         sally.name = nil
-        expect(sally).not_to be_valid
+        expect(sally).not_to be_valid  
       end
     end
-    context "when name lenght is less than or equal to 20" do
+    context "when name is duplicate" do
+      it "is invalid" do
+        sally.save
+        sally_copy = User.new(name: sally.name,
+                              password: sally.password)
+        expect(sally_copy).not_to be_valid  
+      end
+    end
+    context "when name length is less than or equal to 20" do
       it "is valid" do
         sally.name = "a" * 20
         expect(sally).to be_valid  
       end
     end
-    context "when name lenght is greater than 20" do
+    context "when account_di lenght is greater than 20" do
       it "is invalid" do
         sally.name = "a" * 21
         expect(sally).not_to be_valid  
@@ -87,17 +67,17 @@ RSpec.describe User, type: :model do
         expect(sally).not_to be_valid
       end
     end
-    context "when password length is between 6 and 20" do
+    context "when password length is between 4 and 20" do
       it "is valid" do
-        sally.password = "a" * 6
+        sally.password = "a" * 4
         expect(sally).to be_valid
         sally.password = "a" * 20
         expect(sally).to be_valid      
       end
     end
-    context "when password length is less than 6" do
+    context "when password length is less than 4" do
       it "is invalid" do
-        sally.password = "a" * 5
+        sally.password = "a" * 3
         expect(sally).not_to be_valid  
       end
     end

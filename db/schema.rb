@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_100508) do
+ActiveRecord::Schema.define(version: 2020_08_09_094953) do
 
   create_table "goals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "content"
@@ -27,15 +27,14 @@ ActiveRecord::Schema.define(version: 2020_08_04_100508) do
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name"
     t.string "password"
     t.string "password_digest"
     t.boolean "is_admin"
     t.boolean "is_private"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "account_id"
     t.string "token"
+    t.string "name"
   end
 
   create_table "work_records", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

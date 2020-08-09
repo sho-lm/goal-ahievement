@@ -1,6 +1,5 @@
 export class User {
   id:               string;
-  account_id:       string;
   name:             string;
   password:         string;
   token:            string;
@@ -11,7 +10,6 @@ export class User {
 
   constructor() {
     this.id =               '';
-    this.account_id =       '';
     this.name =             '';
     this.password =         '';
     this.token =            '',
@@ -23,7 +21,6 @@ export class User {
 
   setUserData(userData: any):void {
     this.id =               userData.id               || '';
-    this.account_id =       userData.account_id       || '';
     this.name =             userData.name             || '';
     this.token =            userData.token            || '';
     this.is_admin =         userData.is_admin         || false;

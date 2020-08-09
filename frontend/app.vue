@@ -1,27 +1,18 @@
 <template lang="pug">
-  el-container#app
-    el-header
-      el-menu(
-              mode="horizontal"
-      )
-        el-menu-item(index="login", route="{ name: 'login' }")
-          router-link(to="/login") login
-        el-menu-item(index="goals", route="{ name: 'goals' }")
-          router-link(to="/goals") goals
-        el-menu-item(index="workRecords", route="{ name: 'workRecords' }")
-          router-link(to="/workRecords") workRecords
-        el-menu-item(index="usersList", route="{ name: 'usersList' }")
-          router-link(to="/usersList") usersList
-    el-container
-      el-aside
-        users
-      el-main
-        router-view
+  #app
+    .header
+      router-link(to="/login") login
+      router-link(to="/users") users
+      router-link(to="/goals") goals
+      router-link(to="/work_records") workRecords
+      router-link(to="/debug") debug (usersList)
+    .main
+      router-view
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Users from '~/pages/users/Users.vue';
+import Users from '~/components/UsersPage.vue';
 
 export default Vue.extend({
   components: {
@@ -31,7 +22,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+  .header {
+    display: grid;
+    grid-auto-flow: column;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(149, 221, 158);
+  }
   .router-link-active {
-    color: rgb(187, 34, 34) !important;
+    color: rgb(230, 76, 76);
+    font-weight: bold;
   }
 </style>

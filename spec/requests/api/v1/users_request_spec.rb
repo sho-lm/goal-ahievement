@@ -3,7 +3,7 @@ include SessionsHelper
 
 RSpec.describe "Api::V1::Users", type: :request do
   let(:sally) { create(:sally) }
-  let(:sally_login_params) { { account_id: sally.account_id, password: sally.password } }
+  let(:sally_login_params) { { name: sally.name, password: sally.password } }
   
   # create ----------------------------------------------------------------------------------------
   describe "POST #create" do
@@ -25,7 +25,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       end
     end
     context "when request params are valid" do
-      let(:params) { { user: { account_id: "test", name: "test", password: "aaaaaa" } } }
+      let(:params) { { user: { name: "test", password: "aaaaaa" } } }
       it "returns status 201" do
         post api_v1_users_path, params: params
         expect(response.status).to eq 201 

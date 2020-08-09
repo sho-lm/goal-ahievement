@@ -9,13 +9,11 @@ class User < ApplicationRecord
   attribute :is_private, :boolean, default: false
 
   # validates ----------------------------------------------------------------------------------------------
-  validates :account_id,  presence: true,
+  validates :name,  presence: true,
                           uniqueness: { case_sensitive: true },
                           length: { maximum: 20 }
-  validates :name,        presence: true,
-                          length: { maximum: 20 }
   validates :password,    presence: true,
-                          length: { minimum: 6, maximum: 20 },
+                          length: { minimum: 4, maximum: 20 },
                           allow_nil: true
   validates :is_admin,    inclusion: { in: [false, true] }
   validates :is_private,  inclusion: { in: [false, true] }
