@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import { api } from '~/config/api'
-import { User } from '~/models/user';
+import { api } from '@/config/api'
+import { User } from '@/models/user';
 
 Vue.use(Vuex);
 

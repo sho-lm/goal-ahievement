@@ -21,8 +21,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios';
-import { api } from '~/config/api';
-import { User } from '~/models/user';
+import { api } from '@/config/api';
+import { User } from '@/models/user';
 
 const deepCopy = (data: any) => JSON.parse(JSON.stringify(data));
 
@@ -40,6 +40,7 @@ export default Vue.extend({
       isEditMode: false,
     }
   },
+  template: '<v-app> <users> </users> </v-app>',
   methods: {
     editMode(): void {
       this.isEditMode = true;

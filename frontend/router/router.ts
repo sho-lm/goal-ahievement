@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import LoginPage from '~/components/LoginPage.vue';
-import UsersPage from '~/components/UsersPage.vue';
-import GoalsPage from '~/components/GoalsPage.vue';
-import WorkRecordsPage from '~/components/WorkRecordsPage.vue';
-import DebugPage from '~/components/DebugPage.vue';
+import LoginPage from '@/components/LoginPage.vue';
+import UsersPage from '@/components/UsersPage.vue';
+import GoalsPage from '@/components/GoalsPage.vue';
+import WorkRecordsPage from '@/components/WorkRecordsPage.vue';
+import DebugPage from '@/components/DebugPage.vue';
 
 Vue.use(VueRouter);
 export default new VueRouter({

@@ -21,8 +21,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios';
-import { api } from '~/config/api'
-import { User } from '~/models/user'
+import { api } from '@/config/api'
+import { User } from '@/models/user'
 
 const sessionKey = 'userId';
 

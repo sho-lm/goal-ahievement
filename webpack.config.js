@@ -90,7 +90,7 @@ module.exports = (env, argv) => {
         // import Vue from 'vue' での vue が表すファイルパス
         'vue': 'vue/dist/vue.esm.js',
         // フロントエンドのルート
-        '~': path.resolve(__dirname, 'frontend'),
+        '@': path.resolve(__dirname, 'frontend'),
         // 環境変数ファイル
         '@env': path.resolve(__dirname, `frontend/config/.env/${argv.mode}.ts`),
       }
