@@ -35,8 +35,8 @@ RSpec.describe SessionsHelper, type: :helper do
     context "when specified user doesn't equal to current user" do
       it "returns false" do
         log_in(sally)
-        user = User.new(name: "user", id: 0)
-        expect(current_user?(user)).to eq false  
+        not_sally = User.new(name: "user", id: 0)
+        expect(current_user?(not_sally)).to eq false  
       end
     end
     

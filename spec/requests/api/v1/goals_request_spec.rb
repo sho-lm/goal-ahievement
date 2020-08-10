@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe "Api::V1::Goals", type: :request do
   let(:sally) { create(:sally) }
   let(:sally_goal) { sally.goals.create(content: "sally goal") }
-  let(:sally_login_params) { { account_id: sally.account_id, password: sally.password } }
+  let(:sally_login_params) { { name: sally.name, password: sally.password } }
+  
   # index -----------------------------------------------------------------------------------------
   describe "GET #index" do
     context "when haven't logged in" do

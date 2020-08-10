@@ -6,20 +6,20 @@ RSpec.describe "Api::V1::Sessions", type: :request do
   
   # create ----------------------------------------------------------------------------------------
   describe "POST #create" do
-    context "when account_id is worng" do
-      let(:wrong_account_id) { {  account_id: nil, password: john.password } } 
+    context "when name is worng" do
+      let(:wrong_name) { {  name: nil, password: john.password } } 
       it "returns status 401" do
-        post api_v1_login_path, params: wrong_account_id
+        post api_v1_login_path, params: wrong_name
         expect(response.status).to eq 401  
       end
       it "return error message" do
-        post api_v1_login_path, params: wrong_account_id
+        post api_v1_login_path, params: wrong_name
         res_json = JSON.parse(response.body)
         expect(res_json["error"]).to eq "can't log in" 
       end
     end
     context "when password is wrong" do
-      let(:wrong_password) { {  account_id: john.account_id, password: nil } } 
+      let(:wrong_password) { {  name: john.name, password: nil } } 
       it "returns status 401" do
         post api_v1_login_path, params: wrong_password
         expect(response.status).to eq 401  
@@ -31,7 +31,7 @@ RSpec.describe "Api::V1::Sessions", type: :request do
       end
     end
     context "when request params are valid" do
-      let(:params) { {  account_id: john.account_id, password: john.password } } 
+      let(:params) { {  name: john.name, password: john.password } } 
       it "return status 200" do
         post api_v1_login_path, params: params
         expect(response.status).to eq 200  
@@ -53,7 +53,7 @@ RSpec.describe "Api::V1::Sessions", type: :request do
       end
     end
     context "when user haven logged in" do
-      let(:params) { {  account_id: john.account_id, password: john.password } } 
+      let(:params) { {  name: john.name, password: john.password } } 
       before do
         post api_v1_login_path, params: params
       end

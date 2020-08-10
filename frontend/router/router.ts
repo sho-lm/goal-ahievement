@@ -1,34 +1,39 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '~/pages/sessions/Login.vue';
-import Goals from '~/pages/goals/Goals.vue';
-import WorkRecords from '~/pages/workRecords/WorkRecords.vue';
-import UsersList from '~/pages/debug/UsersList.vue';
+import LoginPage from '@/components/LoginPage.vue';
+import UsersPage from '@/components/UsersPage.vue';
+import GoalsPage from '@/components/GoalsPage.vue';
+import WorkRecordsPage from '@/components/WorkRecordsPage.vue';
+import DebugPage from '@/components/DebugPage.vue';
 
 Vue.use(VueRouter);
-
 export default new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   routes: [
     {
       name: 'login',
       path: '/login',
-      component: Login
+      component: LoginPage
+    },
+    {
+      name: 'users',
+      path: '/users',
+      component: UsersPage
     },
     {
       name: 'goals',
       path: '/goals',
-      component: Goals
+      component: GoalsPage
     },
     {
       name: 'workRecords',
-      path: '/workRecords',
-      component: WorkRecords
+      path: '/work_records',
+      component: WorkRecordsPage
     },
     {
-      name: 'usersList',
-      path: '/usersList',
-      component: UsersList
+      name: 'debug',
+      path: '/debug',
+      component: DebugPage
     }
   ]
 })

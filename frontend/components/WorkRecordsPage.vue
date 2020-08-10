@@ -30,8 +30,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios';
-import { WorkRecord } from '~/models/workRecord';
-import { api } from '~/config/api';
+import { WorkRecord } from '@/models/workRecord';
+import { api } from '@/config/api';
 
 export type DataType = {
   workRecordList: Array<WorkRecord>

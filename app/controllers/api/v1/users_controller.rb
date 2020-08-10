@@ -43,7 +43,7 @@ class Api::V1::UsersController < ApiController
 
     # form から特定のパラメータだけを取得する
     def user_params
-      params.require(:user).permit(:account_id, :name, :password)
+      params.require(:user).permit(:name, :password)
     end
 
     # リクエストで指定されたユーザーを返す( correct_user での判定時に呼び出される)

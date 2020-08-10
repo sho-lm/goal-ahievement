@@ -2,14 +2,14 @@
   #userList
     div.user-info(v-for="user in userList")
       p id: {{ user.id }}
-      p account: {{ user.account_id }}
+      p name: {{ user.name }}
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios';
-import { api } from '../../config/api'
-import { User } from '../../models/user'
+import { api } from '@/config/api'
+import { User } from '@/models/user'
 
 const sessionKey = 'userId';
 

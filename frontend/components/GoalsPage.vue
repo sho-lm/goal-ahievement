@@ -32,8 +32,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios';
-import { Goal } from '~/models/goal';
-import { api } from '~/config/api';
+import { Goal } from '@/models/goal';
+import { api } from '@/config/api';
 
 export type DataType = {
   goalList: Array<Goal>

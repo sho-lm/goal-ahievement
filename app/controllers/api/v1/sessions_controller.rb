@@ -3,7 +3,7 @@ class Api::V1::SessionsController < ApiController
   # ユーザーを認証できればログインする (アカウントID + パスワード)
   def create
     logger.debug(params)
-    user = User.find_by(account_id: params[:account_id])
+    user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
       log_in(user)
       render json: user

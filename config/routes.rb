@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
-  root      "homes#index"
-  # get       "/login",     to: "sessions#new"
-  # post      "/login",     to: "sessions#create"
-  # delete    "/logout",    to: "sessions#destroy"
-  # resources :users do
-  #   resources :goals
-  #   resources :work_records
-  # end
+  root                     "homes#index"
+  get "/users",        to: "homes#index"
+  get "/goals",        to: "homes#index"
+  get "/work_records", to: "homes#index"
+  get "/login",        to: "homes#index"
+  get "/debug",        to: "homes#index"
 
   namespace :api, { format: 'json' } do
     namespace :v1 do
