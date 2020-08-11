@@ -40,7 +40,6 @@ export default Vue.extend({
       isEditMode: false,
     }
   },
-  template: '<v-app> <users> </users> </v-app>',
   methods: {
     editMode(): void {
       this.isEditMode = true;
