@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./frontend/*"],
-      "@env": ["./frontend/config/.env/development.ts", "./frontend/config/.env/production.ts"]
+      "@/*": ["frontend/*"],
+      "@env": ["frontend/config/.env/development.ts", "frontend/config/.env/production.ts"]
     },
     "sourceMap": true,
     // TSはECMAScript5 に変換

@@ -28,6 +28,8 @@ export class User {
     this.created_at =       userData.created_at       || '';
     this.updated_at =       userData.updated_at       || '';
   }
+
+  // static methods
   
   static createIndexDataBy(dataList: Array<any>): Array<User> {
     const users: Array<User> = [];
@@ -40,4 +42,22 @@ export class User {
 
     return users;
   }
+
+  // validation
+  static getNameRules(): Array<(v: string) => boolean | string> {
+    return [
+      v => !!v || 'Name is required',
+      v => (v && v.length >= 4) || 'Name must be at least 4 characters',
+      v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+    ];
+  }
+  
+  static getPasswordRules(): Array<(v: string) => boolean | string> {
+    return [
+      v => !!v || 'Password is required',
+      v => (v && v.length >= 4) || 'Password must be at least 4 characters',
+      v => (v && v.length <= 20) || 'Password must be less than 20 characters',
+    ];
+  }
+
 }

@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root                     "homes#index"
+  get "/login",        to: "homes#index"
+  get "sign_up",       to: "homes#index"
   get "/users",        to: "homes#index"
   get "/goals",        to: "homes#index"
   get "/work_records", to: "homes#index"
-  get "/login",        to: "homes#index"
   get "/debug",        to: "homes#index"
 
   namespace :api, { format: 'json' } do
