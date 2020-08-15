@@ -16,7 +16,6 @@
           password-form(:password.sync="password")
           v-card-text(
             align="center"
-            full-width
           )
             v-btn(
               color="success"
@@ -65,12 +64,24 @@ export default Vue.extend({
     login(): void {
       if (!this.getForm.validate()) return;
       
+      this.loading = true;
       const params = {
         name: this.name,
         password:   this.password
       }
-      this.loading = true;
-      this.$store.dispatch('login', params);
+      
+      axios.post(api.loginPath, params)
+        .then(response => {
+          this.$store.dispatch('saveSession', response.data);
+          console.log('log in');
+          // nullチェックはしているが型エラーになるためany型で宣言
+          const redirectTo: any = this.$route.query.redirect ? this.$route.query.redirect : 'users';
+          this.$router.push({ name: redirectTo });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
       this.loading = false;
     },
     logout(): void {

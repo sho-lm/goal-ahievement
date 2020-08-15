@@ -20,7 +20,4 @@ new Vue({
     vuetify,
     components: { App },
     template: '<app />',
-    created() {
-        store.dispatch('restoreSession');
-    }
 });

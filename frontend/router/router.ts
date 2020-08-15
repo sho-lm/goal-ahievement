@@ -14,10 +14,19 @@ export const routes: Array<RouteConfig> = [
     name: 'login',
     path: '/login',
     component: Login,
+    // ログイン済みならユーザー画面を表示する
     meta: {
       icon: 'home',   // vuetify v-icon
-      background: '#f9f9f9'  // background-color of main in App.vue
-    }
+      background: '#f9f9f9',  // background-color of main in App.vue
+      requiresLogin: false,  // アクセスするにはログインが必要か
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters.auth.id && store.getters.auth.token) {
+        next({ name: 'users' });
+      } else {
+        next();
+      }
+    },
   },
   {
     name: 'signUp',
@@ -25,8 +34,16 @@ export const routes: Array<RouteConfig> = [
     component: SignUp,
     meta: {
       icon: 'home',
-      background: '#fff'
-    }
+      background: '#fff',
+      requiresLogin: false,
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters.auth.id && store.getters.auth.token) {
+        next({ name: 'users' });
+      } else {
+        next();
+      }
+    },
   },
   {
     name: 'users',
@@ -34,7 +51,8 @@ export const routes: Array<RouteConfig> = [
     component: Users,
     meta: {
       icon: 'account_circle',
-      background: '#fff'
+      background: '#fff',
+      requiresLogin: true,
     }
   },
   {
@@ -43,7 +61,8 @@ export const routes: Array<RouteConfig> = [
     component: Goals,
     meta: {
       icon: 'assignment',
-      background: '#fff'
+      background: '#fff',
+      requiresLogin: true,
     }
   },
   {
@@ -52,7 +71,8 @@ export const routes: Array<RouteConfig> = [
     component: WorkRecords,
     meta: {
       icon: 'work',
-      background: '#fff'
+      background: '#fff',
+      requiresLogin: true,
     }
   },
   {
@@ -61,7 +81,8 @@ export const routes: Array<RouteConfig> = [
     component: Debug,
     meta: {
       icon: 'info',
-      background: '#fff'
+      background: '#fff',
+      requiresLogin: true,
     }
   }
 ]
@@ -73,8 +94,9 @@ export const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(to.name !== 'login'
     && to.name !== 'signUp'
-    && !store.getters.isLoggedIn) {
-    next({ name: 'login' });
+    && !store.getters.auth.id
+    && !store.getters.auth.token) {
+    next({ name: 'login', query: { redirect: to.name } });
   } else {
     next();
   }

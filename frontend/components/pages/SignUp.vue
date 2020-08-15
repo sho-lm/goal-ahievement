@@ -4,22 +4,25 @@
       v-card(
         flat
         width="90%"
-        max-width="368"
-        color="transparent"
+        max-width="500"
       )
-        v-card-title 新規登録
+        v-card-title.justify-center 新規登録
         v-form(
           v-model="valid"
           ref="form"
         )
+          label Name
           name-form(:name.sync="name")
+          label Password
           password-form(:password.sync="password")
-          v-card-text
+          v-card-text(
+            align="center"
+          )
             v-btn.mr-4(
-              :disabled="!valid || loading"
-              :loading="loading"
+              :disabled="loading"
               color="primary"
               @click="signUp"
+              width="100%"
             ) 登録する
 
 </template>
@@ -30,6 +33,7 @@ import axios from 'axios';
 import { api } from '@/config/api';
 import NameForm from '@/components/users/NameForm.vue';
 import PasswordForm from '@/components/users/PasswordForm.vue';
+import { VForm } from '@/plugins/vuetify';
 
 const sessionKey = 'userId';
 
@@ -53,6 +57,11 @@ export default Vue.extend({
     NameForm,
     PasswordForm
   },
+  computed: {
+    getForm(): VForm {
+      return (this.$refs as any).form;
+    }
+  },
   methods: {
     logout(): void {
       this.name = '';
@@ -60,6 +69,9 @@ export default Vue.extend({
       this.$store.dispatch('logout');
     },
     signUp(): void {
+      if (!this.getForm.validate()) return;
+
+      this.loading = true;
       const params = {
         name: this.name,
         password:   this.password
@@ -68,15 +80,13 @@ export default Vue.extend({
         .then(response => {
           console.log('created');
           this.$store.dispatch('saveSession', response.data);
-          this.$router.push('/users');
+          this.$router.push({ name: 'users' });
         })
         .catch(error => {
           console.log(error);
         })
+      this.loading = false;
     },
   }
 })
 </script>
-
-<style lang="scss">
-</style>
