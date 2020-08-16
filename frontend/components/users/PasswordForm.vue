@@ -1,15 +1,14 @@
 <template lang="pug">
   v-text-field(
-    @click:append="show = !show"
-    v-model="setPassword"
-    :append-icon="show ? 'visibility' : 'visibility_off'"
+    v-model.trim="setPassword"
     :counter="20"
     dense
     outlined
+    :placeholder="placeholder"
     required
     :rules="rules"
     solo
-    :type="show ? 'text' : 'password'"
+    type="password"
     validate-on-blur
   )
 </template>
@@ -20,24 +19,23 @@ import { User } from '@/models/user';
 
 
 export type DataType = {
-  rules: Array<(v: string) => boolean | string>
-  show:  boolean
+  rules:       Array<(v: string) => boolean | string>
 }
 
 export default Vue.extend({
   props: {
-    password: {
-      type: String,
-      default: '',
-    }
+    password:   { type: String,   default: '' },
+    updateMode: { type: Boolean,  default: false },   // 更新のときはパスワードは必須ではない
   },
   data(): DataType {
     return {
-      rules: User.getPasswordRules(),
-      show:  false,
+      rules: this.updateMode ? User.getPasswordUpdateRules() : User.getPasswordRules(),
     }
   },
   computed: {
+    placeholder(): string {
+      return this.updateMode ? '変更する場合は入力してください' : '';
+    },
     setPassword: {
       get(this): string { return this.password },
       set(newVal: string) { return this.$emit('update:password', newVal) } 
@@ -45,7 +43,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -18,7 +18,7 @@
           v-card-text(
             align="center"
           )
-            v-btn.mr-4(
+            v-btn(
               :disabled="loading"
               color="primary"
               @click="signUp"
