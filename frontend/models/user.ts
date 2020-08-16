@@ -47,7 +47,6 @@ export class User {
   static getNameRules(): Array<(v: string) => boolean | string> {
     return [
       v => !!v || 'Name is required',
-      v => (v && v.length >= 4) || 'Name must be at least 4 characters',
       v => (v && v.length <= 20) || 'Name must be less than 20 characters',
     ];
   }
@@ -55,8 +54,13 @@ export class User {
   static getPasswordRules(): Array<(v: string) => boolean | string> {
     return [
       v => !!v || 'Password is required',
-      v => (v && v.length >= 4) || 'Password must be at least 4 characters',
-      v => (v && v.length <= 20) || 'Password must be less than 20 characters',
+      v => (v && v.length >= 4 && v.length <= 20) || 'パスワードは4文字以上20文字以下で入力してください',
+    ];
+  }
+
+  static getPasswordUpdateRules(): Array<(v: string) => boolean | string> {
+    return [
+      v => !v || (v.length >= 4 && v.length <= 20) || 'パスワードは4文字以上20文字以下で入力してください',
     ];
   }
 

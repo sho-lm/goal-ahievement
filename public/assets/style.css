@@ -2,15 +2,6 @@
   background: #fff;
 }
 
-.error[data-v-ef896d3a] {
-  color: #f00;
-}
-.edit-mode[data-v-ef896d3a] {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
 .new-goal[data-v-21baf9ca] {
   display: grid;
   gap: 5px;
