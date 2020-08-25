@@ -77,6 +77,8 @@ export default Vue.extend({
           // nullチェックはしているが型エラーになるためany型で宣言
           const redirectTo: any = this.$route.query.redirect ? this.$route.query.redirect : 'users';
           this.$router.push({ name: redirectTo });
+
+          this.$store.dispatch('selectGoalList');
         })
         .catch(error => {
           console.log(error);

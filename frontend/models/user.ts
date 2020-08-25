@@ -46,20 +46,21 @@ export class User {
   // validation
   static getNameRules(): Array<(v: string) => boolean | string> {
     return [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+      v => !!v || '名前は必須です',
+      v => (v && v.length <= 20) || '名前は20文字以下で入力してください',
     ];
   }
   
   static getPasswordRules(): Array<(v: string) => boolean | string> {
     return [
-      v => !!v || 'Password is required',
+      v => !!v || 'パスワードは必須です',
       v => (v && v.length >= 4 && v.length <= 20) || 'パスワードは4文字以上20文字以下で入力してください',
     ];
   }
 
   static getPasswordUpdateRules(): Array<(v: string) => boolean | string> {
     return [
+      // 更新時はパスワードは空でもOK
       v => !v || (v.length >= 4 && v.length <= 20) || 'パスワードは4文字以上20文字以下で入力してください',
     ];
   }

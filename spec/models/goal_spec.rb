@@ -5,41 +5,14 @@ RSpec.describe Goal, type: :model do
   describe "default value" do
     context "when #new without arguments" do
       let(:goal) { Goal.new } 
-      it "achievement_flag has default value" do
-        expect(goal.achievement_flag).to eq false
-      end
-      it "progress has default value" do
-        expect(goal.progress).to eq 0
-      end
-      it "hierarchy has default value" do
-        expect(goal.hierarchy).to eq 1
-      end
-      it "children_length has default value" do
-        expect(goal.children_length).to eq 0
+      it "is_finished has default value" do
+        expect(goal.is_finished).to eq false
       end
     end
-    context "when #new with achievement_flag" do
-      it "achievement_flag has specified value" do
-        goal_ = Goal.new(achievement_flag: true)
-        expect(goal_.achievement_flag).to eq true 
-      end
-    end
-    context "when #new with progress" do
-      it "progress has specified value" do
-        goal_ = Goal.new(progress: 10)
-        expect(goal_.progress).to eq 10  
-      end
-    end
-    context "when #new with hierarchy" do
-      it "hierarchy has specified value" do
-        goal_ = Goal.new(hierarchy: 2)
-        expect(goal_.hierarchy).to eq 2 
-      end
-    end
-    context "when #new with children_length" do
-      it "children_length has specified value" do
-        goal_ = Goal.new(children_length: 3)
-        expect(goal_.children_length).to eq 3  
+    context "when #new with is_finished" do
+      it "is_finished has specified value" do
+        goal_ = Goal.new(is_finished: true)
+        expect(goal_.is_finished).to eq true 
       end
     end
   end
@@ -58,60 +31,30 @@ RSpec.describe Goal, type: :model do
         expect(test_goal).not_to be_valid  
       end
     end
-    # achievement_flag-----------------------------
-    context "when achievement_flag is blank" do
-      it "is invalid" do
-        test_goal.achievement_flag = nil
-        expect(test_goal).not_to be_valid  
-      end
-    end
-    # progress -------------------------------------
-    context "when progress is blank" do
-      it "is invalid" do
-        test_goal.progress = nil
-        expect(test_goal).not_to be_valid  
-      end
-    end
-    context "when progress is in 0..100" do
+    context "when content length is less than or equal to 20" do
       it "is valid" do
-        test_goal.progress = 0
-        expect(test_goal).to be_valid  
-        test_goal.progress = 50
-        expect(test_goal).to be_valid  
-        test_goal.progress = 100
+        test_goal.content = "a" * 20
         expect(test_goal).to be_valid  
       end
     end
-    context "when progress is out of 0..100" do
+    
+    context "when content length is greater than 20" do
       it "is invalid" do
-        test_goal.progress = -1
-        expect(test_goal).not_to be_valid  
-        test_goal.progress = 101
+        test_goal.content = "a" * 21
         expect(test_goal).not_to be_valid  
       end
     end
-    # hierarchy -------------------------------------
-    context "when hierarchy is blank" do
+    # color --------------------------------------
+    context "when color is blank" do
       it "is invalid" do
-        test_goal.hierarchy = nil
+        test_goal.color = nil
         expect(test_goal).not_to be_valid  
       end
     end
-    context "when hierarchy is in 1..3" do
-      it "is valid" do
-        test_goal.hierarchy = 1
-        expect(test_goal).to be_valid  
-        test_goal.hierarchy = 2
-        expect(test_goal).to be_valid  
-        test_goal.hierarchy = 3
-        expect(test_goal).to be_valid  
-      end
-    end
-    context "when hierarchy is out of 1..3" do
+    # is_finished --------------------------------
+    context "when is_finished is blank" do
       it "is invalid" do
-        test_goal.hierarchy = 0
-        expect(test_goal).not_to be_valid  
-        test_goal.hierarchy = 4
+        test_goal.is_finished = nil
         expect(test_goal).not_to be_valid  
       end
     end
@@ -120,17 +63,6 @@ RSpec.describe Goal, type: :model do
       it "is invalid" do
         test_goal.user_id = nil
         expect(test_goal).not_to be_valid  
-      end
-    end
-  end
-  # methods -----------------------------------------------------------------------------------------------
-  describe "#progress_rate" do
-    context "when called" do
-      it "returns progress + %" do
-        goal_ = Goal.new(progress: 10)
-        expect(goal_.progress_rate).to eq "10%"  
-        goal_.progress = 77
-        expect(goal_.progress_rate).to eq "77%"  
       end
     end
   end

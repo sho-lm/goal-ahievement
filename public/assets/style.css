@@ -2,21 +2,82 @@
   background: #fff;
 }
 
-.new-goal[data-v-21baf9ca] {
+.goal-card[data-v-14c003bc] {
   display: grid;
-  gap: 5px;
-  border: 1px solid #65c87b;
-  padding: 10px;
+  grid-template-columns: 64px 1fr 80px 64px;
 }
-.update-goal[data-v-21baf9ca] {
-  margin-top: 10px;
+.content[data-v-14c003bc] {
+  grid-area: 1/2/2/3;
+}
+.finish-check[data-v-14c003bc] {
+  grid-area: 1/3/2/4;
+}
+.finish-check[data-v-14c003bc] .v-label {
+    font-size: 14px;
+}
+.edit-icon[data-v-14c003bc] {
+  grid-area: 1/4/2/5;
+}
+.cancel-button[data-v-14c003bc] {
+  grid-area: 1/4/2/5;
+}
+.color-selector[data-v-14c003bc] {
+  grid-area: 2/2/3/3;
+}
+.post-button[data-v-14c003bc] {
+  grid-area: 2/4/3/5;
+}
+
+.goals-header[data-v-21baf9ca] {
   display: grid;
-  gap: 5px;
-  border: 1px solid #b8e623;
-  padding: 10px;
+  grid-template-columns: 130px 130px 1fr 300px 100px 100px;
+}
+.goals-header .page-title[data-v-21baf9ca] {
+    grid-area: 1/1/2/2;
+    margin: 15px 10px;
+    font-weight: bold;
+}
+.goals-header .filter-select[data-v-21baf9ca] {
+    grid-area: 1/2/2/3;
+    margin: auto 0;
+}
+.goals-header .delete-mode-area[data-v-21baf9ca] {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    display: grid;
+    grid-area: 1/4/2/5;
+    height: 40px;
+    margin: auto 30px;
+}
+.goals-header .delete-mode-area .all-uncheck-button[data-v-21baf9ca] {
+      grid-area: 1/2/2/3;
+}
+.goals-header .delete-mode-area .all-check-button[data-v-21baf9ca] {
+      grid-area: 1/3/2/4;
+}
+.goals-header .delete-mode-area .delete-button[data-v-21baf9ca] {
+      grid-area: 1/4/2/5;
+}
+.goals-header .delete-mode-button[data-v-21baf9ca] {
+    grid-area: 1/5/2/6;
+    margin: auto 0;
+}
+.goals-header .add-mode-button[data-v-21baf9ca] {
+    grid-area: 1/6/2/7;
+    margin: auto 0;
+}
+.goals-header .divider[data-v-21baf9ca] {
+    grid-area: 2/1/2/7;
+}
+.goals-header .new-goal[data-v-21baf9ca] {
+    grid-area: 2/1/3/7;
+    padding: 24px;
+}
+.goals-header .divider-create-mode[data-v-21baf9ca] {
+    grid-area: 3/1/3/7;
 }
 .goal-item[data-v-21baf9ca] {
-  border-bottom: 1px solid #776ef0;
+  display: grid;
 }
 
 .new-work-record[data-v-ccb26ae8] {
@@ -36,9 +97,11 @@
   border-bottom: 1px solid #776ef0;
 }
 
-.user-info[data-v-6722342e] {
-  border-bottom: 1px solid rgba(15, 60, 206, 0.541);
-  margin-bottom: 5px;
+.page-component[data-v-20e64512] .page-header {
+  background: #fff;
+  position: sticky;
+  top: 60px;
+  z-index: 4;
 }
 
 @charset "UTF-8";

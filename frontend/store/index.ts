@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
 import { auth } from '@/store/modules/auth';
+import { goals } from '@/store/modules/goals';
 import axios from 'axios';
 import { api } from '@/config/api'
 import { User } from '@/models/user';
@@ -10,7 +11,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    auth
+    auth,
+    goals
   },
   state: {
     user: new User(),
@@ -34,6 +36,7 @@ export default new Vuex.Store({
         .then(response => {
           context.dispatch('saveSession', response.data);
           console.log('authenticated');
+          context.dispatch('selectGoalList');
         })
         .catch(error => {
           console.log(error);

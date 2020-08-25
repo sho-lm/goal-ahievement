@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container.users-page
+  v-container
     v-row(justify="center")
       v-card(
         flat
@@ -32,7 +32,7 @@
               ) 編集する
             template(v-else)
               v-btn.mb-5(
-                @click="patchUpdate"
+                @click="updateUser"
                 :disabled="loading"
                 color="primary"
                 width="100%"
@@ -42,7 +42,7 @@
                 width="100%"
               ) キャンセル
               v-btn.mt-5(
-                @click="deleteDestroy"
+                @click="deleteUser"
                 color="red"
                 width="100%"
               ) 削除
@@ -98,7 +98,7 @@ export default Vue.extend({
       this.getForm.resetValidation();
       this.readonly = true;
     },
-    patchUpdate() {
+    updateUser() {
       if (!this.getForm.validate()) return;
 
       const params = {
@@ -115,7 +115,7 @@ export default Vue.extend({
           console.log(error);
         })
     },
-    deleteDestroy() {
+    deleteUser() {
       if (!confirm('削除してよろしいですか?')) return;
 
       axios.delete(api.userPath(this.$store.getters.userId))

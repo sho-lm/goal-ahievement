@@ -4,10 +4,11 @@
       app
       clipped-left
       dark
+      height="60"
     )
       template(v-if="$store.getters.isLoggedIn")
         v-app-bar-nav-icon(@click.stop="drawer = !drawer")
-        v-toolbar-title {{ $store.getters.user.name}}
+        v-toolbar-title {{ $store.getters.user.name}} v-snackbar使う
         v-spacer
         v-btn(@click.stop="logout") ログアウト
       template(v-else)
@@ -30,7 +31,7 @@
             v-list-item-title {{ route.name }}
 
     v-main(v-bind:style="{ background: activeBackGround }")
-      v-container(fluid)
+      v-container.page-component.pa-0
         router-view
 </template>
 
@@ -77,3 +78,17 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+  .page-component {
+    /deep/ .page-header {
+      background: #fff;
+      // box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      //             0 4px 5px 0 rgba(0, 0, 0, 0.14),
+      //             0 1px 10px 0 rgba(0, 0, 0, 0.12);
+      position: sticky;
+      top: 60px;
+      z-index: 4;
+    }
+  }
+</style>
