@@ -54,7 +54,7 @@ RSpec.describe User, type: :model do
         expect(sally).to be_valid  
       end
     end
-    context "when account_di lenght is greater than 20" do
+    context "when account_di length is greater than 20" do
       it "is invalid" do
         sally.name = "a" * 21
         expect(sally).not_to be_valid  
@@ -81,7 +81,7 @@ RSpec.describe User, type: :model do
         expect(sally).not_to be_valid  
       end
     end
-    context "when password lenght is greater than 20" do
+    context "when password length is greater than 20" do
       it "is invalid" do
         sally.password = "a" * 21
         expect(sally).not_to be_valid          

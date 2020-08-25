@@ -39,11 +39,21 @@ class Api::V1::GoalsController < ApiController
     render json: ""
   end
 
+  # 一回で複数を削除する
+  def destroyMultiple
+    ids = params[:ids] || []
+    for id in ids do
+      goal = @user.goals.find_by(id: id)
+      goal.destroy unless goal.nil?
+    end
+    render json: @user.goals
+  end
+
   private
     
     # form から特定のパラメータだけを取得する
     def goal_params
-      params.require(:goal).permit(:content, :limit)
+      params.require(:goal).permit(:content, :color, :is_finished)
     end
     
     # リクエストで指定されたゴールを返す
