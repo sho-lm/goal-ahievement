@@ -1,86 +1,154 @@
 <template lang="pug">
-  #users
-    div(v-if="$store.getters.isLoggedIn")
-      section.new-work-record
-        p new work record
-        label(for="content") content
-        input(v-model="content")
-        label(for="workedOn") worked on
-        input(v-model="workedOn", type="date")
-        button(@click="postCreate") create
-
-      section.update-work-record(v-if="isEditMode")
-        label(for="content") content
-        input(v-model="contentCopy")
-        label(for="workedOn") workedOn
-        input(v-model="workedOnCopy", type="date")
-        button(@click="patchUpdate") update
-        button(@click="deleteDestroy") delete
-        button(@click="cancelEditMode") cancel
-
-      section.work-records
-        h3 work records data
-        .work-record-item(v-for="workRecord in workRecordList")
-          p content: {{ workRecord.content }}
-          p workedOn: {{ workRecord.worked_on }}
-          button(@click="changeEditMode(workRecord, $event)") edit mode
-    div(v-else)
-      p need log in
+  div
+    .work-records-header.page-header
+      .page-title 勉強記録
+      .date-selector(v-if="!deleteMode")
+        date-picker(
+          :date.sync="requestDate"
+        )
+      .delete-mode-area(v-else)
+        v-btn.all-uncheck-button(
+          @click="uncheckAll"
+          icon
+        )
+          v-icon check_box_outline_blank
+        v-btn.all-check-button(
+          @click="checkAll"
+          color="red"
+          icon
+        )
+          v-icon check_box
+        v-btn.delete-button(
+          @click="deleteWorkRecords"
+          color="red"
+          icon
+        )
+          v-icon delete
+      v-btn.delete-mode-button(
+        @click="changeDeleteMode"
+        icon
+      )
+        v-icon(
+          large
+        ) {{ deleteModeIcon }}
+      v-btn.add-mode-button(
+        color="primary"
+        @click="createMode = !createMode"
+        icon
+      )
+        v-icon(
+          large
+        )  {{ createModeIcon }}
+      v-divider.divider
+      template(v-if="createMode")
+        .new-work-record
+          p 新規作成
+          work-record-card(
+            :date="requestDate"
+            :createMode.sync="createMode"
+            @updateWorkRecordList="selectWorkRecordList"
+          )
+        v-divider.divider-create-mode
+    section.pa-6
+      .work-record-item(
+        v-for="workRecord in workRecordList"
+        :key="workRecord.id"
+        :style="{ 'grid-template-columns': `${checkboxWidth}px 1fr` }"
+      )
+        v-checkbox.mt-5(
+          v-model="workRecord.deleteCheckBox"
+          dense
+          color="red"
+        )
+        work-record-card.mb-1(
+          :date="requestDate"
+          :propWorkRecord="workRecord"
+          @updateWorkRecordList="selectWorkRecordList"
+        )
 </template>
+
 <script lang="ts">
 import Vue from 'vue'
 import axios from 'axios';
-import { WorkRecord } from '@/models/workRecord';
 import { api } from '@/config/api';
+import { WorkRecord } from '@/models/workRecord';
+import { Goal } from '@/models/goal';
+import WorkRecordCard from '@/components/workRecords/WorkRecordCard.vue';
+import DatePicker from '@/components/workRecords/DatePicker.vue';
+import moment, { Moment } from 'moment';
 
 export type DataType = {
-  workRecordList: Array<WorkRecord>
-  content:        string
-  workedOn:       string
-  contentCopy:    string
-  workedOnCopy:   string
-  workRecordId:   string
-  isEditMode:     boolean
+  workRecordList:  Array<WorkRecord>
+  requestDate:     Moment
+  deleteMode:      boolean
+  createMode:      boolean
 }
 
+const dateFormat = 'yyyy-M-D';
 
 export default Vue.extend({
   data(): DataType {
     return {
       workRecordList: [],
-      content:        '',
-      workedOn:       '',
-      contentCopy:    '',
-      workedOnCopy:   '',
-      workRecordId:   '',
-      isEditMode:     false,
+      requestDate:    moment(),
+      deleteMode:     false,
+      createMode:     false,
     }
+  },
+  components: {
+    WorkRecordCard,
+    DatePicker
+  },
+  created() {
+    this.selectWorkRecordList();
   },
   computed: {
     userId(): string {
       return this.$store.getters.userId;
-    }
+    },
+    goalList(): Array<Goal> {
+      return this.$store.getters.goalList;
+    },
+    deleteModeIcon(): string {
+      return this.deleteMode ? 'undo' : 'remove_circle';
+    },
+    createModeIcon(): string {
+      return this.createMode ? 'undo' : 'add_circle';
+    },
+    checkboxWidth(): number {
+      return this.deleteMode ? 40 : 0;
+    },
+    deleteList(): Array<WorkRecord> {
+      return this.workRecordList.filter((workRecord: WorkRecord) => workRecord.deleteCheckBox);
+    },
   },
   watch: {
-    userId() {
+    requestDate() {
       this.selectWorkRecordList();
     }
   },
-  mounted() {
-    this.selectWorkRecordList();
-  },
   methods: {
-    changeEditMode(workRecord: WorkRecord, event: any): void {
-      this.contentCopy = workRecord.content;
-      this.workedOnCopy = workRecord.worked_on; 
-      this.workRecordId = workRecord.id;
-      this.isEditMode = true;
+    changeDeleteMode(): void {
+      this.deleteMode = !this.deleteMode;
+      if (!this.deleteMode) {
+        this.uncheckAll();
+      }
     },
-    cancelEditMode(): void {
-      this.isEditMode = false;
+    uncheckAll(): void {
+      for (let goal of this.workRecordList) {
+        goal.deleteCheckBox = false;
+      }
+    },
+    checkAll(): void {
+      for (let goal of this.workRecordList) {
+        goal.deleteCheckBox = true;
+      }
     },
     selectWorkRecordList(): void {
-      axios.get(api.workRecordsPath(this.userId))
+      const params = {
+        date: this.requestDate.format("YYYY-MM-DD")
+      };
+      axios.get(api.workRecordsPath(this.userId), { params: params })
         .then(response => {
           this.workRecordList = WorkRecord.createIndexDataBy(response.data);
         })
@@ -88,41 +156,16 @@ export default Vue.extend({
           console.log(error.response);
         })
     },
-    postCreate(): void {
+    deleteWorkRecords(): void {
+      const deleteIdList = [];
+      for (let workRecord of this.deleteList) {
+        deleteIdList.push(workRecord.id);
+      }
       const params = {
-        content: this.content,
-        worked_on: this.workedOn
-      };
-      axios.post(api.workRecordsPath(this.userId), { work_record: params })
+        ids: deleteIdList
+      }
+      axios.delete(api.workRecordMultiplePath(this.userId), { params })
         .then(response => {
-          const workRecord = new WorkRecord();
-          workRecord.setWorkRecordData(response.data);
-          this.workRecordList.push(workRecord);
-          this.content = '';
-          this.workedOn = '';
-        })
-        .catch(error => {
-          console.log(error.response);
-        })
-    },
-    patchUpdate(): void {
-      const params = {
-        content: this.contentCopy,
-        worked_on: this.workedOnCopy
-      };
-      axios.patch(api.workRecordPath(this.userId, this.workRecordId), { work_record: params })
-        .then(response => {
-          this.isEditMode = false;
-          this.selectWorkRecordList();
-        })
-        .catch(error => {
-          console.log(error.response);
-        })
-    },
-    deleteDestroy(): void {
-      axios.delete(api.workRecordPath(this.userId, this.workRecordId))
-        .then(response => {
-          this.isEditMode = false;
           this.selectWorkRecordList();
         })
         .catch(error => {
@@ -134,20 +177,63 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-  .new-work-record {
+  .work-records-header {
     display: grid;
-    gap: 5px;
-    border: 1px solid rgb(101, 200, 123);
-    padding: 10px;
+    grid-template-columns: 130px minmax(300px, 1fr) 100px 100px;
+
+    .page-title {
+      grid-area: 1/1/2/2;
+      margin: 15px 10px;
+      font-weight: bold;
+    }
+
+    .date-selector {
+      width: 200px;
+      grid-area: 1/2/2/3;
+    }
+
+    .delete-mode-area {
+      width: 300px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      display: grid;
+      grid-area: 1/2/2/3;
+      height: 40px;
+      margin: auto 30px auto auto;
+
+      .all-uncheck-button {
+        grid-area: 1/2/2/3;
+      }
+      .all-check-button {
+        grid-area: 1/3/2/4;
+      }
+      .delete-button {
+        grid-area: 1/4/2/5;
+      }
+    }
+
+    .delete-mode-button {
+      grid-area: 1/3/2/4;
+      margin: auto;
+    }
+    .add-mode-button {
+      grid-area: 1/4/2/5;
+      margin: auto;
+    }
+    .divider {
+      grid-area:2/1/2/5;
+    }
+
+    .new-work-record {
+      grid-area: 2/1/3/5;
+      padding: 24px;
+    }
+    .divider-create-mode {
+      grid-area: 3/1/3/5;
+    }
   }
-  .update-work-record {
-    margin-top: 10px;
-    display: grid;
-    gap: 5px;
-    border: 1px solid rgb(184, 230, 35);
-    padding: 10px;
-  }
+
   .work-record-item {
-    border-bottom: 1px solid rgb(119, 110, 240);
+    display: grid;
   }
 </style>

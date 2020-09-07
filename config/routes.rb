@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     namespace :v1 do
       resources :users, only:          [:index, :create, :update, :destroy] do
-        delete "/goals/multiple", to: "goals#destroyMultiple"
+        delete "/goals/multiple",        to: "goals#destroyMultiple"
+        delete "/work_records/multiple", to: "work_records#destroyMultiple"
 
         resources :goals, only:        [:index, :create, :update, :destroy]
         resources :work_records, only: [:index, :create, :update, :destroy]

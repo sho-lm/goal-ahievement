@@ -15,9 +15,7 @@
 .finish-check[data-v-14c003bc] .v-label {
     font-size: 14px;
 }
-.edit-icon[data-v-14c003bc] {
-  grid-area: 1/4/2/5;
-}
+.edit-icon[data-v-14c003bc],
 .cancel-button[data-v-14c003bc] {
   grid-area: 1/4/2/5;
 }
@@ -30,7 +28,7 @@
 
 .goals-header[data-v-21baf9ca] {
   display: grid;
-  grid-template-columns: 130px 130px 1fr 300px 100px 100px;
+  grid-template-columns: 130px minmax(300px, 1fr) 100px 100px;
 }
 .goals-header .page-title[data-v-21baf9ca] {
     grid-area: 1/1/2/2;
@@ -39,15 +37,17 @@
 }
 .goals-header .filter-select[data-v-21baf9ca] {
     grid-area: 1/2/2/3;
-    margin: auto 0;
+    margin: auto auto auto 10px;
+    width: 130px;
 }
 .goals-header .delete-mode-area[data-v-21baf9ca] {
+    width: 300px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     display: grid;
-    grid-area: 1/4/2/5;
+    grid-area: 1/2/2/3;
     height: 40px;
-    margin: auto 30px;
+    margin: auto 30px auto auto;
 }
 .goals-header .delete-mode-area .all-uncheck-button[data-v-21baf9ca] {
       grid-area: 1/2/2/3;
@@ -59,42 +59,342 @@
       grid-area: 1/4/2/5;
 }
 .goals-header .delete-mode-button[data-v-21baf9ca] {
-    grid-area: 1/5/2/6;
-    margin: auto 0;
+    grid-area: 1/3/2/4;
+    margin: auto;
 }
 .goals-header .add-mode-button[data-v-21baf9ca] {
-    grid-area: 1/6/2/7;
-    margin: auto 0;
+    grid-area: 1/4/2/5;
+    margin: auto;
 }
 .goals-header .divider[data-v-21baf9ca] {
-    grid-area: 2/1/2/7;
+    grid-area: 2/1/2/5;
 }
 .goals-header .new-goal[data-v-21baf9ca] {
-    grid-area: 2/1/3/7;
+    grid-area: 2/1/3/5;
     padding: 24px;
 }
 .goals-header .divider-create-mode[data-v-21baf9ca] {
-    grid-area: 3/1/3/7;
+    grid-area: 3/1/3/5;
 }
 .goal-item[data-v-21baf9ca] {
   display: grid;
 }
 
-.new-work-record[data-v-ccb26ae8] {
-  display: grid;
-  gap: 5px;
-  border: 1px solid #65c87b;
-  padding: 10px;
+.date-text[data-v-54e0e444] input:hover {
+  cursor: pointer;
 }
-.update-work-record[data-v-ccb26ae8] {
-  margin-top: 10px;
+
+.vue__time-picker {
+  display: inline-block;
+  position: relative;
+  font-size: 1em;
+  width: 10em;
+  font-family: sans-serif;
+  vertical-align: middle;
+}
+.vue__time-picker * {
+  box-sizing: border-box;
+}
+.vue__time-picker input.display-time {
+  border: 1px solid #d2d2d2;
+  width: 10em;
+  height: 2.2em;
+  padding: 0.3em 0.5em;
+  font-size: 1em;
+}
+.vue__time-picker input.has-custom-icon {
+  padding-left: 1.8em;
+}
+.vue__time-picker input.display-time.invalid:not(.skip-error-style) {
+  border-color: #cc0033;
+  outline-color: #cc0033;
+}
+.vue__time-picker input.display-time:disabled,
+.vue__time-picker input.display-time.disabled {
+  color: #d2d2d2;
+}
+.vue__time-picker .controls {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: stretch;
+  /* Prevent browser focusing on the controls layer */
+  pointer-events: none;
+}
+.vue__time-picker .controls > * {
+  cursor: pointer;
+  width: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.35em;
+  color: #d2d2d2;
+  line-height: 100%;
+  font-style: normal;
+  /* Resume pointer-events on children components */
+  pointer-events: initial;
+  transition: color .2s, opacity .2s;
+}
+.vue__time-picker .controls > *:hover {
+  color: #797979;
+}
+.vue__time-picker .controls > *:focus,
+.vue__time-picker .controls > *:active {
+  outline: 0;
+}
+.vue__time-picker .controls .char {
+  font-size: 1.1em;
+  line-height: 100%;
+  /* Vertical align fixes for webkit browsers only */
+  -webkit-margin-before: -0.15em;
+}
+.vue__time-picker .custom-icon {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1.8em;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  /* pass down mouse events to the <input> underneath */
+  pointer-events: none;
+}
+.vue__time-picker .custom-icon img,
+.vue__time-picker .custom-icon svg,
+.vue__time-picker .controls img,
+.vue__time-picker .controls svg {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  max-width: 1em;
+  height: auto;
+}
+.vue__time-picker .time-picker-overlay {
+  z-index: 4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.vue__time-picker .dropdown {
+  position: absolute;
+  z-index: 5;
+  top: calc(2.2em + 2px);
+  left: 0;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+  width: 10em;
+  height: 10em;
+  font-weight: normal;
+}
+.vue__time-picker .dropdown .select-list {
+  width: 10em;
+  height: 10em;
+  overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+}
+.vue__time-picker .dropdown .select-list:focus,
+.vue__time-picker .dropdown .select-list:active {
+  outline: 0;
+}
+.vue__time-picker .dropdown ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  outline: 0;
+  flex: 1 1 0.00001px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.vue__time-picker .dropdown ul.minutes,
+.vue__time-picker .dropdown ul.seconds,
+.vue__time-picker .dropdown ul.apms {
+  border-left: 1px solid #fff;
+}
+.vue__time-picker .dropdown ul li {
+  list-style: none;
+  text-align: center;
+  padding: 0.3em 0;
+  color: #161616;
+}
+.vue__time-picker .dropdown ul li:not(.hint):not([disabled]):hover,
+.vue__time-picker .dropdown ul li:not(.hint):not([disabled]):focus {
+  background: rgba(0, 0, 0, 0.08);
+  color: #161616;
+  cursor: pointer;
+}
+.vue__time-picker .dropdown ul li:not([disabled]).active,
+.vue__time-picker .dropdown ul li:not([disabled]).active:hover,
+.vue__time-picker .dropdown ul li:not([disabled]).active:focus {
+  background: #41B883;
+  color: #fff;
+}
+.vue__time-picker .dropdown ul li[disabled],
+.vue__time-picker .dropdown ul li[disabled]:hover {
+  background: transparent;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.vue__time-picker .dropdown .hint {
+  color: #a5a5a5;
+  cursor: default;
+  font-size: 0.8em;
+}
+
+@charset "UTF-8";
+.work-record-card[data-v-bf2ab74c] {
   display: grid;
-  gap: 5px;
-  border: 1px solid #b8e623;
-  padding: 10px;
+  grid-template-columns: 1fr 200px 64px;
+  grid-row-gap: 10px;
+}
+.work-record-card .goal-select[data-v-bf2ab74c] {
+    grid-area: 1/1/2/2;
+    margin: auto 20px;
+}
+.work-record-card .worked-for[data-v-bf2ab74c] {
+    position: relative;
+    grid-area: 1/2/2/3;
+    margin: auto 30px auto auto;
+}
+.work-record-card .worked-date[data-v-bf2ab74c] {
+    grid-area: 2/1/3/3;
+    grid-template-columns: repeat(auto-fill, 200px);
+    display: grid;
+}
+.work-record-card .worked-date > *[data-v-bf2ab74c] {
+      margin: auto;
+}
+.work-record-card .worked-date .start-time[data-v-bf2ab74c] {
+      position: relative;
+}
+.work-record-card .worked-date .end-time[data-v-bf2ab74c]::before {
+      content: '～';
+      position: relative;
+      top: 3px;
+      left: -14px;
+}
+.work-record-card .edit-icon[data-v-bf2ab74c],
+  .work-record-card .cancel-button[data-v-bf2ab74c] {
+    grid-area: 1/3/2/4;
+    margin: 16px;
+}
+.work-record-card .post-button[data-v-bf2ab74c] {
+    grid-area: 2/3/3/4;
+    padding: 0 !important;
+    margin: auto 0;
+}
+.work-record-card .memo[data-v-bf2ab74c] {
+    grid-area: 3/1/4/2;
+}
+.work-record-card .error-message[data-v-bf2ab74c] {
+    color: #f00;
+    position: absolute;
+    top: -20px;
+    font-size: 0.8em;
+}
+
+.work-records-header[data-v-ccb26ae8] {
+  display: grid;
+  grid-template-columns: 130px minmax(300px, 1fr) 100px 100px;
+}
+.work-records-header .page-title[data-v-ccb26ae8] {
+    grid-area: 1/1/2/2;
+    margin: 15px 10px;
+    font-weight: bold;
+}
+.work-records-header .date-selector[data-v-ccb26ae8] {
+    width: 200px;
+    grid-area: 1/2/2/3;
+}
+.work-records-header .delete-mode-area[data-v-ccb26ae8] {
+    width: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    display: grid;
+    grid-area: 1/2/2/3;
+    height: 40px;
+    margin: auto 30px auto auto;
+}
+.work-records-header .delete-mode-area .all-uncheck-button[data-v-ccb26ae8] {
+      grid-area: 1/2/2/3;
+}
+.work-records-header .delete-mode-area .all-check-button[data-v-ccb26ae8] {
+      grid-area: 1/3/2/4;
+}
+.work-records-header .delete-mode-area .delete-button[data-v-ccb26ae8] {
+      grid-area: 1/4/2/5;
+}
+.work-records-header .delete-mode-button[data-v-ccb26ae8] {
+    grid-area: 1/3/2/4;
+    margin: auto;
+}
+.work-records-header .add-mode-button[data-v-ccb26ae8] {
+    grid-area: 1/4/2/5;
+    margin: auto;
+}
+.work-records-header .divider[data-v-ccb26ae8] {
+    grid-area: 2/1/2/5;
+}
+.work-records-header .new-work-record[data-v-ccb26ae8] {
+    grid-area: 2/1/3/5;
+    padding: 24px;
+}
+.work-records-header .divider-create-mode[data-v-ccb26ae8] {
+    grid-area: 3/1/3/5;
 }
 .work-record-item[data-v-ccb26ae8] {
-  border-bottom: 1px solid #776ef0;
+  display: grid;
+}
+
+.select-list[data-v-9e0ba6ba] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 10em;
+  height: 10em;
+  overflow: hidden;
+}
+.select-list ul[data-v-9e0ba6ba] {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    list-style: none;
+}
+.select-list ul li[data-v-9e0ba6ba] {
+      text-align: center;
+      padding: 0.3em 0;
+}
+.select-list ul li[data-v-9e0ba6ba]:not(.hint):hover {
+        cursor: pointer;
+}
+.select-list ul .hint[data-v-9e0ba6ba] {
+      color: #a5a5a5;
+      cursor: default;
+      font-size: 0.8em;
+}
+.select-list ul .active[data-v-9e0ba6ba] {
+      background: #41B883;
+      color: #fff;
+}
+
+.grid[data-v-6722342e] {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .page-component[data-v-20e64512] .page-header {

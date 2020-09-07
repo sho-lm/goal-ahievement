@@ -12,7 +12,7 @@
         v-card-title(
         ) {{ content }}
         v-btn.edit-icon.ma-4(
-          @click="editMode"
+          @click="readonly = false"
           icon
         )
           v-icon edit
@@ -92,7 +92,7 @@ export default Vue.extend({
       valid:      true,
     }
   },
-  mounted() {
+  created() {
     this.initialize();
 
     if (this.createMode) {
@@ -107,11 +107,11 @@ export default Vue.extend({
     getForm(): VForm {
       return (this.$refs as any).form;
     },
+    userId(): string {
+      return this.$store.getters.userId;
+    },
   },
   methods: {
-    editMode(): void {
-      this.readonly = false;
-    },
     cancelEdit(): void {
       this.initialize();
       this.getForm.resetValidation();
@@ -148,7 +148,7 @@ export default Vue.extend({
         color:       this.color,
         is_finished: this.isFinished,
       };
-      axios.patch(api.goalPath(this.$store.getters.userId, this.id), { goal: params })
+      axios.patch(api.goalPath(this.userId, this.id), { goal: params })
         .then(response => {
           this.readonly = true;
           
@@ -174,16 +174,13 @@ export default Vue.extend({
     grid-area: 1/2/2/3;
   }
   .finish-check {
-    
     grid-area: 1/3/2/4;
 
     /deep/ .v-label {
       font-size: 14px;
     }
   }
-  .edit-icon {
-    grid-area: 1/4/2/5;
-  }
+  .edit-icon,
   .cancel-button {
     grid-area: 1/4/2/5;
   }

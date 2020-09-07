@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::WorkRecords", type: :request do
   let(:sally) { create(:sally) }
-  let(:sally_work_record) { sally.work_records.create(content: "sally work record", worked_on: "2020-7-7") }
+  let(:sally_work_record) { sally.work_records.create( worked_on: "2020-7-7") }
   let(:sally_login_params) { { name: sally.name, password: sally.password } }
   
   # index -----------------------------------------------------------------------------------------
@@ -34,11 +34,21 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
           get api_v1_user_work_records_path(sally)
           expect(response.status).to eq 200  
         end
-        it "returns work_record list" do
-          sally.work_records.create(content: "record1", worked_on: "2020-8-8")
+      end
+      context "when date param is null" do
+        it "returns work_record list where worked_on is today" do
+          sally.work_records.create( worked_on: Date.today)
           get api_v1_user_work_records_path(sally)
           res_json = JSON.parse(response.body)
-          expect(res_json[0]["content"]).to eq "record1"
+          expect(res_json[0]["worked_on"]).to eq Date.today.to_s
+        end
+      end
+      context "when date params is specified" do
+        it "returns work_record list where worked_on is specified date" do
+          sally.work_records.create( worked_on: "2020-08-08")
+          get api_v1_user_work_records_path(sally), params: { date: "2020-08-08" }
+          res_json = JSON.parse(response.body)
+          expect(res_json[0]["worked_on"]).to eq "2020-08-08"
         end
       end
     end
@@ -68,7 +78,7 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
         end
       end
       context "when request params are invalid" do
-        let(:invalid_params) { { work_record: { content: nil } } }
+        let(:invalid_params) { { work_record: { worked_on: nil } } }
         it "returns status 400" do
           post api_v1_user_work_records_path(sally), params: invalid_params
           expect(response.status).to eq 400  
@@ -85,7 +95,7 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
         end
       end
       context "when request params are valid" do
-        let(:work_record_params) { { work_record: { content: "work_record", worked_on: "2020-8-8" } }  }
+        let(:work_record_params) { { work_record: { worked_on: "2020-8-8" } }  }
         it "returns status 201" do
           post api_v1_user_work_records_path(sally), params: work_record_params
           expect(response.status).to eq 201  
@@ -93,7 +103,7 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
         it "returns created work_record" do
           post api_v1_user_work_records_path(sally), params: work_record_params
           res_json = JSON.parse(response.body)
-          expect(res_json["content"]).to eq "work_record"  
+          expect(res_json["worked_on"]).to eq "2020-08-08"  
         end
         it "creates new work_record" do
           expect do
@@ -129,7 +139,7 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
       end
       context "when specified user doesn't own specified work_record" do
         let(:tom) { create(:tom) }
-        let(:tom_work_record) { tom.work_records.create(content: "tom work_record", worked_on: "2020-8-8") }
+        let(:tom_work_record) { tom.work_records.create(worked_on: "2020-8-8") }
         it "returns status 404" do
           patch api_v1_user_work_record_path(sally, tom_work_record)
           expect(response.status).to eq 404  
@@ -141,7 +151,7 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
         end
       end
       context "when request params are invalid" do
-        let(:invalid_params) { { work_record: { content: nil } } }
+        let(:invalid_params) { { work_record: { worked_on: nil, memo: "updated" } } }
         it "returns status 400" do
           patch api_v1_user_work_record_path(sally, sally_work_record), params: invalid_params
           expect(response.status).to eq 400  
@@ -154,11 +164,11 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
         it "doesn't update work_record" do
           expect do
             patch api_v1_user_work_record_path(sally, sally_work_record), params: invalid_params
-          end.not_to change{ sally_work_record.reload.content }
+          end.not_to change{ sally_work_record.reload.memo }
         end
       end
       context "when request params are valid" do
-        let(:update_params) { { work_record: { content: "updated" } }  }
+        let(:update_params) { { work_record: { worked_on: "2020-8-8", memo: "updated" } }  }
         it "returns status 200" do
           patch api_v1_user_work_record_path(sally, sally_work_record), params: update_params
           expect(response.status).to eq 200  
@@ -166,12 +176,12 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
         it "returns updated work_record" do
           patch api_v1_user_work_record_path(sally, sally_work_record), params: update_params
           res_json = JSON.parse(response.body)
-          expect(res_json["content"]).to eq "updated"
+          expect(res_json["memo"]).to eq "updated"
         end
         it "updates work_record" do
           expect do
             patch api_v1_user_work_record_path(sally, sally_work_record), params: update_params
-          end.to change{ sally_work_record.reload.content }.from("sally work record").to("updated")
+          end.to change{ sally_work_record.reload.memo }.from(nil).to("updated")
         end
       end
     end
@@ -202,7 +212,7 @@ RSpec.describe "Api::V1::WorkRecords", type: :request do
       end
       context "when specified user doesn't own specified work_record" do
         let(:tom) { create(:tom) }
-        let(:tom_work_record) { tom.work_records.create(content: "tom work_record", worked_on: "2020-8-8") }
+        let(:tom_work_record) { tom.work_records.create(worked_on: "2020-8-8") }
         it "returns status 404" do
           delete api_v1_user_work_record_path(sally, tom_work_record)
           expect(response.status).to eq 404  

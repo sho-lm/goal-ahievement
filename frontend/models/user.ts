@@ -64,5 +64,4 @@ export class User {
       v => !v || (v.length >= 4 && v.length <= 20) || 'パスワードは4文字以上20文字以下で入力してください',
     ];
   }
-
 }

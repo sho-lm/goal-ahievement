@@ -1,5 +1,6 @@
 class Goal < ApplicationRecord
   belongs_to :user
+  has_many :work_records, dependent: :destroy
 
   # attirbute ---------------------------------------------------------------------------------------------
   attribute :is_finished, :boolean, default: false

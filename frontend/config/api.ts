@@ -19,4 +19,6 @@ export const api = {
                     `${baseUrl}/users/${userId}/work_records/${workRecordId}`,
   goalMultiplePath: (userId: string) =>
                     `${baseUrl}/users/${userId}/goals/multiple`,
+  workRecordMultiplePath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/work_records/multiple`,
 }
