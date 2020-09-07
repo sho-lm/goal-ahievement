@@ -3,13 +3,13 @@
     .goals-header.page-header
       .page-title 目標一覧
       v-select.filter-select(
+        v-if="!deleteMode"
         v-model="selected"
         :items="filterSelectors"
         dense
         hide-details
       )
-
-      .delete-mode-area(v-if="deleteMode")
+      .delete-mode-area(v-else)
         v-btn.all-uncheck-button(
           @click="uncheckAll"
           icon
@@ -109,9 +109,9 @@ export default Vue.extend({
       newGoal:         new Goal(),
       selected:        SELECTOR_VALUE.NOT_FINISHED,
       filterSelectors: [
-        { value: SELECTOR_VALUE.FINISHED,     text: '完了済み' },
+        { value: SELECTOR_VALUE.FINISHED,     text: '完了済' },
         { value: SELECTOR_VALUE.NOT_FINISHED, text: '未完了' },
-        { value: SELECTOR_VALUE.ALL,          text: '全て' },
+        { value: SELECTOR_VALUE.ALL,          text: '全て表示' },
       ]
     }
   },
@@ -121,6 +121,9 @@ export default Vue.extend({
   computed: {
     goalList(): Array<Goal> {
       return this.$store.getters.goalList;
+    },
+    userId(): string {
+      return this.$store.getters.userId;
     },
     checkboxWidth(): number {
       return this.deleteMode ? 40 : 0;
@@ -169,7 +172,7 @@ export default Vue.extend({
       const params = {
         ids: deleteIdList
       }
-      axios.delete(api.goalMultiplePath(this.$store.getters.userId), { params })
+      axios.delete(api.goalMultiplePath(this.userId), { params })
         .then(response => {
           this.$store.commit('setGoalList', response.data);
         })
@@ -184,7 +187,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
   .goals-header {
     display: grid;
-    grid-template-columns: 130px 130px 1fr 300px 100px 100px;
+    grid-template-columns: 130px minmax(300px, 1fr) 100px 100px;
 
     .page-title {
       grid-area: 1/1/2/2;
@@ -194,16 +197,18 @@ export default Vue.extend({
 
     .filter-select {
       grid-area: 1/2/2/3;
-      margin: auto 0;
+      margin: auto auto auto 10px;
+      width: 130px;
     }
 
     .delete-mode-area {
+      width: 300px;
       border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 20px;
       display: grid;
-      grid-area: 1/4/2/5;
+      grid-area: 1/2/2/3;
       height: 40px;
-      margin: auto 30px;
+      margin: auto 30px auto auto;
 
       .all-uncheck-button {
         grid-area: 1/2/2/3;
@@ -217,22 +222,22 @@ export default Vue.extend({
     }
 
     .delete-mode-button {
-      grid-area: 1/5/2/6;
-      margin: auto 0;
+      grid-area: 1/3/2/4;
+      margin: auto;
     }
     .add-mode-button {
-      grid-area: 1/6/2/7;
-      margin: auto 0;
+      grid-area: 1/4/2/5;
+      margin: auto;
     }
     .divider {
-      grid-area:2/1/2/7;
+      grid-area:2/1/2/5;
     }
     .new-goal {
-      grid-area: 2/1/3/7;
+      grid-area: 2/1/3/5;
       padding: 24px;
     }
     .divider-create-mode {
-      grid-area: 3/1/3/7;
+      grid-area: 3/1/3/5;
     }
   }
 

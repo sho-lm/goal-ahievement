@@ -24,7 +24,7 @@ class Api::V1::GoalsController < ApiController
 
   # 更新する
   def update
-    goal = find_goal
+    goal = find
     if goal.update(goal_params)
       render json: goal
     else
@@ -34,7 +34,7 @@ class Api::V1::GoalsController < ApiController
 
   # 削除する
   def destroy
-    goal = find_goal
+    goal = find
     goal.destroy unless goal.nil?
     render json: ""
   end
@@ -57,7 +57,7 @@ class Api::V1::GoalsController < ApiController
     end
     
     # リクエストで指定されたゴールを返す
-    def find_goal
+    def find
       @user.goals.find(params[:id])
     end
 

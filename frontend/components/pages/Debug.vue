@@ -1,16 +1,18 @@
 <template lang="pug">
   v-container
-    goal-card(
-      :content.sync="content"
-      :color.sync="color"
-    )
+    .grid
+      time-picker(
+        hourText="時間"
+        minuteText="分"
+      )
+      vue-timepicker
+      time-picker
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios';
-import { api } from '@/config/api';
-import GoalCard from '@/components/goals/GoalCard.vue';
+import TimePicker from '@/components/workRecords/TimePicker.vue';
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue';
 
 const sessionKey = 'userId';
 
@@ -26,7 +28,15 @@ export default Vue.extend({
     }
   },
   components: {
-    GoalCard
+    TimePicker,
+    VueTimepicker
   },
 })
 </script>
+
+<style lang="scss" scoped>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+</style>
