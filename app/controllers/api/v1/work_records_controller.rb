@@ -40,7 +40,7 @@ class Api::V1::WorkRecordsController < ApiController
   end
 
   # 一回で複数を削除する
-  def destroyMultiple
+  def destroy_multiple
     ids = params[:ids] || []
     for id in ids do
       work_record = @user.work_records.find_by(id: id)
@@ -74,5 +74,4 @@ class Api::V1::WorkRecordsController < ApiController
     def find_user
       User.find_by(id: params[:user_id])
     end
-
 end

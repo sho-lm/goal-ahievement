@@ -5,6 +5,7 @@
       .date-selector(v-if="!deleteMode")
         date-picker(
           :date.sync="requestDate"
+          showArrow
         )
       .delete-mode-area(v-else)
         v-btn.all-uncheck-button(
@@ -74,7 +75,7 @@ import { api } from '@/config/api';
 import { WorkRecord } from '@/models/workRecord';
 import { Goal } from '@/models/goal';
 import WorkRecordCard from '@/components/workRecords/WorkRecordCard.vue';
-import DatePicker from '@/components/workRecords/DatePicker.vue';
+import DatePicker from '@/components/common/DatePicker.vue';
 import moment, { Moment } from 'moment';
 
 export type DataType = {
@@ -188,8 +189,9 @@ export default Vue.extend({
     }
 
     .date-selector {
-      width: 200px;
       grid-area: 1/2/2/3;
+      margin-top: 5px;
+      width: 300px;
     }
 
     .delete-mode-area {

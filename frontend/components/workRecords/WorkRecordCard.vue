@@ -91,7 +91,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import { api } from '@/config/api';
 import { WorkRecord } from '@/models/workRecord';
-import DatePicker from '@/components/workRecords/DatePicker.vue';
+import DatePicker from '@/components/common/DatePicker.vue';
 import WorkedForPicker from '@/components/workRecords/WorkedForPicker.vue';
 import { Goal } from '@/models/goal';
 import { VForm } from '@/plugins/vuetify';

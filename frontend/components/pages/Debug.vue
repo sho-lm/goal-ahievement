@@ -1,42 +1,38 @@
 <template lang="pug">
-  v-container
-    .grid
-      time-picker(
-        hourText="時間"
-        minuteText="分"
-      )
-      vue-timepicker
-      time-picker
+  .debug
+    year-picker(
+      :date.sync="date"
+    )
+    date-picker(
+      :date="date"
+    )
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import TimePicker from '@/components/workRecords/TimePicker.vue';
-import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue';
+import Vue from 'vue';
+import YearPicker from '@/components/reports/YearPicker.vue';
+import DatePicker from '@/components/common/DatePicker.vue';
+import moment, { Moment } from 'moment';
 
-const sessionKey = 'userId';
-
-export type DataType = {
-}
 
 export default Vue.extend({
   data()  {
     return {
-      readonly: false,
-      content: 'hey',
-      color: '#48cc9180',
+      date: moment()
     }
   },
   components: {
-    TimePicker,
-    VueTimepicker
+    YearPicker,
+    DatePicker
   },
 })
 </script>
 
 <style lang="scss" scoped>
-  .grid {
+  .debug {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    height: 50px;
   }
 </style>

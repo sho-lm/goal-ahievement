@@ -6,6 +6,7 @@ import SignUp from '@/components/pages/SignUp.vue';
 import Users from '@/components/pages/Users.vue';
 import Goals from '@/components/pages/Goals.vue';
 import WorkRecords from '@/components/pages/WorkRecords.vue';
+import Reports from '@/components/pages/Reports.vue';
 import Debug from '@/components/pages/Debug.vue';
 
 Vue.use(VueRouter);
@@ -71,6 +72,16 @@ export const routes: Array<RouteConfig> = [
     component: WorkRecords,
     meta: {
       icon: 'work',
+      background: '#fff',
+      requiresLogin: true,
+    }
+  },
+  {
+    name: 'reports',
+    path: '/reports',
+    component: Reports,
+    meta: {
+      icon: 'bar_chart',
       background: '#fff',
       requiresLogin: true,
     }

@@ -7,18 +7,22 @@ export const api = {
   logoutPath:       `${baseUrl}/logout`,
   authPath:         `${baseUrl}/auth`,
   usersPath:        `${baseUrl}/users`,
-  goalsPath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/goals`,
-  workRecordsPath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/work_records`,
   userPath: (userId: string) => 
                     `${baseUrl}/users/${userId}`,
+  goalsPath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/goals`,
   goalPath: (userId: string, goalId: string) => 
                     `${baseUrl}/users/${userId}/goals/${goalId}`,
-  workRecordPath: (userId: string, workRecordId: string) => 
-                    `${baseUrl}/users/${userId}/work_records/${workRecordId}`,
   goalMultiplePath: (userId: string) =>
                     `${baseUrl}/users/${userId}/goals/multiple`,
+  workRecordsPath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/work_records`,
+  workRecordPath: (userId: string, workRecordId: string) => 
+                    `${baseUrl}/users/${userId}/work_records/${workRecordId}`,
   workRecordMultiplePath: (userId: string) =>
                     `${baseUrl}/users/${userId}/work_records/multiple`,
+  reportsPerTimePath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/reports/per_time`,
+  reportsPerDatePath: (userId: string) =>
+                    `${baseUrl}/users/${userId}/reports/per_date`,
 }
