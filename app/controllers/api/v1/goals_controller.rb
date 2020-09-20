@@ -40,7 +40,7 @@ class Api::V1::GoalsController < ApiController
   end
 
   # 一回で複数を削除する
-  def destroyMultiple
+  def destroy_multiple
     ids = params[:ids] || []
     for id in ids do
       goal = @user.goals.find_by(id: id)

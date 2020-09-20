@@ -7,6 +7,7 @@ export class Goal {
   created_at:       string
   updated_at:       string
   deleteCheckBox:   boolean
+  filterCheck:      boolean
 
   constructor() {
     this.id =               '';
@@ -17,6 +18,7 @@ export class Goal {
     this.created_at =       '';
     this.updated_at =       '';
     this.deleteCheckBox =   false;
+    this.filterCheck =      true;
   }
 
   setGoalData(goalData: any):void {

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
 import { auth } from '@/store/modules/auth';
 import { goals } from '@/store/modules/goals';
+import { reports } from '@/store/modules/reports';
 import axios from 'axios';
 import { api } from '@/config/api'
 import { User } from '@/models/user';
@@ -12,7 +13,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     auth,
-    goals
+    goals,
+    reports
   },
   state: {
     user: new User(),

@@ -80,8 +80,11 @@
   display: grid;
 }
 
-.date-text[data-v-54e0e444] input:hover {
-  cursor: pointer;
+.date-picker[data-v-78e41226] {
+  display: grid;
+}
+.date-picker .date-text[data-v-78e41226] input:hover {
+    cursor: pointer;
 }
 
 .vue__time-picker {
@@ -318,8 +321,9 @@
     font-weight: bold;
 }
 .work-records-header .date-selector[data-v-ccb26ae8] {
-    width: 200px;
     grid-area: 1/2/2/3;
+    margin-top: 5px;
+    width: 300px;
 }
 .work-records-header .delete-mode-area[data-v-ccb26ae8] {
     width: 300px;
@@ -361,40 +365,134 @@
   display: grid;
 }
 
-.select-list[data-v-9e0ba6ba] {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 10em;
-  height: 10em;
+.chart .label[data-v-4a01c41b] {
+  height: 53px;
   overflow: hidden;
+  position: relative;
+  background: #fff;
+  z-index: 3;
 }
-.select-list ul[data-v-9e0ba6ba] {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    list-style: none;
+.chart .type-day-label[data-v-4a01c41b] {
+  margin-right: 17px;
 }
-.select-list ul li[data-v-9e0ba6ba] {
-      text-align: center;
-      padding: 0.3em 0;
+.chart .data[data-v-4a01c41b] {
+  height: 478px;
+  margin-top: -31px;
 }
-.select-list ul li[data-v-9e0ba6ba]:not(.hint):hover {
-        cursor: pointer;
-}
-.select-list ul .hint[data-v-9e0ba6ba] {
-      color: #a5a5a5;
-      cursor: default;
-      font-size: 0.8em;
-}
-.select-list ul .active[data-v-9e0ba6ba] {
-      background: #41B883;
-      color: #fff;
+.chart .type-day-data[data-v-4a01c41b] {
+  overflow-y: scroll;
 }
 
-.grid[data-v-6722342e] {
+.bar-chart[data-v-a0b44218] canvas {
+  height: 1000px !important;
+}
+
+.year-picker[data-v-405b7185] {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 30px 50px 120px 50px 30px;
+}
+.year-picker .fast-prev[data-v-405b7185] {
+    position: relative;
+    margin: auto;
+}
+.year-picker .fast-prev .left[data-v-405b7185] {
+      position: absolute;
+      left: 0;
+}
+.year-picker .fast-prev .right[data-v-405b7185] {
+      position: absolute;
+      left: 10px;
+}
+.year-picker .fast-next[data-v-405b7185] {
+    position: relative;
+    margin: auto;
+}
+.year-picker .fast-next .right[data-v-405b7185] {
+      position: absolute;
+      right: 0;
+}
+.year-picker .fast-next .left[data-v-405b7185] {
+      position: absolute;
+      right: 10px;
+}
+
+.bar-chart[data-v-730bbbd8] canvas {
+  height: 420px !important;
+}
+
+.date-select[data-v-58c6d825] {
+  display: grid;
+  grid-template-columns: 300px;
+  height: 50px;
+}
+.date-select .back-to-today[data-v-58c6d825] {
+    margin: auto auto auto 30px;
+    color: #6666e6;
+}
+.date-select .back-to-today[data-v-58c6d825]:hover {
+      cursor: pointer;
+}
+.calendar[data-v-58c6d825] {
+  border-top: none !important;
+}
+.calendar[data-v-58c6d825] .v-calendar-daily__head {
+    border-top: 1px solid #e0e0e0;
+}
+
+.category-filter[data-v-33e535f0] {
+  width: 200px;
+}
+.category-filter .category-text[data-v-33e535f0] input:hover {
+    cursor: pointer;
+}
+.filter-area[data-v-33e535f0] {
+  background: #fff;
+}
+.filter-area ul[data-v-33e535f0] {
+    list-style: none;
+    padding: 0;
+}
+.filter-area ul li[data-v-33e535f0] {
+      display: grid;
+      grid-template-columns: 40px 250px;
+}
+.filter-area ul li[data-v-33e535f0]:hover {
+        cursor: pointer;
+}
+.filter-area ul li .filter-text[data-v-33e535f0] {
+        margin: auto 0;
+}
+.filter-area ul .inactive[data-v-33e535f0] {
+      opacity: 0.5;
+      text-decoration: line-through;
+}
+
+.reports[data-v-9527964c] {
+  position: relative;
+}
+.reports-header[data-v-9527964c] {
+    display: grid;
+    grid-template-columns: 200px minmax(300px, 1fr) 200px;
+    height: 50px;
+}
+.reports-header .type-select[data-v-9527964c] {
+      margin: auto 10px;
+}
+.reports-header .date-select[data-v-9527964c] .picker {
+      height: 100%;
+}
+.reports-header .category-select[data-v-9527964c] {
+      margin-right: 10px;
+}
+.reports .chart[data-v-9527964c] {
+    z-index: 1;
+}
+
+.debug[data-v-6722342e] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  height: 50px;
 }
 
 .page-component[data-v-20e64512] .page-header {
