@@ -113,8 +113,9 @@ export default Vue.extend({
         this.$emit('update:startTimeValid', false);
         return;
       }
-
+      
       this.$emit('update:workTime', workTime.toString());
+      this.$emit('update:workTimeValid', true);
     }
   }
 })

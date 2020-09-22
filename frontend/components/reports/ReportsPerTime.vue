@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-sheet(
+  v-sheet.mt-5(
     height=500
   )
     v-calendar.calendar(
@@ -122,6 +122,14 @@ export default Vue.extend({
 
     /deep/ .v-calendar-daily__head {
       border-top: 1px solid #e0e0e0;
+    }
+
+    /deep/ .v-calendar-daily__intervals-body {
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    /deep/ .v-calendar-daily__day {
+      // border-bottom: none !important;
     }
   }
 </style>

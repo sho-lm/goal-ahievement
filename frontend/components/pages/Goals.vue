@@ -109,8 +109,8 @@ export default Vue.extend({
       newGoal:         new Goal(),
       selected:        SELECTOR_VALUE.NOT_FINISHED,
       filterSelectors: [
-        { value: SELECTOR_VALUE.FINISHED,     text: '完了済' },
-        { value: SELECTOR_VALUE.NOT_FINISHED, text: '未完了' },
+        { value: SELECTOR_VALUE.FINISHED,     text: '完了済のみ' },
+        { value: SELECTOR_VALUE.NOT_FINISHED, text: '未完了のみ' },
         { value: SELECTOR_VALUE.ALL,          text: '全て表示' },
       ]
     }
@@ -132,10 +132,10 @@ export default Vue.extend({
       return this.$store.getters.goalList.filter((goal: Goal) => goal.deleteCheckBox);
     },
     deleteModeIcon(): string {
-      return this.deleteMode ? 'undo' : 'remove_circle';
+      return this.deleteMode ? 'undo' : 'remove_circle_outline';
     },
     createModeIcon(): string {
-      return this.createMode ? 'undo' : 'add_circle';
+      return this.createMode ? 'undo' : 'playlist_add';
     },
     goaiItemFilter: function() {
       const self = this;

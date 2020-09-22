@@ -28,7 +28,7 @@ export default Vue.extend({
               beginAtZero: true
             },
             scaleLabel: {
-              display: true,
+              display: false,
             }
           }],
           xAxes: [{

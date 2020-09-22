@@ -1,133 +1,94 @@
 <template lang="pug">
-  v-container
-    v-row(justify="center")
-      v-card(
-        flat
-        width="90%"
-        max-width="500"
-      )
-        v-card-title.justify-center プロフィール
-        v-form(
-          v-model="valid"
-          ref="form"
+  div
+    .users-header
+      .grid-center
+        .title プロフィール
+        v-btn.edit-icon(
+          @click="readonly = !readonly"
+          icon
         )
-          label Name
-          name-form(
-            :name.sync="getUser.name"
-            :readonly="readonly"
-          )
-          template(v-if="!readonly")
-            label Password
-            password-form(
-              :password.sync="getUser.password"
-              :updateMode="true"
-            )
-          v-card-text(
-            align="center"
-          )
-            template(v-if="readonly")
-              v-btn(
-                @click="editMode"
-                width="100%"
-              ) 編集する
-            template(v-else)
-              v-btn.mb-5(
-                @click="updateUser"
-                :disabled="loading"
-                color="primary"
-                width="100%"
-              ) 更新する
-              v-btn.my-5(
-                @click="cancelEdit"
-                width="100%"
-              ) キャンセル
-              v-btn.mt-5(
-                @click="deleteUser"
-                color="red"
-                width="100%"
-              ) 削除
+          v-icon {{ editIcon }}
+    section.profile(
+      v-if="readonly"
+    )
+      .name Name : {{ user.name }}
+    user-card.user-card(
+      v-else
+      :user="userCopy"
+      @updateDone="readonly = true"
+    )
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios';
-import { api } from '@/config/api';
 import { User } from '@/models/user';
-import NameForm from '@/components/users/NameForm.vue';
-import PasswordForm from '@/components/users/PasswordForm.vue';
-import { VForm } from '@/plugins/vuetify';
+import UserCard from '@/components/users/UserCard.vue';
 
 const deepCopy = (data: any) => JSON.parse(JSON.stringify(data));
 
 export type DataType = {
-  loading:  boolean
-  readonly: boolean
-  user:     User
-  userCopy: User
-  valid:    boolean
+  readonly: Boolean
 }
 
 export default Vue.extend({
   data(): DataType {
     return {
-      loading:  false,
-      readonly: true,
-      user:     this.$store.getters.user,
-      userCopy: new User(),
-      valid:    true,
+      readonly: true
     }
   },
   components: {
-    NameForm,
-    PasswordForm
+    UserCard,
   },
   computed: {
-    getForm(): VForm {
-      return (this.$refs as any).form;
+    user(): User {
+      return this.$store.getters.user;
     },
-    getUser(): User {
-      return this.readonly ? this.user : this.userCopy; // user は vuex から貰っているので、編集時はコピーを操作する
+    userCopy(): User {
+      return deepCopy(this.user); // user は vuex から貰っているので、編集時はコピーを操作する
+    },
+    editIcon(): string {
+      return this.readonly ? 'edit' : 'undo';
     }
   },
   methods: {
-    editMode(): void {
-      this.userCopy = deepCopy(this.user);
-      this.readonly = false;
+    deepCopy(data: any): any {
+      return JSON.parse(JSON.stringify(data));
     },
-    cancelEdit(): void {
-      this.getForm.resetValidation();
-      this.readonly = true;
-    },
-    updateUser() {
-      if (!this.getForm.validate()) return;
-
-      const params = {
-        name:     this.userCopy.name,
-        password: this.userCopy.password
-      }
-      axios.patch(api.userPath(this.$store.getters.userId), { user: params })
-        .then(response => {
-          console.log('update');
-          this.$store.commit('setUser', response.data);
-          this.readonly = true;
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    },
-    deleteUser() {
-      if (!confirm('削除してよろしいですか?')) return;
-
-      axios.delete(api.userPath(this.$store.getters.userId))
-        .then(response => {
-          console.log('deleted');
-          this.$store.dispatch('discardSession');
-          this.$router.push({ name: 'login' });
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    }
   }
 })
 </script>
+
+<style lang="scss" scoped>
+  .users-header {
+    display: grid;
+    margin-bottom: 10px;
+
+    .grid-center {
+      align-self: center;
+      justify-self: center;
+      display: grid;
+      grid-template-columns: 1fr 50px;
+
+      .title {
+        margin: 10px 0;
+      }
+
+      .edit-icon {
+        margin: 8px 20px;
+      }
+    }
+  }
+
+  .profile {
+    width: 30%;
+    min-width: 300px;
+    margin: 0 auto;
+    font-size: 20px;
+  }
+
+  .user-card {
+    width: 50%;
+    min-width: 300px;
+    margin: 0 auto;
+  }
+</style>

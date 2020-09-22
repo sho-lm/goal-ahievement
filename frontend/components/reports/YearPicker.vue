@@ -18,10 +18,7 @@
       readonly
     )
       template(v-slot:prepend-inner)
-        v-btn(
-          icon
-          color="primary"
-        )
+        .calendar-icon
           v-icon today
     v-btn.ma-auto(
       icon
@@ -68,6 +65,17 @@ export default Vue.extend({
   .year-picker {
     display: grid;
     grid-template-columns: 30px 50px 120px 50px 30px;
+    height: 100%;
+
+    .calendar-icon {
+      width: 36px;
+      height: 36px;
+      display: inline-block;
+
+      /deep/ .v-icon {
+        margin: 6px;
+      }
+    }
 
     .fast-prev {
       position: relative;

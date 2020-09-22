@@ -1,18 +1,15 @@
 <template lang="pug">
-  v-container.login-page
+  .login-page
     v-row(justify="center")
       v-card.my-5(
-        width="90%"
-        max-width="368"
+        width="360"
         color="transparent"
       )
         v-form.login-form.pa-5(
           v-model="valid"
           ref="form"
         )
-          label Name
           name-form(:name.sync="name")
-          label Password
           password-form(:password.sync="password")
           v-card-text(
             align="center"
@@ -73,23 +70,19 @@ export default Vue.extend({
       axios.post(api.loginPath, params)
         .then(response => {
           this.$store.dispatch('saveSession', response.data);
-          console.log('log in');
+
           // nullチェックはしているが型エラーになるためany型で宣言
           const redirectTo: any = this.$route.query.redirect ? this.$route.query.redirect : 'users';
           this.$router.push({ name: redirectTo });
 
           this.$store.dispatch('selectGoalList');
+          this.$store.dispatch('showMessage', 'ログインしました');
         })
         .catch(error => {
           console.log(error);
         })
 
       this.loading = false;
-    },
-    logout(): void {
-      this.name = '';
-      this.password = '';
-      this.$store.dispatch('logout');
     },
   }
 })
@@ -98,5 +91,6 @@ export default Vue.extend({
 <style lang="scss" scoped>
   .login-form {
     background: #fff;
+    width: 360px;
   }
 </style>

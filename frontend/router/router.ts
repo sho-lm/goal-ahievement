@@ -51,9 +51,10 @@ export const routes: Array<RouteConfig> = [
     path: '/users',
     component: Users,
     meta: {
-      icon: 'account_circle',
-      background: '#fff',
-      requiresLogin: true,
+      icon:           'account_circle',
+      background:     '#fff',
+      requiresLogin:  true,
+      text:           'プロフィール'
     }
   },
   {
@@ -61,9 +62,10 @@ export const routes: Array<RouteConfig> = [
     path: '/goals',
     component: Goals,
     meta: {
-      icon: 'assignment',
-      background: '#fff',
-      requiresLogin: true,
+      icon:           'assignment',
+      background:     '#fff',
+      requiresLogin:  true,
+      text:           '目標を決める'
     }
   },
   {
@@ -71,9 +73,10 @@ export const routes: Array<RouteConfig> = [
     path: '/work_records',
     component: WorkRecords,
     meta: {
-      icon: 'work',
-      background: '#fff',
-      requiresLogin: true,
+      icon:           'create',
+      background:     '#fff',
+      requiresLogin:  true,
+      text:           '記録をつける'
     }
   },
   {
@@ -81,9 +84,10 @@ export const routes: Array<RouteConfig> = [
     path: '/reports',
     component: Reports,
     meta: {
-      icon: 'bar_chart',
-      background: '#fff',
-      requiresLogin: true,
+      icon:           'bar_chart',
+      background:     '#fff',
+      requiresLogin:  true,
+      text:           'グラフで見る'
     }
   },
   {
@@ -94,6 +98,7 @@ export const routes: Array<RouteConfig> = [
       icon: 'info',
       background: '#fff',
       requiresLogin: true,
+      text: 'debug'
     }
   }
 ]

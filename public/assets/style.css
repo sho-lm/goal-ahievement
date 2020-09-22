@@ -1,5 +1,43 @@
 .login-form[data-v-0c791244] {
   background: #fff;
+  width: 360px;
+}
+
+.button-area[data-v-7a4ff9a8] {
+  display: grid;
+  grid-template-columns: 1fr 64px;
+}
+.button-area .update-button[data-v-7a4ff9a8] {
+    grid-area: 1/2/2/3;
+    margin-top: 20px;
+}
+
+.users-header[data-v-ef896d3a] {
+  display: grid;
+  margin-bottom: 10px;
+}
+.users-header .grid-center[data-v-ef896d3a] {
+    align-self: center;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 1fr 50px;
+}
+.users-header .grid-center .title[data-v-ef896d3a] {
+      margin: 10px 0;
+}
+.users-header .grid-center .edit-icon[data-v-ef896d3a] {
+      margin: 8px 20px;
+}
+.profile[data-v-ef896d3a] {
+  width: 30%;
+  min-width: 300px;
+  margin: 0 auto;
+  font-size: 20px;
+}
+.user-card[data-v-ef896d3a] {
+  width: 50%;
+  min-width: 300px;
+  margin: 0 auto;
 }
 
 .goal-card[data-v-14c003bc] {
@@ -82,6 +120,7 @@
 
 .date-picker[data-v-78e41226] {
   display: grid;
+  height: 100%;
 }
 .date-picker .date-text[data-v-78e41226] input:hover {
     cursor: pointer;
@@ -268,6 +307,7 @@
 .work-record-card .goal-select[data-v-bf2ab74c] {
     grid-area: 1/1/2/2;
     margin: auto 20px;
+    min-width: 190px;
 }
 .work-record-card .worked-for[data-v-bf2ab74c] {
     position: relative;
@@ -276,20 +316,33 @@
 }
 .work-record-card .worked-date[data-v-bf2ab74c] {
     grid-area: 2/1/3/3;
-    grid-template-columns: repeat(auto-fill, 200px);
-    display: grid;
+    display: flex;
+    flex-flow: row wrap;
+    margin-right: 30px;
+    min-width: 400px;
 }
-.work-record-card .worked-date > *[data-v-bf2ab74c] {
-      margin: auto;
+.work-record-card .worked-date .worked-on[data-v-bf2ab74c] {
+      flex: 0 0 200px;
+      margin: 0 0 20px 20px;
 }
-.work-record-card .worked-date .start-time[data-v-bf2ab74c] {
-      position: relative;
+.work-record-card .worked-date .worked-time[data-v-bf2ab74c] {
+      display: grid;
+      grid-template-columns: 1fr 200px 200px;
+      flex: 1 0 400px;
 }
-.work-record-card .worked-date .end-time[data-v-bf2ab74c]::before {
-      content: '～';
-      position: relative;
-      top: 3px;
-      left: -14px;
+.work-record-card .worked-date .worked-time .start-time[data-v-bf2ab74c] {
+        grid-area: 1/2/2/3;
+        margin: 10px 7px 10px auto;
+}
+.work-record-card .worked-date .worked-time .end-time[data-v-bf2ab74c] {
+        grid-area: 1/3/2/4;
+        margin: 10px 0 10px auto;
+}
+.work-record-card .worked-date .worked-time .end-time[data-v-bf2ab74c]::before {
+          content: '～';
+          position: relative;
+          top: 3px;
+          left: -14px;
 }
 .work-record-card .edit-icon[data-v-bf2ab74c],
   .work-record-card .cancel-button[data-v-bf2ab74c] {
@@ -303,6 +356,7 @@
 }
 .work-record-card .memo[data-v-bf2ab74c] {
     grid-area: 3/1/4/2;
+    margin-left: 20px;
 }
 .work-record-card .error-message[data-v-bf2ab74c] {
     color: #f00;
@@ -390,6 +444,15 @@
 .year-picker[data-v-405b7185] {
   display: grid;
   grid-template-columns: 30px 50px 120px 50px 30px;
+  height: 100%;
+}
+.year-picker .calendar-icon[data-v-405b7185] {
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+}
+.year-picker .calendar-icon[data-v-405b7185] .v-icon {
+      margin: 6px;
 }
 .year-picker .fast-prev[data-v-405b7185] {
     position: relative;
@@ -438,9 +501,12 @@
 .calendar[data-v-58c6d825] .v-calendar-daily__head {
     border-top: 1px solid #e0e0e0;
 }
+.calendar[data-v-58c6d825] .v-calendar-daily__intervals-body {
+    border-bottom: 1px solid #e0e0e0;
+}
 
 .category-filter[data-v-33e535f0] {
-  width: 200px;
+  width: 180;
 }
 .category-filter .category-text[data-v-33e535f0] input:hover {
     cursor: pointer;
@@ -472,29 +538,32 @@
 }
 .reports-header[data-v-9527964c] {
     display: grid;
-    grid-template-columns: 200px minmax(300px, 1fr) 200px;
-    height: 50px;
+    grid-template-columns: 180px minmax(300px, 1fr) 180px;
+    padding-top: 5px;
+    height: 60px;
 }
 .reports-header .type-select[data-v-9527964c] {
       margin: auto 10px;
 }
-.reports-header .date-select[data-v-9527964c] .picker {
-      height: 100%;
+.reports-header .date-select[data-v-9527964c] {
+      margin-left: 10px;
 }
 .reports-header .category-select[data-v-9527964c] {
       margin-right: 10px;
 }
-.reports .chart[data-v-9527964c] {
+.reports section[data-v-9527964c] {
     z-index: 1;
+    padding: 0 24px;
 }
 
-.debug[data-v-6722342e] {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  height: 50px;
-}
 
+.snackbar[data-v-20e64512] {
+  z-index: 1000;
+  margin: 2px;
+}
+.snackbar[data-v-20e64512] .v-snack__wrapper {
+    margin: 4px;
+}
 .page-component[data-v-20e64512] .page-header {
   background: #fff;
   position: sticky;

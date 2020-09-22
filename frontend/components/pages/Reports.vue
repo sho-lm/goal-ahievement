@@ -20,7 +20,7 @@
         )
       .category-select
         category-filter
-    .chart
+    section
       reports-per-day(
         v-if="type === 'day'"
         :date.sync="date"
@@ -93,26 +93,27 @@ export default Vue.extend({
 
     &-header {
       display: grid;
-      grid-template-columns: 200px minmax(300px, 1fr) 200px;
-      height: 50px;
+      grid-template-columns: 180px minmax(300px, 1fr) 180px;
+      padding-top: 5px;
+      height: 60px;
 
       .type-select {
         margin: auto 10px;
       }
 
       .date-select {
-        /deep/ .picker {
-          height: 100%;
-        }
+        margin-left: 10px;
       }
-
+      
       .category-select {
         margin-right: 10px;
       }
+
     }
 
-    .chart {
+    section {
       z-index: 1;
+      padding: 0 24px;
     }
   }
 </style>

@@ -120,6 +120,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
   .date-picker {
     display: grid;
+    height: 100%;
 
     .date-text {
       /deep/ input:hover {
