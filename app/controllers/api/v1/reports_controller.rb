@@ -51,8 +51,10 @@ class Api::V1::ReportsController < ApiController
     end
 
     def filter_checked?(report)
+      filter_list = params[:filter_list]
+      return true unless filter_list   # filter_list 指定なしの場合は全部OK
+
       id = report.goal_id || "0"
-      filter_list = params[:filter_list] || []
       filter_list.include?(id.to_s)
     end
 

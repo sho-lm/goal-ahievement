@@ -35,23 +35,24 @@
               v-bind:date="workRecord.momentDate()"
               v-on:update:date="emitUpdateDate($event)"
             )
-          .start-time
-            .error-message(v-if="validationStart && !startTimeValid") 終了時刻を超えています
-            vue-timepicker(
-              v-model="workRecord.start_time"
-              auto-scroll
-              hour-label="時"
-              minute-label="分"
-              placeholder="開始時刻"
-            )
-          .end-time
-            vue-timepicker(
-              v-model="workRecord.end_time"
-              auto-scroll
-              hour-label="時"
-              minute-label="分"
-              placeholder="終了時刻"
-            )
+          .worked-time
+            .start-time
+              .error-message(v-if="validationStart && !startTimeValid") 終了時刻を超えています
+              vue-timepicker(
+                v-model="workRecord.start_time"
+                auto-scroll
+                hour-label="時"
+                minute-label="分"
+                placeholder="開始時刻"
+              )
+            .end-time
+              vue-timepicker(
+                v-model="workRecord.end_time"
+                auto-scroll
+                hour-label="時"
+                minute-label="分"
+                placeholder="終了時刻"
+              )
         .memo
           v-textarea(
             v-model="workRecord.memo"
@@ -143,12 +144,17 @@ export default Vue.extend({
       return this.$store.getters.userId;
     },
     goalList(): Array<Selector> {
-      return this.$store.getters.goalList.map((goal: Goal) => {
-        return {
-          value: goal.id,
-          text:  goal.content
+      // 未完了のみ選択ボックスに表示する
+      return this.$store.getters.goalList.reduce((goalList: Array<Selector>, goal: Goal) => {
+        
+        if (!goal.is_finished) {
+          goalList.push({
+            value: goal.id,
+            text:  goal.content
+          });
         };
-      });
+        return goalList;
+      }, []);
     },
     requestParams(): object {
       return {
@@ -220,6 +226,7 @@ export default Vue.extend({
     .goal-select {
       grid-area: 1/1/2/2;
       margin: auto 20px;
+      min-width: 190px;
     }
 
     .worked-for {
@@ -230,23 +237,36 @@ export default Vue.extend({
 
     .worked-date {
       grid-area: 2/1/3/3;
-      grid-template-columns: repeat(auto-fill, 200px);
-      display: grid;
+      display: flex;
+      flex-flow: row wrap;
+      margin-right: 30px;
+      min-width: 400px;
 
-      & > * {
-        margin: auto;
+      .worked-on {
+        flex: 0 0 200px;
+        margin: 0 0 20px 20px;
       }
 
-      .start-time {
-        position: relative;
-      }
+      .worked-time {
+        display: grid;
+        grid-template-columns: 1fr 200px 200px;
+        flex: 1 0 400px;
 
-      .end-time {
-        &::before {
-          content: '～';
-          position: relative;
-          top: 3px;
-          left: -14px;
+        .start-time {
+          grid-area: 1/2/2/3;
+          margin: 10px 7px 10px auto;
+        }
+
+        .end-time {
+          grid-area: 1/3/2/4;
+          margin: 10px 0 10px auto;
+
+          &::before {
+            content: '～';
+            position: relative;
+            top: 3px;
+            left: -14px;
+          }
         }
       }
     }
@@ -265,6 +285,7 @@ export default Vue.extend({
 
     .memo {
       grid-area: 3/1/4/2;
+      margin-left: 20px;
     }
 
     .error-message {

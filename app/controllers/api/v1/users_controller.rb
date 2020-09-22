@@ -14,21 +14,31 @@ class Api::V1::UsersController < ApiController
 
   # 新規登録する
   def create
+    if duplicate_name?
+      render json: { error: "duplicateName" }, status: :bad_request
+      return
+    end
+
     user = User.new(user_params)
     if user.save
       log_in(user)
       render json: user.reload, status: :created
     else
-      render json: { error: "invalid params" }, status: :bad_request
+      render json: { message: "登録に失敗しました" }, status: :bad_request
     end
   end
 
   # 更新する
   def update
+    if duplicate_name?
+      render json: { error: "duplicateName" }, status: :bad_request
+      return
+    end
+
     if @user.update(user_params)
       render json: @user.reload
     else
-      render json: { error: "invalid params" } , status: :bad_request
+      render json: { message: "更新に失敗しました" } , status: :bad_request
     end
   end
 
@@ -49,5 +59,17 @@ class Api::V1::UsersController < ApiController
     # リクエストで指定されたユーザーを返す( correct_user での判定時に呼び出される)
     def find_user
       User.find_by(id: params[:id])
+    end
+
+    # 指定された name がすでに使われているかを判断する( ture = 重複している )
+    def duplicate_name?
+      user = User.find_by(name: params[:user][:name])
+
+      # 自分の name と重複していると判断するのを回避
+      if @current_user && user && @current_user.id == user.id
+        return false
+      end
+
+      !user.nil?
     end
 end

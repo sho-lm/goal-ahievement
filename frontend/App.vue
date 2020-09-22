@@ -1,5 +1,13 @@
 <template lang="pug">
   v-app
+    v-snackbar.snackbar(
+      v-model="snackbarDisplay"
+      top
+      app
+      absolute
+      timeout=1000
+      color="grey darken-3"
+    ) {{ $store.getters.snackbarMessage }}
     v-app-bar(
       app
       clipped-left
@@ -8,15 +16,12 @@
     )
       template(v-if="$store.getters.isLoggedIn")
         v-app-bar-nav-icon(@click.stop="drawer = !drawer")
-        v-toolbar-title {{ $store.getters.user.name}} v-snackbar使う
         v-spacer
         v-btn(@click.stop="logout") ログアウト
       template(v-else)
         v-spacer
         router-link(to="login") ログイン
         router-link.ml-5(to="sign_up") 新規登録
-
-
     v-navigation-drawer(
       v-if="$store.getters.isLoggedIn"
       v-model="drawer"
@@ -28,7 +33,7 @@
           v-list-item-icon
             v-icon {{ route.meta.icon }}
           v-list-item-content
-            v-list-item-title {{ route.name }}
+            v-list-item-title {{ route.meta.text }}
 
     v-main(v-bind:style="{ background: activeBackGround }")
       v-container.page-component.pa-0
@@ -56,11 +61,15 @@ export default Vue.extend({
     }
   },
   computed: {
-    activeBackGround():string {
+    activeBackGround(): string {
       return this.$route.meta.background || '#fff';
     },
     routesOnLogin(): Array<RouteConfig> {
       return this.routes.filter(route => route.meta.requiresLogin);
+    },
+    snackbarDisplay: {
+      get(): boolean { return this.$store.getters.snackbarDisplay; },
+      set(): void { this.$store.dispatch('hideMessage'); }
     }
   },
   methods: {
@@ -68,8 +77,9 @@ export default Vue.extend({
       axios.delete(api.logoutPath)
         .then(response => {
           this.$store.dispatch('discardSession');
-          console.log('log out');
           this.$router.push({ name: 'login' });
+
+          this.$store.dispatch('showMessage', 'ログアウトしました');
         })
         .catch(error => {
           console.log(error);
@@ -80,6 +90,15 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+  .snackbar {
+    z-index: 1000;
+    margin: 2px;
+
+    /deep/ .v-snack__wrapper  {
+      margin: 4px;
+    }
+  }
+
   .page-component {
     /deep/ .page-header {
       background: #fff;

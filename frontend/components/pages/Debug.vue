@@ -1,19 +1,19 @@
 <template lang="pug">
   .debug
-    year-picker(
-      :date.sync="date"
-    )
-    date-picker(
-      :date="date"
+    .page-header プロフィール
+    user-card(
+      :user="userCopy"
+      @updateDone="log"
     )
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import YearPicker from '@/components/reports/YearPicker.vue';
-import DatePicker from '@/components/common/DatePicker.vue';
+import UserCard from '@/components/users/UserCard.vue';
 import moment, { Moment } from 'moment';
+import { User } from '@/models/user';
 
+const deepCopy = (data: any) => JSON.parse(JSON.stringify(data));
 
 export default Vue.extend({
   data()  {
@@ -22,17 +22,23 @@ export default Vue.extend({
     }
   },
   components: {
-    YearPicker,
-    DatePicker
+    UserCard,
   },
+  computed: {
+    userCopy(): User {
+      return (deepCopy(this.$store.getters.user) as User);
+    }
+  },
+  methods: {
+    log() {
+      console.log('log');
+      
+    }
+  }
 })
 </script>
 
 <style lang="scss" scoped>
   .debug {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    height: 50px;
   }
 </style>

@@ -6,11 +6,11 @@
       offset-y
       max-width="290px"
       min-width="290px"
-      nudge-left="45"
+      nudge-left="55"
     )
       template(v-slot:activator="{ on }")
         v-text-field.category-text(
-          value="カテゴリー選択"
+          value="目標をしぼる"
           v-on="on"
           dense
           hide-details
@@ -20,9 +20,8 @@
             v-btn(
               v-on="on"
               icon
-              color="primary"
             )
-              v-icon today
+              v-icon filter_list
       .filter-area
         .filter-header
           v-btn.ml-1(
@@ -141,7 +140,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
   .category-filter {
-    width: 200px;
+    width: 180;
     
     .category-text {
       /deep/ input:hover {

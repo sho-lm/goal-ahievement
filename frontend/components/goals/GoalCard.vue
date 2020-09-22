@@ -92,7 +92,7 @@ export default Vue.extend({
       valid:      true,
     }
   },
-  created() {
+  mounted() {
     this.initialize();
 
     if (this.createMode) {

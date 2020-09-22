@@ -1,16 +1,17 @@
 <template lang="pug">
-  v-text-field(
-    v-model.trim="setPassword"
-    :counter="20"
-    dense
-    outlined
-    :placeholder="placeholder"
-    required
-    :rules="rules"
-    solo
-    type="password"
-    validate-on-blur
-  )
+  div
+    label Password
+    v-text-field(
+      v-model.trim="setPassword"
+      :counter="20"
+      dense
+      outlined
+      :placeholder="placeholder"
+      required
+      :rules="rules"
+      type="password"
+      validate-on-blur
+    )
 </template>
 
 <script lang="ts">

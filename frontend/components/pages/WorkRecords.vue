@@ -107,14 +107,11 @@ export default Vue.extend({
     userId(): string {
       return this.$store.getters.userId;
     },
-    goalList(): Array<Goal> {
-      return this.$store.getters.goalList;
-    },
     deleteModeIcon(): string {
-      return this.deleteMode ? 'undo' : 'remove_circle';
+      return this.deleteMode ? 'undo' : 'remove_circle_outline';
     },
     createModeIcon(): string {
-      return this.createMode ? 'undo' : 'add_circle';
+      return this.createMode ? 'undo' : 'playlist_add';
     },
     checkboxWidth(): number {
       return this.deleteMode ? 40 : 0;
@@ -126,6 +123,7 @@ export default Vue.extend({
   watch: {
     requestDate() {
       this.selectWorkRecordList();
+      this.createMode = false;
     }
   },
   methods: {

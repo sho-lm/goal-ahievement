@@ -11,10 +11,13 @@
           v-model="valid"
           ref="form"
         )
-          label Name
-          name-form(:name.sync="name")
-          label Password
-          password-form(:password.sync="password")
+          name-form(
+            :name.sync="name"
+            :duplicateNameList="duplicateNameList"
+          )
+          password-form(
+            :password.sync="password"
+          )
           v-card-text(
             align="center"
           )
@@ -22,7 +25,7 @@
               :disabled="loading"
               color="primary"
               @click="signUp"
-              width="100%"
+              width="150"
             ) 登録する
 
 </template>
@@ -42,15 +45,17 @@ export type DataType = {
   name:     string
   password: string
   loading:  boolean
+  duplicateNameList: Array<String>
 }
 
 export default Vue.extend({
   data(): DataType  {
     return {
-      valid:    true,
-      name:     '',
-      password: '',
-      loading:  false,
+      valid:             true,
+      name:              '',
+      password:          '',
+      loading:           false,
+      duplicateNameList: []
     }
   },
   components: {
@@ -63,11 +68,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    logout(): void {
-      this.name = '';
-      this.password = '';
-      this.$store.dispatch('logout');
-    },
     signUp(): void {
       if (!this.getForm.validate()) return;
 
@@ -78,14 +78,20 @@ export default Vue.extend({
       }
       axios.post(api.usersPath, { user: params })
         .then(response => {
-          console.log('created');
           this.$store.dispatch('saveSession', response.data);
           this.$router.push({ name: 'users' });
+          this.$store.dispatch('showMessage', '登録しました');
         })
         .catch(error => {
-          console.log(error);
+          console.log(error.response);
+          if (error.response.data.error === 'duplicateName') {
+            this.duplicateNameList.push(this.name);
+            this.getForm.validate();
+          }
         })
-      this.loading = false;
+        .finally(() => { 
+          this.loading = false;
+        })
     },
   }
 })

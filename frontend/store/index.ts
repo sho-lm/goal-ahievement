@@ -4,6 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import { auth } from '@/store/modules/auth';
 import { goals } from '@/store/modules/goals';
 import { reports } from '@/store/modules/reports';
+import { snackbar } from '@/store/modules/snackbar';
 import axios from 'axios';
 import { api } from '@/config/api'
 import { User } from '@/models/user';
@@ -14,7 +15,8 @@ export default new Vuex.Store({
   modules: {
     auth,
     goals,
-    reports
+    reports,
+    snackbar,
   },
   state: {
     user: new User(),

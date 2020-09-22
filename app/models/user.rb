@@ -9,7 +9,7 @@ class User < ApplicationRecord
   attribute :is_private, :boolean, default: false
 
   # validates ----------------------------------------------------------------------------------------------
-  validates :name,  presence: true,
+  validates :name,        presence: true,
                           uniqueness: { case_sensitive: true },
                           length: { maximum: 20 }
   validates :password,    presence: true,
