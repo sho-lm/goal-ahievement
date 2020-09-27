@@ -16,12 +16,30 @@ RSpec.describe "Api::V1::Users", type: :request do
       it "returns error message" do
         post api_v1_users_path, params: invalid_params
         res_json = JSON.parse(response.body)
-        expect(res_json["error"]).to eq "invalid params" 
+        expect(res_json["error"]).to eq "invalid_params" 
       end
       it "doesn't create new user" do
         expect do
           post api_v1_users_path, params: invalid_params
         end.not_to change(User, :count)
+      end
+    end
+    context "when specified name is already used" do
+      let(:duplicate_name_params) { { user: { name: sally.name, password: "aaaa" } } }
+      it "returns status 400" do
+        post api_v1_users_path, params: duplicate_name_params
+        expect(response.status).to eq 400
+      end
+      it "returns duplicate name error" do
+        post api_v1_users_path, params: duplicate_name_params
+        res_json = JSON.parse(response.body)
+        expect(res_json["error"]).to eq "duplicate_name" 
+      end
+      it "doesn't create new user" do
+        u = User.find_by(name: sally.name)
+        expect(User.count ).to eq 1
+        post api_v1_users_path, params: duplicate_name_params
+        expect(User.count ).to eq 1
       end
     end
     context "when request params are valid" do
@@ -81,7 +99,7 @@ RSpec.describe "Api::V1::Users", type: :request do
         it "returns error message" do
           patch api_v1_user_path(sally), params: invalid_params
           res_json = JSON.parse(response.body)
-          expect(res_json["error"]).to eq "invalid params"
+          expect(res_json["error"]).to eq "invalid_params"
         end
         it "doesn't update user" do
           expect do
