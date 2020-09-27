@@ -77,7 +77,7 @@ export default Vue.extend({
         })
         .catch(error => {
           console.log(error.response);
-          if (error.response.data.error === 'duplicateName') {
+          if (error.response.data.error === 'duplicate_name') {
             this.duplicateNameList.push(this.user.name);
             this.getForm.validate();
           }

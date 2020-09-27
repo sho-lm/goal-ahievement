@@ -140,7 +140,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
   .category-filter {
-    width: 180;
+    width: 180px;
     
     .category-text {
       /deep/ input:hover {

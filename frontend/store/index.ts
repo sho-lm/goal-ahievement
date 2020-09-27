@@ -39,11 +39,10 @@ export default new Vuex.Store({
       axios.post(api.authPath, context.getters.auth)
         .then(response => {
           context.dispatch('saveSession', response.data);
-          console.log('authenticated');
           context.dispatch('selectGoalList');
         })
         .catch(error => {
-          console.log(error);
+          console.log(error.response);
         })
     },
     saveSession(context, userData): void {
