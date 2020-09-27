@@ -52,3 +52,6 @@ gem 'tzinfo-data'
 
 # windows 環境でエラーが出るため
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+
+# github Dependabot alerts
+gem "actionview", ">= 6.0.3.3"
