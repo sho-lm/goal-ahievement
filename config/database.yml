@@ -51,5 +51,5 @@ test:
 production:
   <<: *default
   database: goal_achievement_production
-  username: goal_achievement
-  password: <%= ENV['GOAL_ACHIEVEMENT_DATABASE_PASSWORD'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
