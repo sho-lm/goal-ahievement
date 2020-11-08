@@ -5,7 +5,7 @@ import { auth } from '@/store/modules/auth';
 import { goals } from '@/store/modules/goals';
 import { reports } from '@/store/modules/reports';
 import { snackbar } from '@/store/modules/snackbar';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api'
 import { User } from '@/models/user';
 
@@ -36,13 +36,14 @@ export default new Vuex.Store({
   },
   actions: {
     restoreSession(context): void {
-      axios.post(api.authPath, context.getters.auth)
+      customAxios.post(api.authPath, context.getters.auth)
         .then(response => {
+          console.log(response);
           context.dispatch('saveSession', response.data);
           context.dispatch('selectGoalList');
         })
         .catch(error => {
-          console.log(error.response);
+          console.log(error);
         })
     },
     saveSession(context, userData): void {

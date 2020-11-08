@@ -20,5 +20,6 @@ module GoalAchievement
     # the framework and any gems in your application.
 
     config.assets.enabled = false
+
   end
 end

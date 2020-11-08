@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import DatePicker from '@/components/common/DatePicker.vue';
 import moment, { Moment } from 'moment';
@@ -89,7 +89,7 @@ export default Vue.extend({
         filter_list: this.filterList
       };
       
-      axios.get(api.reportsPerTimePath(this.userId), { params: params })
+      customAxios.get(api.reportsPerTimePath(this.userId), { params: params })
         .then(response => {
           this.events = response.data;
         })
@@ -126,10 +126,6 @@ export default Vue.extend({
 
     /deep/ .v-calendar-daily__intervals-body {
       border-bottom: 1px solid #e0e0e0;
-    }
-
-    /deep/ .v-calendar-daily__day {
-      // border-bottom: none !important;
     }
   }
 </style>

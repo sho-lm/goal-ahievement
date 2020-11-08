@@ -70,7 +70,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import { WorkRecord } from '@/models/workRecord';
 import { Goal } from '@/models/goal';
@@ -147,7 +147,7 @@ export default Vue.extend({
       const params = {
         date: this.requestDate.format("YYYY-MM-DD")
       };
-      axios.get(api.workRecordsPath(this.userId), { params: params })
+      customAxios.get(api.workRecordsPath(this.userId), { params: params })
         .then(response => {
           this.workRecordList = WorkRecord.createIndexDataBy(response.data);
         })
@@ -163,7 +163,7 @@ export default Vue.extend({
       const params = {
         ids: deleteIdList
       }
-      axios.delete(api.workRecordMultiplePath(this.userId), { params })
+      customAxios.delete(api.workRecordMultiplePath(this.userId), { params })
         .then(response => {
           this.selectWorkRecordList();
         })

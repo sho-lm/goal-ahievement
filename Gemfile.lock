@@ -118,6 +118,8 @@ GEM
     puma (5.0.0)
       nio4r (~> 2.0)
     rack (2.2.3)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.3.3)
@@ -223,6 +225,7 @@ DEPENDENCIES
   listen
   mysql2
   puma
+  rack-cors
   rails
   rspec-rails
   selenium-webdriver
