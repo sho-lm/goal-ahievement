@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import NameForm from '@/components/users/NameForm.vue';
 import PasswordForm from '@/components/users/PasswordForm.vue';
@@ -76,7 +76,7 @@ export default Vue.extend({
         name: this.name,
         password:   this.password
       }
-      axios.post(api.usersPath, { user: params })
+      customAxios.post(api.usersPath, { user: params })
         .then(response => {
           this.$store.dispatch('saveSession', response.data);
           this.$router.push({ name: 'users' });

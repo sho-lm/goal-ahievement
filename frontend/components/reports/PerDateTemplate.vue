@@ -20,7 +20,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import BarChart from '@/components/reports/BarChart.vue';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 
 export type DataType = {
@@ -71,7 +71,7 @@ export default Vue.extend({
         type:        this.type,
         filter_list: this.filterList
       };
-      axios.get(api.reportsPerDatePath(this.userId), { params: params })
+      customAxios.get(api.reportsPerDatePath(this.userId), { params: params })
         .then(response => {
           this.chartData = {
             labels:   response.data.labels,

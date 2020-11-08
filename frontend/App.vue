@@ -44,9 +44,8 @@
 import Vue from 'vue';
 import { RouteConfig } from 'vue-router';
 import { routes } from '@/router/router';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
-
 
 export type DataType = {
   drawer: boolean | null,
@@ -74,7 +73,7 @@ export default Vue.extend({
   },
   methods: {
     logout(): void {
-      axios.delete(api.logoutPath)
+      customAxios.delete(api.logoutPath)
         .then(response => {
           this.$store.dispatch('discardSession');
           this.$router.push({ name: 'login' });

@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import { Goal } from '@/models/goal';
 import GoalCard from '@/components/goals/GoalCard.vue';
@@ -172,7 +172,7 @@ export default Vue.extend({
       const params = {
         ids: deleteIdList
       }
-      axios.delete(api.goalMultiplePath(this.userId), { params })
+      customAxios.delete(api.goalMultiplePath(this.userId), { params })
         .then(response => {
           this.$store.commit('setGoalList', response.data);
         })

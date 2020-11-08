@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api'
 import { Goal } from '@/models/goal';
 
@@ -27,7 +27,7 @@ export const goals = {
   },
   actions: {
     selectGoalList(context: any): void {
-      axios.get(api.goalsPath(context.getters.userId))
+      customAxios.get(api.goalsPath(context.getters.userId))
         .then(response => {
           context.commit('setGoalList', response.data);
         })

@@ -1,28 +1,24 @@
-import { env } from '@env';
-
-const baseUrl = env.baseUrl;
-
 export const api = {
-  loginPath:        `${baseUrl}/login`,
-  logoutPath:       `${baseUrl}/logout`,
-  authPath:         `${baseUrl}/auth`,
-  usersPath:        `${baseUrl}/users`,
+  loginPath:        '/login',
+  logoutPath:       '/logout',
+  authPath:         '/auth',
+  usersPath:        '/users',
   userPath: (userId: string) => 
-                    `${baseUrl}/users/${userId}`,
+                    `/users/${userId}`,
   goalsPath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/goals`,
+                    `/users/${userId}/goals`,
   goalPath: (userId: string, goalId: string) => 
-                    `${baseUrl}/users/${userId}/goals/${goalId}`,
+                    `/users/${userId}/goals/${goalId}`,
   goalMultiplePath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/goals/multiple`,
+                    `/users/${userId}/goals/multiple`,
   workRecordsPath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/work_records`,
+                    `/users/${userId}/work_records`,
   workRecordPath: (userId: string, workRecordId: string) => 
-                    `${baseUrl}/users/${userId}/work_records/${workRecordId}`,
+                    `/users/${userId}/work_records/${workRecordId}`,
   workRecordMultiplePath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/work_records/multiple`,
+                    `/users/${userId}/work_records/multiple`,
   reportsPerTimePath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/reports/per_time`,
+                    `/users/${userId}/reports/per_time`,
   reportsPerDatePath: (userId: string) =>
-                    `${baseUrl}/users/${userId}/reports/per_date`,
+                    `/users/${userId}/reports/per_date`,
 }

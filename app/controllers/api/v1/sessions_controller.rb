@@ -8,7 +8,7 @@ class Api::V1::SessionsController < ApiController
       log_in(user)
       render json: user
     else
-      render json: { error: "can't log in" }, status: :unauthorized
+      render json: { error: "worng parameter for login" }, status: :bad_request
     end
   end
 

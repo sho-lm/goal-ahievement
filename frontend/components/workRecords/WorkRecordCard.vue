@@ -89,7 +89,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import { WorkRecord } from '@/models/workRecord';
 import DatePicker from '@/components/common/DatePicker.vue';
@@ -191,7 +191,7 @@ export default Vue.extend({
       this.validationStart = true;
       if (!this.workTimeValid || !this.startTimeValid) return;
 
-      axios.post(api.workRecordsPath(this.userId), { work_record: this.requestParams} )
+      customAxios.post(api.workRecordsPath(this.userId), { work_record: this.requestParams} )
         .then(response => {
           this.$emit('update:createMode', false);
           this.$emit('updateWorkRecordList');
@@ -204,7 +204,7 @@ export default Vue.extend({
       this.validationStart = true;
       if (!this.workTimeValid || !this.startTimeValid) return;
 
-      axios.patch(api.workRecordPath(this.userId, this.workRecord.id), { work_record: this.requestParams} )
+      customAxios.patch(api.workRecordPath(this.userId, this.workRecord.id), { work_record: this.requestParams} )
         .then(response => {
           this.readonly = true;
           this.$emit('updateWorkRecordList');

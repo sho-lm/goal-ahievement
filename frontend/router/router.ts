@@ -7,7 +7,6 @@ import Users from '@/components/pages/Users.vue';
 import Goals from '@/components/pages/Goals.vue';
 import WorkRecords from '@/components/pages/WorkRecords.vue';
 import Reports from '@/components/pages/Reports.vue';
-import Debug from '@/components/pages/Debug.vue';
 
 Vue.use(VueRouter);
 export const routes: Array<RouteConfig> = [
@@ -91,16 +90,12 @@ export const routes: Array<RouteConfig> = [
     }
   },
   {
-    name: 'debug',
-    path: '/debug',
-    component: Debug,
+    path: '/',
+    component: Reports,
     meta: {
-      icon: 'info',
-      background: '#fff',
-      requiresLogin: true,
-      text: 'debug'
+      requiresLogin:  false,
     }
-  }
+  },
 ]
 export const router = new VueRouter({
   mode: 'history',
@@ -108,7 +103,7 @@ export const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.name !== 'login'
+  if (to.name !== 'login'
     && to.name !== 'signUp'
     && !store.getters.auth.id
     && !store.getters.auth.token) {

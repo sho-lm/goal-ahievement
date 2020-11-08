@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import { User } from '@/models/user';
 import NameForm from '@/components/users/NameForm.vue';
@@ -70,7 +70,7 @@ export default Vue.extend({
         name:     this.user.name,
         password: this.user.password
       }
-      axios.patch(api.userPath(this.$store.getters.userId), { user: params })
+      customAxios.patch(api.userPath(this.$store.getters.userId), { user: params })
         .then(response => {
           this.$store.commit('setUser', response.data);
           this.$emit('updateDone');

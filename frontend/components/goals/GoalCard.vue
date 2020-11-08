@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios';
+import { customAxios } from '@/plugins/customAxios';
 import { api } from '@/config/api';
 import { Goal } from '@/models/goal';
 import ContentForm from '@/components/goals/ContentForm.vue';
@@ -129,7 +129,7 @@ export default Vue.extend({
         content:     this.content,
         color:       this.color,
       };
-      axios.post(api.goalsPath(this.$store.getters.userId), { goal: params})
+      customAxios.post(api.goalsPath(this.$store.getters.userId), { goal: params})
         .then(response => {
           const newGoal = new Goal();
           newGoal.setGoalData(response.data);
@@ -148,7 +148,7 @@ export default Vue.extend({
         color:       this.color,
         is_finished: this.isFinished,
       };
-      axios.patch(api.goalPath(this.userId, this.id), { goal: params })
+      customAxios.patch(api.goalPath(this.userId, this.id), { goal: params })
         .then(response => {
           this.readonly = true;
           
