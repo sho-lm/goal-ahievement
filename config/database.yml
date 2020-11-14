@@ -51,5 +51,5 @@ test:
 production:
   <<: *default
   database: goal_achievement_production
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  username: <%= Rails.application.credentials.mysql[:pro_user] %>
+  password: <%= Rails.application.credentials.mysql[:pro_pass] %>
