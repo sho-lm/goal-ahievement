@@ -60,6 +60,6 @@ gem "actionview", ">= 6.0.3.3"
 gem 'rack-cors'
 
 group :production do
-  # for aws deploy
+  # use unicorn in production
   gem 'unicorn', '~> 5.1'
 end
