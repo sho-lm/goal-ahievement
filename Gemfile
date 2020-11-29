@@ -58,3 +58,8 @@ gem "actionview", ">= 6.0.3.3"
 
 # Permit cors
 gem 'rack-cors'
+
+group :production do
+  # use unicorn in production
+  gem 'unicorn', '~> 5.1'
+end
