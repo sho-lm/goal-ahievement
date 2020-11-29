@@ -7,31 +7,27 @@ module SessionsHelper
     end
   end
 
-  # 指定したユーザーをセッションに保存する
-  def log_in(user)
-    session[:user_id] = user.id
+  # リクエストで指定されたユーザーがログイン中のユーザーでなければ 403 を返す
+  # find_user() は各controller内で定義された find_user メソッドが呼び出される
+  def correct_user
+    @user = find_user
+    render json: { error: "not correct user" }, status: :forbidden unless @user.id.to_s == current_user_id
   end
 
-  # ログイン中のユーザーを返す(いなければnil)
-  def current_user
-    if (user_id = session[:user_id])
-      @current_user ||= User.find_by(id: user_id)
-    end
+  # HTTPヘッダーに設定されているユーザーIDを返す
+  def current_user_id
+    request.headers["HTTP_USER_ID"]
   end
 
-  # 指定したユーザーとログイン中のユーザーが同じであればtrueを返す
-  def current_user?(user)
-    current_user == user
+  # HTTPヘッダーに設定されているユーザーの認証トークンを返す
+  def current_user_token
+    request.headers["HTTP_USER_TOKEN"]
   end
 
   # ユーザーがログイン中ならtrueを返す
   def logged_in?
-    !current_user.nil?
+    user = User.find_by(id: current_user_id, token: current_user_token)
+    !user.nil?
   end
 
-  # セッションを破棄してログアウトする
-  def log_out
-    session[:user_id] = nil
-    @current_user = nil
-  end
 end

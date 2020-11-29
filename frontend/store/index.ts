@@ -38,7 +38,6 @@ export default new Vuex.Store({
     restoreSession(context): void {
       customAxios.post(api.authPath, context.getters.auth)
         .then(response => {
-          console.log(response);
           context.dispatch('saveSession', response.data);
           context.dispatch('selectGoalList');
         })

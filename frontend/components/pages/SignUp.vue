@@ -70,7 +70,6 @@ export default Vue.extend({
   methods: {
     signUp(): void {
       if (!this.getForm.validate()) return;
-
       this.loading = true;
       const params = {
         name: this.name,
@@ -79,6 +78,7 @@ export default Vue.extend({
       customAxios.post(api.usersPath, { user: params })
         .then(response => {
           this.$store.dispatch('saveSession', response.data);
+          this.$store.dispatch('selectGoalList');
           this.$router.push({ name: 'users' });
           this.$store.dispatch('showMessage', '登録しました');
         })

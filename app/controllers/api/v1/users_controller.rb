@@ -66,7 +66,7 @@ class Api::V1::UsersController < ApiController
       user = User.find_by(name: params[:user][:name])
 
       # 自分の name と重複していると判断するのを回避
-      if @current_user && user && @current_user.id == user.id
+      if user && current_user_id == user.id.to_s
         return false
       end
 
