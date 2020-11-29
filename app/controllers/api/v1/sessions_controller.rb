@@ -5,7 +5,7 @@ class Api::V1::SessionsController < ApiController
     logger.debug(params)
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
-      log_in(user)
+      # restfulに変更したのでサーバー側の処理はなくなった
       render json: user
     else
       render json: { error: "worng parameter for login" }, status: :bad_request
@@ -14,7 +14,6 @@ class Api::V1::SessionsController < ApiController
 
   # ログアウトする
   def destroy
-    log_out if logged_in?
-    render json: ""
+    # restfulに変更したのでサーバー側の処理はなくなった
   end
 end

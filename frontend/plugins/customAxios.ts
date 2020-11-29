@@ -6,9 +6,17 @@ import store from '@/store/index';
 
 export const customAxios = createAxiosInstance();
 
+
 function createAxiosInstance(){
+  const data = localStorage.getItem('goal-achievement') || '{"auth":{"id":"", "token":""}}';
+  const json = JSON.parse(data);
+
   const axiosInstance = axios.create({
     baseURL: env.baseUrl ,
+    headers: {
+      user_id: json.auth.id,
+      user_token: json.auth.token
+    }
   })
 
   // 401エラーの場合は、ログインできていないと判断してログイン画面を表示する

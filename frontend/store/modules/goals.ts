@@ -5,7 +5,7 @@ import { Goal } from '@/models/goal';
 
 export const goals = {
   state: {
-    goalList: [ new Goal() ],
+    goalList: [],
   },
   getters: {
     goalList: (state: any): Array<Goal> => state.goalList,
