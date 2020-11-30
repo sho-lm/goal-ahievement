@@ -21,7 +21,6 @@ class Api::V1::UsersController < ApiController
 
     user = User.new(user_params)
     if user.save
-      log_in(user)
       render json: user.reload, status: :created
     else
       render json: { error: "invalid_params" }, status: :bad_request
