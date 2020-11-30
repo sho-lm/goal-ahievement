@@ -27,6 +27,7 @@ module SessionsHelper
   # ユーザーがログイン中ならtrueを返す
   def logged_in?
     user = User.find_by(id: current_user_id, token: current_user_token)
+    request.headers.sort.map { |k, v| logger.debug "#{k} : #{v}" }
     !user.nil?
   end
 
