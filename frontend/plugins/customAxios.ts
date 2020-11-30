@@ -10,7 +10,7 @@ function createAxiosInstance(){
     baseURL: env.baseUrl ,
   })
   
-  // 認証用のユーザーIDとトークンを設定する
+  // 認証用のユーザーIDとトークンを設定する(vuexから設定内容を取得)
   axiosInstance.interceptors.request.use(
     config => {
       config.headers = {
