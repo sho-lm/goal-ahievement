@@ -92,6 +92,7 @@ export default Vue.extend({
   .snackbar {
     z-index: 1000;
     margin: 2px;
+    height: 99%; // vuetifyが自動でつける [height: 100%] のせいで縦スクロールがでるのを防ぐ
 
     /deep/ .v-snack__wrapper  {
       margin: 4px;
