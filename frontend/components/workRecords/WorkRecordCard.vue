@@ -15,6 +15,7 @@
           v-model="workRecord.goal_id"
           :items="goalList"
           dense
+          no-data-text="目標が設定されていません"
           height="30"
           hide-details
         )
@@ -255,6 +256,7 @@ export default Vue.extend({
         .start-time {
           grid-area: 1/2/2/3;
           margin: 10px 7px 10px auto;
+          position: relative;
         }
 
         .end-time {

@@ -64,7 +64,7 @@ export default Vue.extend({
   async mounted() {
     this.selectReportList();
 
-    // this.$refs.calendar に scrollToTime メソッドがあると認識されずにエラーが出るのを回避
+    // this.$refs.calendar に scrollToTime メソッドがあると認識されずにエラーが出るのを回避するためにキャストしている
     (this.$refs.calendar as any).scrollToTime('08:00');
   },
   watch: {

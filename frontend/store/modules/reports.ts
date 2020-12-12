@@ -4,7 +4,7 @@ moment.locale("ja");
 
 export const reports = {
   state: {
-    reportDate:       moment().subtract(6, 'd'),
+    reportDate:       moment(),
     reportType:       'time',
     reportFilterList: null,
   },

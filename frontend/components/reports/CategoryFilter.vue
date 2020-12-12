@@ -89,6 +89,9 @@ export default Vue.extend({
   components: {
     FilterCheckIcon
   },
+  mounted() {
+    this.updateFilterList();
+  },
   watch: {
     goalList(): void {
       this.updateFilterList();
