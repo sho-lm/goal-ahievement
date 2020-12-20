@@ -91,12 +91,32 @@ export default Vue.extend({
       
       customAxios.get(api.reportsPerTimePath(this.userId), { params: params })
         .then(response => {
-          this.events = response.data;
+          // 前回のデータを削除
+          this.events.length = 0;
+
+          // 日時の値が正しいものはグラフに表示する
+          for (let i = 0, len = response.data.length; i < len; i++) {
+            const d = response.data[i];
+            
+            if (this.isValidDate(d.start) && this.isValidDate(d.end)) {
+              this.events.push(d);
+            }
+          }
         })
         .catch(error => {
           console.log(error.response);
         })
     },
+    isValidDate(dateString: string): boolean {
+      // YYYY-MM-DD HH:mm 形式であるか
+      if (!dateString || dateString.length !== 16) {
+        return false;
+      }
+
+      // 日時の値として正しいか
+      const date = moment(dateString);
+      return date.isValid();
+    }
   },
 })
 </script>
