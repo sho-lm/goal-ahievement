@@ -83,7 +83,10 @@ class Api::V1::ReportsController < ApiController
       prev_id = -1
       dataset = {}
       for report in reports
+        # フィルターの対象でデータを絞る
         next unless filter_checked?(report)
+        # 勉強時間の入っていないデータは無視
+        next if (report.sum_worked_for.nil?)
 
         id = report.goal_id || 0
         if id != prev_id

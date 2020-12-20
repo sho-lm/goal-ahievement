@@ -145,10 +145,10 @@ export default Vue.extend({
       return this.$store.getters.userId;
     },
     goalList(): Array<Selector> {
-      // 未完了のみ選択ボックスに表示する
+      // 未完了のみ選択ボックスに表示する(ただし、すでに選択中のものは未完了でも表示する)
       return this.$store.getters.goalList.reduce((goalList: Array<Selector>, goal: Goal) => {
         
-        if (!goal.is_finished) {
+        if (!goal.is_finished || goal.id === this.workRecord.goal_id) {
           goalList.push({
             value: goal.id,
             text:  goal.content
