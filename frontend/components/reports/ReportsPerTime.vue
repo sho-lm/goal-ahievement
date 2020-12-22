@@ -92,7 +92,7 @@ export default Vue.extend({
       customAxios.get(api.reportsPerTimePath(this.userId), { params: params })
         .then(response => {
           // 前回のデータを削除
-          this.events.length = 0;
+          this.events = [];
 
           // 日時の値が正しいものはグラフに表示する
           for (let i = 0, len = response.data.length; i < len; i++) {
