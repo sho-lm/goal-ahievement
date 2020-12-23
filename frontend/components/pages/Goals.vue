@@ -156,13 +156,38 @@ export default Vue.extend({
     },
     uncheckAll(): void {
       for (let goal of this.goalList) {
+
+        // フィルター状態のものは飛ばす
+        if (this.isFilteredGoal(goal)) {
+          continue;
+        }
         goal.deleteCheckBox = false;
       }
     },
     checkAll(): void {
       for (let goal of this.goalList) {
+
+        // フィルター状態のものは飛ばす
+        if (this.isFilteredGoal(goal)) {
+          continue;
+        }
         goal.deleteCheckBox = true;
       }
+    },
+    isFilteredGoal(goal: Goal): boolean {
+      
+      // 「完了済み」を選択中は未完了のGoalはフィルター状態
+      if (this.selected === SELECTOR_VALUE.FINISHED) {
+        return !goal.is_finished;
+      }
+
+      // 「未完了のみ」を選択中は完了済みのGoalはフィルター状態
+      if (this.selected === SELECTOR_VALUE.NOT_FINISHED) {
+        return goal.is_finished;
+      }
+
+      // 「全て表示」を選択中はフィルター状態のGoalはない
+      return false;
     },
     deleteGoals(): void {
       const deleteIdList = [];
