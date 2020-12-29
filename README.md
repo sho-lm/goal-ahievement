@@ -50,7 +50,7 @@ access to <span>http://localhost:3000</span>
 free license
 
 ## 使用言語
-<a href="https://ruby-lang.org/ja/">Ruby</a><br>
+<a href="https://www.ruby-lang.org/ja/">Ruby</a><br>
 <a href="https://railsguides.jp/">Rails</a><br>
 <a href="https://jp.vuejs.org/index.html">Vue</a><br>
 <a href="https://www.typescriptlang.org/">TypeScript</a><br>
