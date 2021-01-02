@@ -52,7 +52,8 @@ free license
 ## 使用言語
 <a href="https://www.ruby-lang.org/ja/">Ruby</a><br>
 <a href="https://railsguides.jp/">Rails</a><br>
-<a href="https://jp.vuejs.org/index.html">Vue</a><br>
+<a href="https://jp.vuejs.org/index.html">Vue.js</a><br>
+<a href="https://nodejs.org/ja/">Node.js</a><br>
 <a href="https://www.typescriptlang.org/">TypeScript</a><br>
 <a href="https://sass-lang.com/">Sass</a><br>
 <a href="https://www.npmjs.com/package/pug">Pug</a><br>
