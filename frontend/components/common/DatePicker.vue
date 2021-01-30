@@ -11,10 +11,11 @@
     v-menu(
       v-model="menu"
       :close-on-content-click="false"
-      offset-y
+      :attach="attach"
       max-width="290px"
       min-width="290px"
-      nudge-left="45"
+      :nudge-left="nudgeLeft"
+      nudge-bottom="35"
     )
       template(v-slot:activator="{ on }")
         v-text-field.date-text(
@@ -59,6 +60,7 @@ export default Vue.extend({
   props: {
     type:      { type: String,  default: 'date' },
     date:      { type: moment , default: moment() },
+    isAttach:  { type: Boolean, default: false },
     showArrow: { type: Boolean, default: false },
   },
   data(): DataType {
@@ -87,6 +89,12 @@ export default Vue.extend({
     momentFormat(): string {
       return this.type === 'month' ? 'YYYY-MM' : 'YYYY-MM-DD';
     },
+    attach(): string | boolean {
+      return this.isAttach ? '.date-picker' : false;
+    },
+    nudgeLeft(): string {
+      return this.type === 'month' ? '75' : '45';
+    }
   },
   methods: {
     dayFormat(dateString: string): string {

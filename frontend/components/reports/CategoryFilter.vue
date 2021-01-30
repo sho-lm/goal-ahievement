@@ -2,11 +2,12 @@
   .category-filter
     v-menu(
       v-model="menu"
+      attach=".category-filter"
       :close-on-content-click="false"
-      offset-y
       max-width="290px"
       min-width="290px"
       nudge-left="55"
+      nudge-bottom="35"
     )
       template(v-slot:activator="{ on }")
         v-text-field.category-text(

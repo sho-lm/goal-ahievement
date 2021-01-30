@@ -8,7 +8,7 @@
       timeout=1000
       color="grey darken-3"
     ) {{ $store.getters.snackbarMessage }}
-    v-app-bar(
+    v-app-bar.my-app-bar(
       app
       clipped-left
       dark
@@ -22,7 +22,7 @@
         v-spacer
         router-link(to="login") ログイン
         router-link.ml-5(to="sign_up") 新規登録
-    v-navigation-drawer(
+    v-navigation-drawer.my-side-bar(
       v-if="$store.getters.isLoggedIn"
       v-model="drawer"
       app
@@ -89,6 +89,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+  .my-app-bar {
+    z-index: 30 !important; // 勉強記録画面の select 要素の z-index との調整のため
+  }
+
+  .my-side-bar {
+    z-index: 40 !important; // 勉強記録画面の select 要素の z-index との調整のため
+  }
+
   .snackbar {
     z-index: 1000;
     margin: 2px;
@@ -104,7 +112,7 @@ export default Vue.extend({
       background: #fff;
       position: sticky;
       top: 60px;
-      z-index: 4;
+      z-index: 10;
     }
   }
 </style>

@@ -4,6 +4,7 @@
       v-select.type-select(
         v-model="type"
         :items="typeList"
+        attach=".type-select"
         dense
         hide-details
       )
@@ -16,6 +17,7 @@
           v-else
           :date.sync="date"
           showArrow
+          isAttach
           :type="pickerType"
         )
       .category-select
