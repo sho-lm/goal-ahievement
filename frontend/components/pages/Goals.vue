@@ -6,6 +6,7 @@
         v-if="!deleteMode"
         v-model="selected"
         :items="filterSelectors"
+        attach=".filter-select"
         dense
         hide-details
       )

@@ -6,6 +6,7 @@
         date-picker(
           :date.sync="requestDate"
           showArrow
+          isAttach
         )
       .delete-mode-area(v-else)
         v-btn.all-uncheck-button(
@@ -41,15 +42,15 @@
           large
         )  {{ createModeIcon }}
       v-divider.divider
-      template(v-if="createMode")
-        .new-work-record
-          p 新規作成
-          work-record-card(
-            :date="requestDate"
-            :createMode.sync="createMode"
-            @updateWorkRecordList="selectWorkRecordList"
-          )
-        v-divider.divider-create-mode
+    template(v-if="createMode")
+      .new-work-record
+        p 新規作成
+        work-record-card(
+          :date="requestDate"
+          :createMode.sync="createMode"
+          @updateWorkRecordList="selectWorkRecordList"
+        )
+      v-divider.divider-create-mode
     section.pa-6
       .work-record-item(
         v-for="workRecord in workRecordList"
@@ -224,14 +225,11 @@ export default Vue.extend({
       grid-area:2/1/2/5;
     }
 
-    .new-work-record {
-      grid-area: 2/1/3/5;
-      padding: 24px;
-    }
-    .divider-create-mode {
-      grid-area: 3/1/3/5;
-    }
   }
+  .new-work-record {
+    padding: 24px;
+  }
+  
 
   .work-record-item {
     display: grid;

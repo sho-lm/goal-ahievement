@@ -44259,6 +44259,7 @@ moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale('ja');
     props: {
         type: { type: String, default: 'date' },
         date: { type: moment__WEBPACK_IMPORTED_MODULE_1___default.a, default: moment__WEBPACK_IMPORTED_MODULE_1___default()() },
+        isAttach: { type: Boolean, default: false },
         showArrow: { type: Boolean, default: false },
     },
     data: function () {
@@ -44287,6 +44288,12 @@ moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale('ja');
         momentFormat: function () {
             return this.type === 'month' ? 'YYYY-MM' : 'YYYY-MM-DD';
         },
+        attach: function () {
+            return this.isAttach ? '.date-picker' : false;
+        },
+        nudgeLeft: function () {
+            return this.type === 'month' ? '75' : '45';
+        }
     },
     methods: {
         dayFormat: function (dateString) {
@@ -48217,7 +48224,10 @@ var render = function() {
       ),
       _c(
         "v-app-bar",
-        { attrs: { app: "", "clipped-left": "", dark: "", height: "60" } },
+        {
+          staticClass: "my-app-bar",
+          attrs: { app: "", "clipped-left": "", dark: "", height: "60" }
+        },
         [
           _vm.$store.getters.isLoggedIn
             ? [
@@ -48261,6 +48271,7 @@ var render = function() {
         ? _c(
             "v-navigation-drawer",
             {
+              staticClass: "my-side-bar",
               attrs: { app: "", clipped: "" },
               model: {
                 value: _vm.drawer,
@@ -48366,10 +48377,11 @@ var render = function() {
         {
           attrs: {
             "close-on-content-click": false,
-            "offset-y": "",
+            attach: _vm.attach,
             "max-width": "290px",
             "min-width": "290px",
-            "nudge-left": "45"
+            "nudge-left": _vm.nudgeLeft,
+            "nudge-bottom": "35"
           },
           scopedSlots: _vm._u([
             {
@@ -48716,6 +48728,7 @@ var render = function() {
               staticClass: "filter-select",
               attrs: {
                 items: _vm.filterSelectors,
+                attach: ".filter-select",
                 dense: "",
                 "hide-details": ""
               },
@@ -49001,7 +49014,12 @@ var render = function() {
       [
         _c("v-select", {
           staticClass: "type-select",
-          attrs: { items: _vm.typeList, dense: "", "hide-details": "" },
+          attrs: {
+            items: _vm.typeList,
+            attach: ".type-select",
+            dense: "",
+            "hide-details": ""
+          },
           model: {
             value: _vm.type,
             callback: function($$v) {
@@ -49029,6 +49047,7 @@ var render = function() {
                   attrs: {
                     date: _vm.date,
                     showArrow: "",
+                    isAttach: "",
                     type: _vm.pickerType
                   },
                   on: {
@@ -49273,164 +49292,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "work-records-header page-header" },
-      [
-        _c("div", { staticClass: "page-title" }, [_vm._v("勉強記録")]),
-        !_vm.deleteMode
-          ? _c(
-              "div",
-              { staticClass: "date-selector" },
-              [
-                _c("date-picker", {
-                  attrs: { date: _vm.requestDate, showArrow: "" },
-                  on: {
-                    "update:date": function($event) {
-                      _vm.requestDate = $event
-                    }
-                  }
-                })
-              ],
-              1
-            )
-          : _c(
-              "div",
-              { staticClass: "delete-mode-area" },
-              [
-                _c(
-                  "v-btn",
-                  {
-                    staticClass: "all-uncheck-button",
-                    attrs: { icon: "" },
-                    on: { click: _vm.uncheckAll }
-                  },
-                  [_c("v-icon", [_vm._v("check_box_outline_blank")])],
-                  1
-                ),
-                _c(
-                  "v-btn",
-                  {
-                    staticClass: "all-check-button",
-                    attrs: { color: "red", icon: "" },
-                    on: { click: _vm.checkAll }
-                  },
-                  [_c("v-icon", [_vm._v("check_box")])],
-                  1
-                ),
-                _c(
-                  "v-btn",
-                  {
-                    staticClass: "delete-button",
-                    attrs: { color: "red", icon: "" },
-                    on: { click: _vm.deleteWorkRecords }
-                  },
-                  [_c("v-icon", [_vm._v("delete")])],
-                  1
-                )
-              ],
-              1
-            ),
-        _c(
-          "v-btn",
-          {
-            staticClass: "delete-mode-button",
-            attrs: { icon: "" },
-            on: { click: _vm.changeDeleteMode }
-          },
-          [
-            _c("v-icon", { attrs: { large: "" } }, [
-              _vm._v(_vm._s(_vm.deleteModeIcon))
-            ])
-          ],
-          1
-        ),
-        _c(
-          "v-btn",
-          {
-            staticClass: "add-mode-button",
-            attrs: { color: "primary", icon: "" },
-            on: {
-              click: function($event) {
-                _vm.createMode = !_vm.createMode
-              }
-            }
-          },
-          [
-            _c("v-icon", { attrs: { large: "" } }, [
-              _vm._v(" " + _vm._s(_vm.createModeIcon))
-            ])
-          ],
-          1
-        ),
-        _c("v-divider", { staticClass: "divider" }),
-        _vm.createMode
-          ? [
-              _c(
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        { staticClass: "work-records-header page-header" },
+        [
+          _c("div", { staticClass: "page-title" }, [_vm._v("勉強記録")]),
+          !_vm.deleteMode
+            ? _c(
                 "div",
-                { staticClass: "new-work-record" },
+                { staticClass: "date-selector" },
                 [
-                  _c("p", [_vm._v("新規作成")]),
-                  _c("work-record-card", {
+                  _c("date-picker", {
                     attrs: {
                       date: _vm.requestDate,
-                      createMode: _vm.createMode
+                      showArrow: "",
+                      isAttach: ""
                     },
                     on: {
-                      "update:createMode": function($event) {
-                        _vm.createMode = $event
-                      },
-                      "update:create-mode": function($event) {
-                        _vm.createMode = $event
-                      },
-                      updateWorkRecordList: _vm.selectWorkRecordList
+                      "update:date": function($event) {
+                        _vm.requestDate = $event
+                      }
                     }
                   })
                 ],
                 1
+              )
+            : _c(
+                "div",
+                { staticClass: "delete-mode-area" },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "all-uncheck-button",
+                      attrs: { icon: "" },
+                      on: { click: _vm.uncheckAll }
+                    },
+                    [_c("v-icon", [_vm._v("check_box_outline_blank")])],
+                    1
+                  ),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "all-check-button",
+                      attrs: { color: "red", icon: "" },
+                      on: { click: _vm.checkAll }
+                    },
+                    [_c("v-icon", [_vm._v("check_box")])],
+                    1
+                  ),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "delete-button",
+                      attrs: { color: "red", icon: "" },
+                      on: { click: _vm.deleteWorkRecords }
+                    },
+                    [_c("v-icon", [_vm._v("delete")])],
+                    1
+                  )
+                ],
+                1
               ),
-              _c("v-divider", { staticClass: "divider-create-mode" })
-            ]
-          : _vm._e()
-      ],
-      2
-    ),
-    _c(
-      "section",
-      { staticClass: "pa-6" },
-      _vm._l(_vm.workRecordList, function(workRecord) {
-        return _c(
-          "div",
-          {
-            key: workRecord.id,
-            staticClass: "work-record-item",
-            style: { "grid-template-columns": _vm.checkboxWidth + "px 1fr" }
-          },
-          [
-            _c("v-checkbox", {
-              staticClass: "mt-5",
-              attrs: { dense: "", color: "red" },
-              model: {
-                value: workRecord.deleteCheckBox,
-                callback: function($$v) {
-                  _vm.$set(workRecord, "deleteCheckBox", $$v)
-                },
-                expression: "workRecord.deleteCheckBox"
+          _c(
+            "v-btn",
+            {
+              staticClass: "delete-mode-button",
+              attrs: { icon: "" },
+              on: { click: _vm.changeDeleteMode }
+            },
+            [
+              _c("v-icon", { attrs: { large: "" } }, [
+                _vm._v(_vm._s(_vm.deleteModeIcon))
+              ])
+            ],
+            1
+          ),
+          _c(
+            "v-btn",
+            {
+              staticClass: "add-mode-button",
+              attrs: { color: "primary", icon: "" },
+              on: {
+                click: function($event) {
+                  _vm.createMode = !_vm.createMode
+                }
               }
-            }),
-            _c("work-record-card", {
-              staticClass: "mb-1",
-              attrs: { date: _vm.requestDate, propWorkRecord: workRecord },
-              on: { updateWorkRecordList: _vm.selectWorkRecordList }
-            })
-          ],
-          1
-        )
-      }),
-      0
-    )
-  ])
+            },
+            [
+              _c("v-icon", { attrs: { large: "" } }, [
+                _vm._v(" " + _vm._s(_vm.createModeIcon))
+              ])
+            ],
+            1
+          ),
+          _c("v-divider", { staticClass: "divider" })
+        ],
+        1
+      ),
+      _vm.createMode
+        ? [
+            _c(
+              "div",
+              { staticClass: "new-work-record" },
+              [
+                _c("p", [_vm._v("新規作成")]),
+                _c("work-record-card", {
+                  attrs: { date: _vm.requestDate, createMode: _vm.createMode },
+                  on: {
+                    "update:createMode": function($event) {
+                      _vm.createMode = $event
+                    },
+                    "update:create-mode": function($event) {
+                      _vm.createMode = $event
+                    },
+                    updateWorkRecordList: _vm.selectWorkRecordList
+                  }
+                })
+              ],
+              1
+            ),
+            _c("v-divider", { staticClass: "divider-create-mode" })
+          ]
+        : _vm._e(),
+      _c(
+        "section",
+        { staticClass: "pa-6" },
+        _vm._l(_vm.workRecordList, function(workRecord) {
+          return _c(
+            "div",
+            {
+              key: workRecord.id,
+              staticClass: "work-record-item",
+              style: { "grid-template-columns": _vm.checkboxWidth + "px 1fr" }
+            },
+            [
+              _c("v-checkbox", {
+                staticClass: "mt-5",
+                attrs: { dense: "", color: "red" },
+                model: {
+                  value: workRecord.deleteCheckBox,
+                  callback: function($$v) {
+                    _vm.$set(workRecord, "deleteCheckBox", $$v)
+                  },
+                  expression: "workRecord.deleteCheckBox"
+                }
+              }),
+              _c("work-record-card", {
+                staticClass: "mb-1",
+                attrs: { date: _vm.requestDate, propWorkRecord: workRecord },
+                on: { updateWorkRecordList: _vm.selectWorkRecordList }
+              })
+            ],
+            1
+          )
+        }),
+        0
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49462,11 +49486,12 @@ var render = function() {
         "v-menu",
         {
           attrs: {
+            attach: ".category-filter",
             "close-on-content-click": false,
-            "offset-y": "",
             "max-width": "290px",
             "min-width": "290px",
-            "nudge-left": "55"
+            "nudge-left": "55",
+            "nudge-bottom": "35"
           },
           scopedSlots: _vm._u([
             {
