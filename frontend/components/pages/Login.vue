@@ -79,7 +79,10 @@ export default Vue.extend({
           this.$store.dispatch('showMessage', 'ログインしました');
         })
         .catch(error => {
-          console.log(error);
+          console.log(error.response);
+          if (error.response.status === 400) {
+            this.$store.dispatch('showAlertMessage', '名前かパスワードが間違っています');
+          }
         })
 
       this.loading = false;
