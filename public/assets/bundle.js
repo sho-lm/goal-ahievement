@@ -2763,10 +2763,12 @@ var snackbar = {
     state: {
         snackbarDisplay: false,
         snackbarMessage: '',
+        snackbarColor: '',
     },
     getters: {
         snackbarDisplay: function (state) { return state.snackbarDisplay; },
         snackbarMessage: function (state) { return state.snackbarMessage; },
+        snackbarColor: function (state) { return state.snackbarColor; },
     },
     mutations: {
         setSnackbarDisplay: function (state, snackbarDisplay) {
@@ -2775,6 +2777,9 @@ var snackbar = {
         setSnackbarMessage: function (state, snackbarMessage) {
             state.snackbarMessage = snackbarMessage;
         },
+        setSnackbarColor: function (state, snackbarColor) {
+            state.snackbarColor = snackbarColor;
+        }
     },
     actions: {
         hideMessage: function (context) {
@@ -2783,6 +2788,12 @@ var snackbar = {
         },
         showMessage: function (context, message) {
             context.commit('setSnackbarMessage', message);
+            context.commit('setSnackbarColor', 'grey darken-3');
+            context.commit('setSnackbarDisplay', true);
+        },
+        showAlertMessage: function (context, message) {
+            context.commit('setSnackbarMessage', message);
+            context.commit('setSnackbarColor', 'red lighten-2');
             context.commit('setSnackbarDisplay', true);
         }
     }
@@ -44219,6 +44230,9 @@ __webpack_require__.r(__webpack_exports__);
         snackbarDisplay: {
             get: function () { return this.$store.getters.snackbarDisplay; },
             set: function () { this.$store.dispatch('hideMessage'); }
+        },
+        snackbarColor: function () {
+            return this.$store.getters.snackbarColor;
         }
     },
     methods: {
@@ -44683,7 +44697,10 @@ __webpack_require__.r(__webpack_exports__);
                 _this.$store.dispatch('showMessage', 'ログインしました');
             })
                 .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
+                if (error.response.status === 400) {
+                    _this.$store.dispatch('showAlertMessage', '名前かパスワードが間違っています');
+                }
             });
             this.loading = false;
         },
@@ -48209,8 +48226,8 @@ var render = function() {
             top: "",
             app: "",
             absolute: "",
-            timeout: "1000",
-            color: "grey darken-3"
+            timeout: "2000",
+            color: _vm.snackbarColor
           },
           model: {
             value: _vm.snackbarDisplay,

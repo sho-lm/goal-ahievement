@@ -5,8 +5,8 @@
       top
       app
       absolute
-      timeout=1000
-      color="grey darken-3"
+      timeout=2000
+      :color="snackbarColor"
     ) {{ $store.getters.snackbarMessage }}
     v-app-bar.my-app-bar(
       app
@@ -69,6 +69,9 @@ export default Vue.extend({
     snackbarDisplay: {
       get(): boolean { return this.$store.getters.snackbarDisplay; },
       set(): void { this.$store.dispatch('hideMessage'); }
+    },
+    snackbarColor(): string {
+      return this.$store.getters.snackbarColor;
     }
   },
   methods: {
