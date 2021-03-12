@@ -6,7 +6,7 @@
 自分で目標を設定し、それを実行した時間の記録をつけます。<br>
 どの目標をどれだけ頑張ったかの記録をグラフとして確認することができます。<br>
 
-<a href="http://ec2-52-199-23-50.ap-northeast-1.compute.amazonaws.com">デモページ</a><br>
+<a href="http://ec2-13-114-95-233.ap-northeast-1.compute.amazonaws.com">デモページ</a><br>
 ログインが必要なので &lt;ユーザー = test, パスワード = aaaa&gt; でログインしてください。
 
 ## 機能紹介

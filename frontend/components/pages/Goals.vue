@@ -195,15 +195,22 @@ export default Vue.extend({
       for (let goal of this.deleteList) {
         deleteIdList.push(goal.id);
       }
+      // 削除チェックが入ったデータが0件のとき
+      if (!deleteIdList.length) {
+        this.$store.dispatch('showMessage', '削除対象にチェックを入れてください');
+        return;
+      }
       const params = {
         ids: deleteIdList
       }
       customAxios.delete(api.goalMultiplePath(this.userId), { params })
         .then(response => {
           this.$store.commit('setGoalList', response.data);
+          this.$store.dispatch('showMessage', '削除しました');
         })
         .catch(error => {
           console.log(error.response);
+          this.$store.dispatch('showAlertMessage', '削除に失敗しました');
         })
     }
   }

@@ -135,9 +135,11 @@ export default Vue.extend({
           newGoal.setGoalData(response.data);
           this.$store.commit('addGoal', newGoal);
           this.$emit('update:createMode', false);
+          this.$store.dispatch('showMessage', '作成しました');
         })
         .catch(error => {
           console.log(error.response);
+          this.$store.dispatch('showAlertMessage', '作成に失敗しました');
         })
     },
     updateGoal(): void {
@@ -156,9 +158,11 @@ export default Vue.extend({
           goal.setGoalData(params);
           goal.id = this.id;
           this.$store.commit('updateGoal', goal);
+          this.$store.dispatch('showMessage', '更新しました');
         })
         .catch(error => {
           console.log(error.response);
+          this.$store.dispatch('showAlertMessage', '更新に失敗しました');
         })
     },
   }
