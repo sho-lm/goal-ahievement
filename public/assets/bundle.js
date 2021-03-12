@@ -44476,9 +44476,11 @@ __webpack_require__.r(__webpack_exports__);
                 newGoal.setGoalData(response.data);
                 _this.$store.commit('addGoal', newGoal);
                 _this.$emit('update:createMode', false);
+                _this.$store.dispatch('showMessage', '作成しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
+                _this.$store.dispatch('showAlertMessage', '作成に失敗しました');
             });
         },
         updateGoal: function () {
@@ -44497,9 +44499,11 @@ __webpack_require__.r(__webpack_exports__);
                 goal.setGoalData(params);
                 goal.id = _this.id;
                 _this.$store.commit('updateGoal', goal);
+                _this.$store.dispatch('showMessage', '更新しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
+                _this.$store.dispatch('showAlertMessage', '更新に失敗しました');
             });
         },
     }
@@ -44623,15 +44627,22 @@ var SELECTOR_VALUE = {
                 var goal = _a[_i];
                 deleteIdList.push(goal.id);
             }
+            // 削除チェックが入ったデータが0件のとき
+            if (!deleteIdList.length) {
+                this.$store.dispatch('showMessage', '削除対象にチェックを入れてください');
+                return;
+            }
             var params = {
                 ids: deleteIdList
             };
             _plugins_customAxios__WEBPACK_IMPORTED_MODULE_1__["customAxios"].delete(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].goalMultiplePath(this.userId), { params: params })
                 .then(function (response) {
                 _this.$store.commit('setGoalList', response.data);
+                _this.$store.dispatch('showMessage', '削除しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
+                _this.$store.dispatch('showAlertMessage', '削除に失敗しました');
             });
         }
     }
@@ -44700,6 +44711,9 @@ __webpack_require__.r(__webpack_exports__);
                 console.log(error.response);
                 if (error.response.status === 400) {
                     _this.$store.dispatch('showAlertMessage', '名前かパスワードが間違っています');
+                }
+                else {
+                    _this.$store.dispatch('showAlertMessage', 'ログインに失敗しました');
                 }
             });
             this.loading = false;
@@ -44993,15 +45007,22 @@ var dateFormat = 'yyyy-M-D';
                 var workRecord = _a[_i];
                 deleteIdList.push(workRecord.id);
             }
+            // 削除チェックが入ったデータが0件のとき
+            if (!deleteIdList.length) {
+                this.$store.dispatch('showMessage', '削除対象にチェックを入れてください');
+                return;
+            }
             var params = {
                 ids: deleteIdList
             };
             _plugins_customAxios__WEBPACK_IMPORTED_MODULE_1__["customAxios"].delete(_config_api__WEBPACK_IMPORTED_MODULE_2__["api"].workRecordMultiplePath(this.userId), { params: params })
                 .then(function (response) {
                 _this.selectWorkRecordList();
+                _this.$store.dispatch('showMessage', '削除しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
+                _this.$store.dispatch('showAlertMessage', '削除に失敗しました');
             });
         }
     }
@@ -45739,12 +45760,16 @@ var deepCopy = function (data) { return JSON.parse(JSON.stringify(data)); };
                 .then(function (response) {
                 _this.$store.commit('setUser', response.data);
                 _this.$emit('updateDone');
+                _this.$store.dispatch('showMessage', '更新しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
                 if (error.response.data.error === 'duplicate_name') {
                     _this.duplicateNameList.push(_this.user.name);
                     _this.getForm.validate();
+                }
+                else {
+                    _this.$store.dispatch('showAlertMessage', '更新に失敗しました');
                 }
             })
                 .finally(function () {
@@ -45867,9 +45892,11 @@ __webpack_require__.r(__webpack_exports__);
                 .then(function (response) {
                 _this.$emit('update:createMode', false);
                 _this.$emit('updateWorkRecordList');
+                _this.$store.dispatch('showMessage', '作成しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
+                _this.$store.dispatch('showAlertMessage', '作成に失敗しました');
             });
         },
         updateWorkRecord: function () {
@@ -45881,9 +45908,11 @@ __webpack_require__.r(__webpack_exports__);
                 .then(function (response) {
                 _this.readonly = true;
                 _this.$emit('updateWorkRecordList');
+                _this.$store.dispatch('showMessage', '更新しました');
             })
                 .catch(function (error) {
                 console.log(error.response);
+                _this.$store.dispatch('showAlertMessage', '更新に失敗しました');
             });
         },
     }

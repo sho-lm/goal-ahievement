@@ -196,9 +196,11 @@ export default Vue.extend({
         .then(response => {
           this.$emit('update:createMode', false);
           this.$emit('updateWorkRecordList');
+          this.$store.dispatch('showMessage', '作成しました');
         })
         .catch(error => {
           console.log(error.response);
+          this.$store.dispatch('showAlertMessage', '作成に失敗しました');
         })
     },
     updateWorkRecord(): void {
@@ -209,9 +211,11 @@ export default Vue.extend({
         .then(response => {
           this.readonly = true;
           this.$emit('updateWorkRecordList');
+          this.$store.dispatch('showMessage', '更新しました');
         })
         .catch(error => {
           console.log(error.response);
+          this.$store.dispatch('showAlertMessage', '更新に失敗しました');
         })
     },
   }

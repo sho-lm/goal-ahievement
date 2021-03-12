@@ -82,6 +82,8 @@ export default Vue.extend({
           console.log(error.response);
           if (error.response.status === 400) {
             this.$store.dispatch('showAlertMessage', '名前かパスワードが間違っています');
+            } else {
+              this.$store.dispatch('showAlertMessage', 'ログインに失敗しました');
           }
         })
 

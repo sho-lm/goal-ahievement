@@ -74,12 +74,15 @@ export default Vue.extend({
         .then(response => {
           this.$store.commit('setUser', response.data);
           this.$emit('updateDone');
+          this.$store.dispatch('showMessage', '更新しました');
         })
         .catch(error => {
           console.log(error.response);
           if (error.response.data.error === 'duplicate_name') {
             this.duplicateNameList.push(this.user.name);
             this.getForm.validate();
+          } else {
+            this.$store.dispatch('showAlertMessage', '更新に失敗しました');
           }
         })
         .finally(() => { 
